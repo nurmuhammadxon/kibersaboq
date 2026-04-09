@@ -24,7 +24,7 @@ model User {
   name              String
   email             String       @unique
   hashedPassword    String
-  role              Role         @default(EMPLOYEE)
+  role              Role         @default(Users)
   lang              Lang         @default(UZ)
 
   resetToken        String?      @unique
@@ -42,8 +42,7 @@ model User {
 
 enum Role {
   SUPER_ADMIN
-  ORG_ADMIN
-  EMPLOYEE
+  Users
 }
 
 enum Lang {

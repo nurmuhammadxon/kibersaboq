@@ -17,7 +17,7 @@ export function Sidebar({ role, name }: SidebarProps) {
     const [open, setOpen] = useState(true)
     const [mobileOpen, setMobileOpen] = useState(false)
 
-    const isAdmin = role === "SUPER_ADMIN" || role === "ORG_ADMIN"
+    const isAdmin = role === "SUPER_ADMIN" 
     const navItems = isAdmin ? adminNav : userNav
 
     useEffect(() => {
@@ -56,7 +56,7 @@ export function Sidebar({ role, name }: SidebarProps) {
             <div className="p-3 border-t border-zinc-800 bg-zinc-900/50">
                 <button
                     onClick={() => signOut({ callbackUrl: "/login" })}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all w-full group"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all w-full group cursor-pointer"
                 >
                     <LogOut className="w-5 h-5 flex-shrink-0 group-hover:-translate-x-1 transition-transform" />
                     {(open || mobileOpen) && <span className="text-sm font-medium">Chiqish</span>}

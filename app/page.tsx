@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <div>
-      Home
+      <a href="/login">Login</a>
     </div>
   );
 }

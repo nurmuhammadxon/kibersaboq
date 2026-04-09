@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'ORG_ADMIN', 'EMPLOYEE');
+CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN',  'Users');
 
 -- CreateEnum
 CREATE TYPE "Lang" AS ENUM ('UZ', 'RU');
@@ -25,7 +25,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "hashedPassword" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'EMPLOYEE',
+    "role" "Role" NOT NULL DEFAULT 'Users',
     "lang" "Lang" NOT NULL DEFAULT 'UZ',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

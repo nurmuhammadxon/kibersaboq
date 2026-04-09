@@ -11,7 +11,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     const role = (session.user as any).role
     const name = session.user?.name || "Admin"
 
-    if (role === "EMPLOYEE") redirect("/dashboard")
+    if (role === "Users") redirect("/dashboard")
 
     return (
         <div className="min-h-screen bg-zinc-950 flex">

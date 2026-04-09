@@ -64,7 +64,7 @@ export async function POST(req: Request) {
         name,
         email,
         hashedPassword,
-        role: role || "EMPLOYEE",
+        role: role || "Users",
         lang: lang || "UZ",
         organizationId: (session.user as any).organizationId,
       },

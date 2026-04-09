@@ -3,7 +3,7 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Mail, Loader2, ArrowRight } from "lucide-react"
+import { Mail, Loader2 } from "lucide-react"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
 import { PasswordInput } from "@/components/auth/password-input"
 import { Button } from "@/components/ui/button"
@@ -34,7 +34,7 @@ export default function LoginPage() {
     } else {
       const session = await fetch("/api/auth/session").then(r => r.json())
       const role = session?.user?.role
-      if (role === "SUPER_ADMIN" || role === "ORG_ADMIN") {
+      if (role === "SUPER_ADMIN") {
         router.push("/admin")
       } else {
         router.push("/dashboard")

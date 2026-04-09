@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token && (pathname === "/login" || pathname === "/register")) {
-    if (role === "EMPLOYEE") {
+    if (role === "Users") {
       return NextResponse.redirect(new URL("/dashboard", req.url))
     } else {
       return NextResponse.redirect(new URL("/admin", req.url))
@@ -25,12 +25,12 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith("/admin")) {
     if (!token) return NextResponse.redirect(new URL("/login", req.url))
-    if (role === "EMPLOYEE") return NextResponse.redirect(new URL("/dashboard", req.url))
+    if (role === "Users") return NextResponse.redirect(new URL("/dashboard", req.url))
   }
 
   if (pathname.startsWith("/dashboard")) {
     if (!token) return NextResponse.redirect(new URL("/login", req.url))
-    if (role === "SUPER_ADMIN" || role === "ORG_ADMIN") return NextResponse.redirect(new URL("/admin", req.url))
+    if (role === "SUPER_ADMIN") return NextResponse.redirect(new URL("/admin", req.url))
   }
 
   return NextResponse.next()
