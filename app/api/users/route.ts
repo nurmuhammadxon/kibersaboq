@@ -13,19 +13,21 @@ export async function GET() {
     const users = await prisma.user.findMany({
       where: {
         organizationId: (session.user as any).organizationId,
+        role: "USER",
       },
       select: {
         id: true,
         name: true,
         email: true,
         role: true,
-        lang: true,
+        organizationName: true,
         createdAt: true,
       },
     })
 
     return NextResponse.json(users)
   } catch (error) {
+    console.error("Users GET xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
   }
 }
@@ -37,24 +39,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
-    const { name, email, password, role, lang } = await req.json()
+    const { name, email, password, role, organizationName } = await req.json()
 
-    if (!name || !email || !password) {
-      return NextResponse.json(
-        { error: "Barcha maydonlarni to'ldiring" },
-        { status: 400 }
-      )
+    if (!name || !email || !password || !organizationName) {
+      return NextResponse.json({ error: "Barcha maydonlarni to'ldiring" }, { status: 400 })
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    })
-
+    const existingUser = await prisma.user.findUnique({ where: { email } })
     if (existingUser) {
-      return NextResponse.json(
-        { error: "Bu email allaqachon mavjud" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Bu email allaqachon mavjud" }, { status: 400 })
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
@@ -64,22 +57,25 @@ export async function POST(req: Request) {
         name,
         email,
         hashedPassword,
-        role: role || "Users",
-        lang: lang || "UZ",
-        organizationId: (session.user as any).organizationId,
+        role: role || "USER",
+        organizationName,
+        organization: {
+          connect: { id: (session.user as any).organizationId },
+        },
       },
       select: {
         id: true,
         name: true,
         email: true,
         role: true,
-        lang: true,
+        organizationName: true,
         createdAt: true,
       },
     })
 
     return NextResponse.json(user, { status: 201 })
   } catch (error) {
+    console.error("Users POST xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
   }
 }

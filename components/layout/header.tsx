@@ -9,63 +9,61 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { User, ChevronDown, Bell } from "lucide-react"
+import { User, ChevronDown, Menu } from "lucide-react"
 import Link from "next/link"
 
 interface HeaderProps {
     role: string
     name: string
+    onMenuClick: () => void
 }
 
-export function Header({ role, name }: HeaderProps) {
+export function Header({ role, name, onMenuClick }: HeaderProps) {
     const pathname = usePathname()
-
     const isAdmin = role === "SUPER_ADMIN"
     const navItems = isAdmin ? adminNav : userNav
-
-    const profilePath = "/profile"
-
     const currentPage = navItems.find(i => i.href === pathname)?.label || "Boshqaruv paneli"
 
     return (
-        <header className="h-16 bg-zinc-900/50 backdrop-blur-md border-b border-zinc-800 flex items-center justify-between px-6 sticky top-0 z-30">
-            <div>
-                <h1 className="text-zinc-100 font-semibold text-sm leading-none mb-1">{currentPage}</h1>
-                <p className="text-zinc-400 text-[10px] uppercase tracking-wider font-bold">
-                    Kiber Saboq
-                </p>
+        <header className="h-16 bg-card/50 backdrop-blur-md border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
+            <div className="flex items-center gap-4">
+                <button
+                    onClick={onMenuClick}
+                    className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-all"
+                >
+                    <Menu className="w-5 h-5" />
+                </button>
+                <div>
+                    <h1 className="text-foreground font-semibold text-sm leading-none mb-1">{currentPage}</h1>
+                    <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-bold">Kiber Saboq</p>
+                </div>
             </div>
 
             <div className="flex items-center gap-4">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <button className="flex items-center gap-3 hover:bg-zinc-800/50 p-1.5 rounded-xl transition-all outline-none group cursor-pointer">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs font-black shadow-lg shadow-blue-900/20 text-[10px]">
+                        <button className="flex items-center gap-3 hover:bg-secondary p-1.5 rounded-xl transition-all outline-none group cursor-pointer">
+                            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-black shadow-lg shadow-primary/20 text-[10px]">
                                 {name.substring(0, 2).toUpperCase()}
                             </div>
                             <div className="hidden sm:block text-left">
-                                <p className="text-zinc-200 text-sm font-medium leading-none mb-1 group-hover:text-white transition-colors">{name}</p>
-                                <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-tighter">
-                                    {role === "SUPER_ADMIN" ? "Administrator" : "Xodim"}
+                                <p className="text-foreground text-sm font-medium leading-none mb-1 group-hover:text-foreground transition-colors">{name}</p>
+                                <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-tighter">
+                                    {role === "SUPER_ADMIN" ? "Administrator" : ""}
                                 </p>
                             </div>
-                            <ChevronDown className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+                            <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                         </button>
                     </DropdownMenuTrigger>
-
-                    <DropdownMenuContent align="end" className="w-56 bg-zinc-900 border-zinc-800 text-zinc-300 p-2 shadow-2xl">
-                        <DropdownMenuLabel className="text-zinc-500 text-[10px] uppercase px-2 py-1.5 font-bold">
+                    <DropdownMenuContent align="end" className="w-56 p-2 shadow-2xl">
+                        <DropdownMenuLabel className="text-muted-foreground text-[10px] uppercase px-2 py-1.5 font-bold">
                             Hisob boshqaruvi
                         </DropdownMenuLabel>
-
-                        <DropdownMenuSeparator className="bg-zinc-800/50" />
-
-                        <Link href={profilePath}>
-                            <DropdownMenuItem className="focus:bg-amber-50 focus:text-white cursor-pointer rounded-lg gap-2 py-2.5 outline-none group">
-                                <User className="w-4 h-4 text-zinc-400 group-hover:text-blue-500 transition-colors" />
-                                <span className="font-medium">
-                                    Profilni tahrirlash
-                                </span>
+                        <DropdownMenuSeparator />
+                        <Link href="/profile">
+                            <DropdownMenuItem className="cursor-pointer rounded-lg gap-2 py-2.5 outline-none">
+                                <User className="w-4 h-4 text-primary" />
+                                <span className="font-medium">Profilni tahrirlash</span>
                             </DropdownMenuItem>
                         </Link>
                     </DropdownMenuContent>

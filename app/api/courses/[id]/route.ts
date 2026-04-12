@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -12,18 +12,19 @@ export async function GET(
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
+    const { id } = await params
+
     const course = await prisma.course.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         modules: {
           orderBy: { order: "asc" },
           include: {
-            lessons: {
-              orderBy: { order: "asc" },
-            },
-          },
+            lessons: { orderBy: { order: "asc" } }
+          }
         },
-      },
+        enrollments: true,
+      }
     })
 
     if (!course) {
@@ -32,13 +33,14 @@ export async function GET(
 
     return NextResponse.json(course)
   } catch (error) {
+    console.error("Course GET xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -46,22 +48,24 @@ export async function PATCH(
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
+    const { id } = await params
     const data = await req.json()
 
     const course = await prisma.course.update({
-      where: { id: params.id },
+      where: { id },
       data,
     })
 
     return NextResponse.json(course)
   } catch (error) {
+    console.error("Course PATCH xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth()
@@ -69,12 +73,13 @@ export async function DELETE(
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
-    await prisma.course.delete({
-      where: { id: params.id },
-    })
+    const { id } = await params
+
+    await prisma.course.delete({ where: { id } })
 
     return NextResponse.json({ message: "Kurs o'chirildi" })
   } catch (error) {
+    console.error("Course DELETE xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
   }
 }

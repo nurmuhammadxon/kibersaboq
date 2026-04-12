@@ -23,7 +23,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
-          include: { organization: true },
         })
 
         if (!user) return null
@@ -48,17 +47,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role
-        token.organizationId = (user as any).organizationId
+        token.role = user.role
+        token.organizationId = user.organizationId
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).id = token.sub
-          ; (session.user as any).role = token.role
-          ; (session.user as any).organizationId = token.organizationId
-      }
+      session.user.id = token.sub!
+      session.user.role = token.role
+      session.user.organizationId = token.organizationId
       return session
     },
   },

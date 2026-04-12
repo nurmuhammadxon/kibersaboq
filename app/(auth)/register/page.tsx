@@ -1,6 +1,4 @@
 "use client"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { User, Building2, Mail, Loader2 } from "lucide-react"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
@@ -8,101 +6,91 @@ import { PasswordInput } from "@/components/auth/password-input"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRegister } from "@/hooks/use-register"
 
 export default function RegisterPage() {
-  const [form, setForm] = useState(
-    {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      organizationName: ""
-    }
-  )
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (form.password !== form.confirmPassword) return setError("Parollar mos kelmadi")
-    setLoading(true)
-    try {
-      const res = await fetch("/api/register", { method: "POST", body: JSON.stringify(form) })
-      if (!res.ok) throw new Error("Ro'yxatdan o'tishda xatolik")
-      router.push("/login")
-    } catch (err: any) {
-      setError(err.message);
-      setLoading(false);
-    }
-  }
+  const { form, updateForm, error, loading, handleRegister } = useRegister()
 
   return (
     <AuthWrapper title="Ro'yxatdan o'tish" error={error}>
-      <form onSubmit={handleRegister} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1">
-            <Label className="text-zinc-400 text-[10px] uppercase font-bold ml-1">
-              Ism Familya
-            </Label>
-            <div className="relative">
-              <User className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+      <form onSubmit={handleRegister} className="space-y-3 sm:space-y-4">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div className="space-y-2">
+            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Ism Familya</Label>
+            <div className="relative group">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <Input
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="ALi Valiyev"
-                className="pl-10 bg-zinc-950/40 border-zinc-800 text-zinc-200 h-11"
-                required />
+                onChange={(e) => updateForm("name", e.target.value)}
+                placeholder="Ali Valiyev"
+                className="pl-10"
+                required
+              />
             </div>
           </div>
-          <div className="space-y-1">
-            <Label className="text-zinc-400 text-[10px] uppercase font-bold ml-1">
-              Tashkilot
-            </Label>
-            <div className="relative">
-              <Building2 className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+
+          <div className="space-y-2">
+            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Tashkilot</Label>
+            <div className="relative group">
+              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <Input
                 value={form.organizationName}
-                onChange={(e) => setForm({ ...form, organizationName: e.target.value })}
+                onChange={(e) => updateForm("organizationName", e.target.value)}
                 placeholder="Kiber Saboq"
-                className="pl-10 bg-zinc-950/40 border-zinc-800 text-zinc-200 h-11"
-                required />
+                className="pl-10"
+                required
+              />
             </div>
           </div>
         </div>
-        <div className="space-y-1">
-          <Label className="text-zinc-400 text-[10px] uppercase font-bold ml-1">
-            Email
-          </Label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+
+        <div className="space-y-2">
+          <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Email</Label>
+          <div className="relative group">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
               type="email"
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => updateForm("email", e.target.value)}
               placeholder="kibersaboq@gmail.com"
-              className="pl-10 bg-zinc-950/40 border-zinc-800 text-zinc-200 h-11"
-              required />
+              className="pl-10"
+              required
+            />
           </div>
         </div>
+
         <PasswordInput
           label="Parol"
           value={form.password}
-          onChange={(v) => setForm({ ...form, password: v })}
+          onChange={(v) => updateForm("password", v)}
+          placeholder="••••••••"
         />
+
         <PasswordInput
-          label="Tasdiqlash"
+          label="Parolni tasdiqlash"
           value={form.confirmPassword}
-          onChange={(v) => setForm({ ...form, confirmPassword: v })}
+          onChange={(v) => updateForm("confirmPassword", v)}
+          placeholder="••••••••"
         />
+
         <Button
-          className="w-full bg-blue-600 hover:bg-blue-500 h-11 mt-2"
-          disabled={loading}>
-          {loading ? <Loader2 className="animate-spin" /> : "Hisob yaratish"}
+          type="submit"
+          className="w-full h-11 font-bold shadow-lg shadow-primary/20 mt-2 bg-primary text-primary-foreground hover:bg-primary/90"
+          disabled={loading}
+        >
+          {loading ? (
+            <><Loader2 className="animate-spin h-5 w-5 mr-2" /> Amalga oshmoqda...</>
+          ) : (
+            "Hisob yaratish"
+          )}
         </Button>
-        <p className="text-center text-sm text-zinc-500 pt-4 border-t border-zinc-800/40">
+
+        <p className="text-center text-xs sm:text-sm text-muted-foreground pt-4 border-t border-border">
           Profilingiz bormi?
-          <Link href="/login" className="text-blue-500 font-bold hover:underline ml-1">Kirish</Link>
+          <Link href="/login" className="text-primary font-bold hover:text-primary/80 ml-2">
+            Kirish
+          </Link>
         </p>
       </form>
     </AuthWrapper>

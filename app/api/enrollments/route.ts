@@ -62,6 +62,7 @@ export async function POST(req: Request) {
       create: {
         userId: userId || (session.user as any).id,
         courseId,
+        organizationId: (session.user as any).organizationId,
       },
     })
 

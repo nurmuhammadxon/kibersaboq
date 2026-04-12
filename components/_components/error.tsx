@@ -18,19 +18,15 @@ export function Error({
 }: ErrorProps) {
     const content = (
         <div className="flex flex-col items-center justify-center gap-4">
-            <div className="bg-red-950 p-4 rounded-full">
-                <AlertCircle className="h-8 w-8 text-red-400" />
+            <div className="bg-destructive/10 p-4 rounded-full">
+                <AlertCircle className="h-8 w-8 text-destructive" />
             </div>
             <div className="text-center">
-                <h2 className="text-lg font-bold text-red-300">{title}</h2>
-                <p className="text-sm text-red-200/70 mt-2">{message}</p>
+                <h2 className="text-lg font-bold text-destructive">{title}</h2>
+                <p className="text-sm text-muted-foreground mt-2">{message}</p>
             </div>
             {onRetry && (
-                <Button
-                    onClick={onRetry}
-                    variant="outline"
-                    className="mt-4"
-                >
+                <Button onClick={onRetry} variant="outline" className="mt-4">
                     <RefreshCw className="mr-2 h-4 w-4" />
                     Qayta urinish
                 </Button>
@@ -40,14 +36,14 @@ export function Error({
 
     if (fullScreen) {
         return (
-            <div className="min-h-screen bg-zinc-950 p-6 flex items-center justify-center">
+            <div className="min-h-screen bg-background p-6 flex items-center justify-center">
                 {content}
             </div>
         )
     }
 
     return (
-        <div className="bg-red-950/30 border border-red-900 rounded-lg p-6">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6">
             {content}
         </div>
     )

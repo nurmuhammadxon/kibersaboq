@@ -23,11 +23,10 @@ export const userNav = [
     { href: "/dashboard", label: "Bosh sahifa", icon: LayoutDashboard },
     { href: "/dashboard/courses", label: "Kurslarim", icon: BookOpen },
     { href: "/dashboard/certificates", label: "Sertifikatlarim", icon: Award },
-    { href: "/dashboard/profile", label: "Profil", icon: User },
 ]
 
 export const STATS_CONFIG = [
-    { key: "totalUsers", label: "Jami xodimlar", icon: Users, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { key: "totalUsers", label: "Jami Foydalanuvchilar", icon: Users, color: "text-blue-500", bg: "bg-blue-500/10" },
     { key: "totalCourses", label: "Jami kurslar", icon: BookOpen, color: "text-violet-500", bg: "bg-violet-500/10" },
     { key: "completedEnrollments", label: "Yakunlangan kurslar", icon: CheckCircle, color: "text-green-500", bg: "bg-green-500/10" },
     { key: "avgScore", label: "O'rtacha test natijasi", icon: Trophy, color: "text-amber-500", bg: "bg-amber-500/10", suffix: "%" },

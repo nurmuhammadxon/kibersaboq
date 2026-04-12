@@ -6,18 +6,16 @@ interface LoadingProps {
     fullScreen?: boolean
 }
 
-export default function Loading({
-    fullScreen = false
-}: LoadingProps) {
+export default function Loading({ fullScreen = false }: LoadingProps) {
     const content = (
         <div className="w-full h-screen flex flex-col items-center justify-center gap-3">
-            <Loader className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader className="h-8 w-8 animate-spin text-primary" />
         </div>
     )
 
     if (fullScreen) {
         return (
-            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50">
                 {content}
             </div>
         )

@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         name,
         email,
         hashedPassword,
-        role: "Users",
+        role: "USER",
         organizationId: organization.id,
       },
     })

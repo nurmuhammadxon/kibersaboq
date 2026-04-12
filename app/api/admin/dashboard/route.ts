@@ -23,31 +23,33 @@ export async function GET() {
             topUsers,
         ] = await Promise.all([
             prisma.user.count({
-                where: { organizationId: orgId, role: "Users" },
+                where: { organizationId: orgId, role: "USER" },
             }),
 
             prisma.course.count({
-                where: { organizationId: orgId },
+                where: { organizationId: orgId }
             }),
 
             prisma.enrollment.count({
-                where: { course: { organizationId: orgId } },
+                where: { user: { organizationId: orgId } },
             }),
 
             prisma.enrollment.count({
                 where: {
-                    course: { organizationId: orgId },
+                    user: { organizationId: orgId },
                     completedAt: { not: null },
                 },
             }),
 
             prisma.quizResult.findMany({
-                where: { quiz: { lesson: { module: { course: { organizationId: orgId } } } } },
+                where: {
+                    user: { organizationId: orgId },
+                },
                 select: { score: true },
             }),
 
             prisma.user.findMany({
-                where: { organizationId: orgId, role: "Users" },
+                where: { organizationId: orgId, role: "USER" },
                 orderBy: { createdAt: "desc" },
                 take: 5,
                 select: {
@@ -59,7 +61,7 @@ export async function GET() {
             }),
 
             prisma.user.findMany({
-                where: { organizationId: orgId, role: "Users" },
+                where: { organizationId: orgId, role: "USER" },
                 take: 5,
                 select: {
                     id: true,

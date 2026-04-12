@@ -11,15 +11,26 @@ interface StatCardProps {
 
 export function StatCard({ label, value, icon: Icon, color, bg }: StatCardProps) {
     return (
-        <Card className="bg-zinc-900 border-zinc-800">
-            <CardContent className="p-5">
-                <div className="flex items-center justify-between mb-3">
-                    <p className="text-zinc-500 text-sm">{label}</p>
-                    <div className={`w-9 h-9 ${bg} rounded-lg flex items-center justify-center`}>
+        <Card className="bg-card border-border rounded-lg sm:rounded-xl hover:border-muted transition-colors">
+            <CardContent className="p-3 sm:p-5">
+
+                {/* Header with Icon */}
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <p className="text-muted-foreground text-xs sm:text-sm font-medium">
+                        {label}
+                    </p>
+                    <div className={`w-8 h-8 sm:w-9 sm:h-9 ${bg} rounded-lg flex items-center justify-center flex-shrink-0 transition-transform hover:scale-110`}>
                         <Icon className={`w-4 h-4 ${color}`} />
                     </div>
                 </div>
-                <p className="text-2xl font-semibold text-zinc-100">{value}</p>
+
+                {/* Value */}
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground break-words">
+                    {value}
+                </p>
+
+                {/* Optional subtle indicator */}
+                <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-border to-transparent mt-3 sm:mt-4" />
             </CardContent>
         </Card>
     )

@@ -43,3 +43,5 @@ next-env.d.ts
 /lib/generated/prisma
 
 scripts/create-super-admin.ts
+
+kurs.txt
