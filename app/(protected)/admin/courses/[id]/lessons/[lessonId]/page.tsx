@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import Loading from "@/components/_components/loading"
 import { Error as ErrorComponent } from "@/components/_components/error"
 import { ConfirmDialog } from "@/components/_components/confirm-dialog"
-import { LessonContent } from "@/components/courses/lessons/lesson-content"
-import { LessonQuiz } from "@/components/courses/lessons/lesson-quiz"
-import { AddQuestionModal } from "@/components/courses/lessons/add-question-modal"
+import { LessonContent } from "@/components/admin/courses/lessons/lesson-content"
+import { LessonQuiz } from "@/components/admin/courses/lessons/lesson-quiz"
+import { AddQuestionModal } from "@/components/admin/courses/lessons/add-question-modal"
 import { useLessonDetail } from "@/hooks/use-lesson-detail"
 
 export default function LessonDetailPage() {

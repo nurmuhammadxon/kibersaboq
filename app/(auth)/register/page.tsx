@@ -1,12 +1,13 @@
 "use client"
 import Link from "next/link"
-import { User, Building2, Mail, Loader2 } from "lucide-react"
+import { User, Building2, Mail } from "lucide-react"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
 import { PasswordInput } from "@/components/auth/password-input"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRegister } from "@/hooks/use-register"
+import Loading from "@/components/_components/loading"
 
 export default function RegisterPage() {
   const { form, updateForm, error, loading, handleRegister } = useRegister()
@@ -80,7 +81,7 @@ export default function RegisterPage() {
           disabled={loading}
         >
           {loading ? (
-            <><Loader2 className="animate-spin h-5 w-5 mr-2" /> Amalga oshmoqda...</>
+            <><Loading /> Amalga oshmoqda...</>
           ) : (
             "Hisob yaratish"
           )}

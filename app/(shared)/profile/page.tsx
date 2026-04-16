@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { User, Lock, Save, Shield, ArrowLeft, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+import { User, Lock, Save, Shield, ArrowLeft, CheckCircle2, AlertCircle } from "lucide-react"
 import { useProfile } from "@/hooks/use-profile"
 import { PersonalInfoSection } from "@/components/profile/profile-sections"
+import Loading from "@/components/_components/loading"
 
 export default function ProfilePage() {
     const router = useRouter()
@@ -93,7 +94,7 @@ export default function ProfilePage() {
                     className="w-full h-11 rounded-xl font-bold transition-all bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                     {state.loading ? (
-                        <><Loader2 className="animate-spin h-4 w-4 mr-2" /> Saqlanmoqda...</>
+                        <><Loading /> Saqlanmoqda...</>
                     ) : (
                         <><Save className="w-4 h-4 mr-2" /> Saqlash</>
                     )}

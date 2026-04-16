@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import Loading from "@/components/_components/loading"
 import { Error as ErrorComponent } from "@/components/_components/error"
 import { ConfirmDialog } from "@/components/_components/confirm-dialog"
-import { ModuleList } from "@/components/courses/module-list"
-import { AddModuleModal } from "@/components/courses/add-module-modal"
-import { AddLessonModal } from "@/components/courses/add-lesson-modal"
+import { ModuleList } from "@/components/admin/courses/module-list"
+import { AddModuleModal } from "@/components/admin/courses/add-module-modal"
+import { AddLessonModal } from "@/components/admin/courses/add-lesson-modal"
 import { useCourseDetail } from "@/hooks/use-course-detail"
 
 export default function CourseDetailPage() {

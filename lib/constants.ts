@@ -16,7 +16,7 @@ export const adminNav = [
     { href: "/admin/users", label: "Foydalanuvchilar", icon: Users },
     { href: "/admin/courses", label: "Kurslar", icon: BookOpen },
     { href: "/admin/certificates", label: "Sertifikatlar", icon: Award },
-    { href: "/admin/reports", label: "Hisobotlar", icon: BarChart3 },
+    // { href: "/admin/reports", label: "Hisobotlar", icon: BarChart3 },
 ]
 
 export const userNav = [

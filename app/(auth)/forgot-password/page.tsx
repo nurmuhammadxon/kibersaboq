@@ -3,9 +3,10 @@ import { AuthWrapper } from "@/components/auth/auth-wrapper"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, ArrowLeft, Mail, AlertCircle } from "lucide-react"
+import { ArrowLeft, Mail, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useForgotPassword } from "@/hooks/use-forgot-password"
+import Loading from "@/components/_components/loading"
 
 export default function ForgotPasswordPage() {
     const { email, setEmail, error, setError, success, loading, handleSubmit } = useForgotPassword()
@@ -68,7 +69,7 @@ export default function ForgotPasswordPage() {
                     )}
 
                     <Button type="submit" className="w-full font-bold" disabled={loading}>
-                        {loading ? <><Loader2 className="animate-spin h-4 w-4 mr-2" /> Yuborilmoqda...</> : "Havola yuborish"}
+                        {loading ? <><Loading />Yuborilmoqda...</> : "Havola yuborish"}
                     </Button>
                 </form>
 

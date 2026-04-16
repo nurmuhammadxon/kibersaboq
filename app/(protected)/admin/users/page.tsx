@@ -1,11 +1,11 @@
 "use client"
 import Loading from "@/components/_components/loading"
 import { Error as ErrorComponent } from "@/components/_components/error"
-import { UsersHeader } from "@/components/users/users-header"
-import { UsersSearch } from "@/components/users/users-search"
-import { UsersTable } from "@/components/users/users-table"
-import { UserModal } from "@/components/users/user-modal"
-import { DeleteUserDialog } from "@/components/users/delete-user-dialog"
+import { UsersHeader } from "@/components/admin/users/users-header"
+import { UsersSearch } from "@/components/admin/users/users-search"
+import { UsersTable } from "@/components/admin/users/users-table"
+import { UserModal } from "@/components/admin/users/user-modal"
+import { DeleteUserDialog } from "@/components/admin/users/delete-user-dialog"
 import { useUsers } from "@/hooks/use-users"
 
 export default function UsersPage() {

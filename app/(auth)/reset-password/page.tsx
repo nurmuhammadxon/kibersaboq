@@ -3,9 +3,10 @@ import { Suspense } from "react"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
 import { PasswordInput } from "@/components/auth/password-input"
 import { Button } from "@/components/ui/button"
-import { Loader2, CheckCircle2, ArrowLeft, AlertCircle } from "lucide-react"
+import { CheckCircle2, ArrowLeft, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useResetPassword } from "@/hooks/use-reset-password"
+import Loading from "@/components/_components/loading"
 
 function ResetPasswordForm() {
     const {
@@ -70,7 +71,7 @@ function ResetPasswordForm() {
                     disabled={loading || !token}
                 >
                     {loading ? (
-                        <><Loader2 className="animate-spin h-4 w-4 mr-2" /> Saqlanmoqda...</>
+                        <><Loading /> Saqlanmoqda...</>
                     ) : (
                         "Parolni yangilash"
                     )}
@@ -91,7 +92,7 @@ export default function ResetPasswordPage() {
         <AuthWrapper title="Parolni tiklash">
             <Suspense fallback={
                 <div className="flex justify-center p-12">
-                    <Loader2 className="animate-spin text-blue-600 w-8 h-8" />
+                    <Loading />
                 </div>
             }>
                 <ResetPasswordForm />

@@ -4,8 +4,8 @@ import Loading from "@/components/_components/loading"
 import { Error as ErrorComponent } from "@/components/_components/error"
 import { ConfirmDialog } from "@/components/_components/confirm-dialog"
 import { Button } from "@/components/ui/button"
-import CourseCard from "@/components/courses/course-card"
-import CourseForm from "@/components/courses/course-form"
+import CourseCard from "@/components/admin/courses/course-card"
+import CourseForm from "@/components/admin/courses/course-form"
 import { useCourses } from "@/hooks/use-courses"
 
 export default function CoursesPage() {

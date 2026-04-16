@@ -1,12 +1,13 @@
 "use client"
 import Link from "next/link"
-import { Mail, Loader2 } from "lucide-react"
+import { Mail } from "lucide-react"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
 import { PasswordInput } from "@/components/auth/password-input"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useLogin } from "@/hooks/use-login"
+import Loading from "@/components/_components/loading"
 
 export default function LoginPage() {
   const {
@@ -62,9 +63,7 @@ export default function LoginPage() {
           className="w-full h-10 sm:h-11 font-bold shadow-lg shadow-primary/20 rounded-lg transition-all bg-primary text-primary-foreground hover:bg-primary/90"
           disabled={loading}
         >
-          {loading ? (
-            <Loader2 className="animate-spin h-5 w-5" />
-          ) : (
+          {loading ? <Loading /> : (
             "Tizimga kirish"
           )}
         </Button>

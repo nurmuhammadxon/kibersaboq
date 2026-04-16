@@ -7,6 +7,7 @@ import {
     DialogTitle, DialogFooter,
 } from "@/components/ui/dialog"
 import { useAddUser } from "@/hooks/use-add-user"
+import { Error } from "@/components/_components/error"
 
 interface Props {
     open: boolean
@@ -24,9 +25,7 @@ export function AddUser({ open, onClose, onSuccess }: Props) {
                     <DialogTitle className="text-foreground">Yangi foydalanuvchi</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-2">
-                    {error && (
-                        <p className="text-destructive text-sm bg-destructive/10 px-3 py-2 rounded-lg">{error}</p>
-                    )}
+                    {error && <Error message={error} />}
                     {organization && (
                         <div className="flex items-center gap-2 px-3 py-2 bg-secondary/50 rounded-lg border border-border">
                             <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
