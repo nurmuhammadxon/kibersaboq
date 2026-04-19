@@ -9,16 +9,47 @@ export async function GET() {
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
+    const role = (session.user as any).role as string
+    const orgId = (session.user as any).organizationId as string
+    const userId = (session.user as any).id as string
+
+    const where =
+      role === "SUPER_ADMIN"
+        ? {}
+        : { isPublished: true }
+
     const courses = await prisma.course.findMany({
+      where,
       orderBy: { createdAt: "desc" },
-      include: {
-        modules: {
-          include: {
-            lessons: true,
+      include:
+        role === "SUPER_ADMIN"
+          ? {
+            modules: {
+              include: {
+                lessons: true,
+              },
+            },
+            enrollments: true,
           }
-        },
-        enrollments: true,
-      }
+          : {
+            modules: {
+              orderBy: { order: "asc" },
+              include: {
+                lessons: {
+                  orderBy: { order: "asc" },
+                  select: {
+                    id: true,
+                    title: true,
+                    order: true,
+                    type: true,
+                  },
+                },
+              },
+            },
+            enrollments: {
+              where: { userId },
+            },
+          },
     })
 
     return NextResponse.json(courses)

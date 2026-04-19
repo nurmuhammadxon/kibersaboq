@@ -45,6 +45,7 @@ export async function POST(req: Request) {
         hashedPassword,
         role: "USER",
         organizationId: organization.id,
+        organizationName
       },
     })
 

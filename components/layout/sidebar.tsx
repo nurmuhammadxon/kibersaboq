@@ -14,6 +14,13 @@ interface SidebarProps {
     onClose: () => void
 }
 
+function isSidebarActive(pathname: string, href: string): boolean {
+    const exactRoots = new Set(["/dashboard", "/admin"])
+    if (pathname === href) return true
+    if (exactRoots.has(href)) return false
+    return pathname.startsWith(`${href}/`)
+}
+
 export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
     const pathname = usePathname()
     const isAdmin = role === "SUPER_ADMIN"
@@ -27,7 +34,7 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
         <div className="flex flex-col h-full">
             <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
                 {navItems.map(({ href, label, icon: Icon }) => {
-                    const isActive = pathname === href
+                    const isActive = isSidebarActive(pathname, href)
                     return (
                         <Link
                             key={href}

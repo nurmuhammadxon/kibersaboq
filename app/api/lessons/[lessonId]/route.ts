@@ -13,25 +13,68 @@ export async function GET(
         }
 
         const { lessonId } = await params
+        const role = (session.user as any).role as string
+        const userId = (session.user as any).id as string
 
         const lesson = await prisma.lesson.findUnique({
             where: { id: lessonId },
             include: {
+                module: {
+                    include: { course: true },
+                },
                 quizzes: {
                     include: {
                         questions: {
-                            include: { options: true }
-                        }
-                    }
-                }
-            }
+                            include: { options: true },
+                        },
+                    },
+                },
+            },
         })
 
         if (!lesson) {
             return NextResponse.json({ error: "Dars topilmadi" }, { status: 404 })
         }
 
-        return NextResponse.json(lesson)
+        const course = lesson.module.course
+
+        if (role !== "SUPER_ADMIN") {
+            if (!course.isPublished) {
+                return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
+            }
+            const enrolled = await prisma.enrollment.findUnique({
+                where: {
+                    userId_courseId: { userId, courseId: course.id },
+                },
+            })
+            if (!enrolled) {
+                return NextResponse.json(
+                    { error: "Bu kursga yozilinmagan" },
+                    { status: 403 }
+                )
+            }
+
+            const sanitized = {
+                ...lesson,
+                quizzes: lesson.quizzes.map((qz) => ({
+                    ...qz,
+                    questions: qz.questions.map((q) => ({
+                        ...q,
+                        options: q.options.map((o) => ({
+                            id: o.id,
+                            text: o.text,
+                        })),
+                    })),
+                })),
+            }
+            const { module: _m, ...rest } = sanitized
+            void _m
+            return NextResponse.json(rest)
+        }
+
+        const { module: _m, ...rest } = lesson
+        void _m
+        return NextResponse.json(rest)
     } catch (error) {
         console.error("Lesson GET xato:", error)
         return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
@@ -46,6 +89,10 @@ export async function PATCH(
         const session = await auth()
         if (!session) {
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
+        }
+
+        if ((session.user as any).role !== "SUPER_ADMIN") {
+            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
         }
 
         const { lessonId } = await params
@@ -71,6 +118,10 @@ export async function DELETE(
         const session = await auth()
         if (!session) {
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
+        }
+
+        if ((session.user as any).role !== "SUPER_ADMIN") {
+            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
         }
 
         const { lessonId } = await params

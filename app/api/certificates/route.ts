@@ -7,14 +7,35 @@ export async function GET(req: Request) {
         const session = await auth()
         if (!session) return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
 
+        const role = (session.user as any).role as string
+        const orgId = (session.user as any).organizationId as string
+        const sessionUserId = (session.user as any).id as string
+
         const { searchParams } = new URL(req.url)
         const userSearch = searchParams.get("user") || ""
         const courseSearch = searchParams.get("course") || ""
 
+        if (role !== "SUPER_ADMIN") {
+            const certificates = await prisma.certificate.findMany({
+                where: {
+                    userId: sessionUserId,
+                    course: {
+                        title: { contains: courseSearch, mode: "insensitive" },
+                    },
+                },
+                include: {
+                    course: { select: { id: true, title: true, level: true } },
+                    user: { select: { name: true } },
+                },
+                orderBy: { issuedAt: "desc" },
+            })
+            return NextResponse.json(certificates)
+        }
+
         const certificates = await prisma.certificate.findMany({
             where: {
                 user: {
-                    organizationId: (session.user as any).organizationId,
+                    organizationId: orgId,
                     name: { contains: userSearch, mode: "insensitive" },
                 },
                 course: {
@@ -22,7 +43,14 @@ export async function GET(req: Request) {
                 },
             },
             include: {
-                user: { select: { id: true, name: true, email: true, organizationName: true } },
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        organizationName: true,
+                    },
+                },
                 course: { select: { id: true, title: true, level: true } },
             },
             orderBy: { issuedAt: "desc" },

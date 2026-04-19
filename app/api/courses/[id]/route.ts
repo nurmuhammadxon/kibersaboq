@@ -13,18 +13,65 @@ export async function GET(
     }
 
     const { id } = await params
+    const role = (session.user as any).role as string
+    const userId = (session.user as any).id as string
+
+    const minimal = await prisma.course.findUnique({
+      where: { id },
+      select: { id: true, isPublished: true },
+    })
+
+    if (!minimal) {
+      return NextResponse.json({ error: "Kurs topilmadi" }, { status: 404 })
+    }
+
+    if (role !== "SUPER_ADMIN") {
+      if (!minimal.isPublished) {
+        return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
+      }
+      const enrolled = await prisma.enrollment.findUnique({
+        where: { userId_courseId: { userId, courseId: id } },
+      })
+      if (!enrolled) {
+        return NextResponse.json(
+          { error: "Bu kursga hali yozilmagansiz" },
+          { status: 403 }
+        )
+      }
+    }
 
     const course = await prisma.course.findUnique({
       where: { id },
-      include: {
-        modules: {
-          orderBy: { order: "asc" },
-          include: {
-            lessons: { orderBy: { order: "asc" } }
+      include:
+        role === "SUPER_ADMIN"
+          ? {
+            modules: {
+              orderBy: { order: "asc" },
+              include: {
+                lessons: { orderBy: { order: "asc" } },
+              },
+            },
+            enrollments: true,
           }
-        },
-        enrollments: true,
-      }
+          : {
+            modules: {
+              orderBy: { order: "asc" },
+              include: {
+                lessons: {
+                  orderBy: { order: "asc" },
+                  select: {
+                    id: true,
+                    title: true,
+                    order: true,
+                    type: true,
+                  },
+                },
+              },
+            },
+            enrollments: {
+              where: { userId },
+            },
+          },
     })
 
     if (!course) {
@@ -46,6 +93,10 @@ export async function PATCH(
     const session = await auth()
     if (!session) {
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
+    }
+
+    if ((session.user as any).role !== "SUPER_ADMIN") {
+      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
     }
 
     const { id } = await params
@@ -71,6 +122,10 @@ export async function DELETE(
     const session = await auth()
     if (!session) {
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
+    }
+
+    if ((session.user as any).role !== "SUPER_ADMIN") {
+      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
     }
 
     const { id } = await params

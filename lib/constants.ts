@@ -4,11 +4,11 @@ import {
     BookOpen,
     Award,
     BarChart3,
-    User,
     Trophy,
     TrendingUp,
     CheckCircle,
-    Clock
+    Clock,
+    GraduationCap
 } from "lucide-react"
 
 export const adminNav = [
@@ -16,12 +16,13 @@ export const adminNav = [
     { href: "/admin/users", label: "Foydalanuvchilar", icon: Users },
     { href: "/admin/courses", label: "Kurslar", icon: BookOpen },
     { href: "/admin/certificates", label: "Sertifikatlar", icon: Award },
-    // { href: "/admin/reports", label: "Hisobotlar", icon: BarChart3 },
+    { href: "/admin/reports", label: "Hisobotlar", icon: BarChart3 },
 ]
 
 export const userNav = [
     { href: "/dashboard", label: "Bosh sahifa", icon: LayoutDashboard },
     { href: "/dashboard/courses", label: "Kurslarim", icon: BookOpen },
+    { href: "/dashboard/catalog", label: "Katalog", icon: GraduationCap }, // ← yangi
     { href: "/dashboard/certificates", label: "Sertifikatlarim", icon: Award },
 ]
 

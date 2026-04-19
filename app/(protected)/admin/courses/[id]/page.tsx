@@ -47,7 +47,7 @@ export default function CourseDetailPage() {
                         {course.modules.length} modul • {totalLessons} dars • {course.enrollments.length} o'quvchi
                     </p>
                 </div>
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium flex-shrink-0 ${course.isPublished
+                <span className={`text-xs px-2.5 py-1 rounded-full font-medium shrink-0 ${course.isPublished
                     ? "bg-emerald-500/10 text-emerald-400"
                     : "bg-muted text-muted-foreground"
                     }`}>
