@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 
 export async function PATCH(
     req: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ userId: string }> }
 ) {
     try {
         const session = await auth()
@@ -13,21 +13,23 @@ export async function PATCH(
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
         }
 
-        const { id } = await params
-        const { name, email, password, organizationName } = await req.json()
+        const { userId } = await params
+        const { firstName, lastName, email, password, organizationName } = await req.json()
 
         const updateData: any = {}
-        if (name) updateData.name = name
+        if (firstName) updateData.firstName = firstName
+        if (lastName) updateData.lastName = lastName
         if (email) updateData.email = email
         if (organizationName) updateData.organizationName = organizationName
         if (password) updateData.hashedPassword = await bcrypt.hash(password, 12)
 
         const user = await prisma.user.update({
-            where: { id },
+            where: { id: userId },
             data: updateData,
             select: {
                 id: true,
-                name: true,
+                firstName: true,
+                lastName: true,
                 email: true,
                 role: true,
                 organizationName: true,
@@ -44,7 +46,7 @@ export async function PATCH(
 
 export async function DELETE(
     _: Request,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ userId: string }> }
 ) {
     try {
         const session = await auth()
@@ -52,9 +54,14 @@ export async function DELETE(
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
         }
 
-        const { id } = await params
+        const role = (session.user as any)?.role
+        if (role !== "SUPER_ADMIN") {
+            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
+        }
 
-        await prisma.user.delete({ where: { id } })
+        const { userId } = await params
+
+        await prisma.user.delete({ where: { id: userId } })
 
         return NextResponse.json({ message: "Foydalanuvchi o'chirildi" })
     } catch (error) {

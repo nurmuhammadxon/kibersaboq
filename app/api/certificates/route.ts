@@ -8,7 +8,6 @@ export async function GET(req: Request) {
         if (!session) return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
 
         const role = (session.user as any).role as string
-        const orgId = (session.user as any).organizationId as string
         const sessionUserId = (session.user as any).id as string
 
         const { searchParams } = new URL(req.url)
@@ -25,7 +24,7 @@ export async function GET(req: Request) {
                 },
                 include: {
                     course: { select: { id: true, title: true, level: true } },
-                    user: { select: { name: true } },
+                    user: { select: { firstName: true, lastName: true } },
                 },
                 orderBy: { issuedAt: "desc" },
             })
@@ -35,8 +34,10 @@ export async function GET(req: Request) {
         const certificates = await prisma.certificate.findMany({
             where: {
                 user: {
-                    organizationId: orgId,
-                    name: { contains: userSearch, mode: "insensitive" },
+                    OR: [
+                        { firstName: { contains: userSearch, mode: "insensitive" } },
+                        { lastName: { contains: userSearch, mode: "insensitive" } },
+                    ],
                 },
                 course: {
                     title: { contains: courseSearch, mode: "insensitive" },
@@ -46,7 +47,8 @@ export async function GET(req: Request) {
                 user: {
                     select: {
                         id: true,
-                        name: true,
+                        firstName: true,
+                        lastName: true,
                         email: true,
                         organizationName: true,
                     },

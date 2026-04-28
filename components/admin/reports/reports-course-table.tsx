@@ -26,26 +26,28 @@ export function ReportsCourseTable({ rows }: ReportsCourseTableProps) {
                     bo'yicha ma'lumot yo'q.
                 </p>
             ) : (
-                <Table>
+                <Table className="min-w-[760px]">
                     <TableHeader>
                         <TableRow>
                             <TableHead>Kurs</TableHead>
+                            <TableHead className="text-right hidden sm:table-cell">Narx</TableHead>
                             <TableHead className="text-right">Yozilishlar</TableHead>
                             <TableHead className="text-right">Yakunlangan</TableHead>
                             <TableHead className="text-right">Sertifikatlar</TableHead>
-                            <TableHead className="text-right">
-                                O'rtacha ball
-                            </TableHead>
+                            <TableHead className="text-right hidden md:table-cell">O'rtacha ball</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow key={row.id}>
                                 <TableCell className="font-medium">{row.title}</TableCell>
+                                <TableCell className="text-right hidden sm:table-cell">
+                                    {row.price ? `$${row.price}` : "Bepul"}
+                                </TableCell>
                                 <TableCell className="text-right">{row.enrollments}</TableCell>
                                 <TableCell className="text-right">{row.completed}</TableCell>
                                 <TableCell className="text-right">{row.certificates}</TableCell>
-                                <TableCell className="text-right">
+                                <TableCell className="text-right hidden md:table-cell">
                                     {row.avgScore != null ? `${row.avgScore}%` : "—"}
                                 </TableCell>
                             </TableRow>

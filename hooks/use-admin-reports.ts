@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react"
 export interface AdminReportsCourseRow {
     id: string
     title: string
+    price: number | null  // ← qo'shildi
     enrollments: number
     completed: number
     certificates: number
@@ -66,10 +67,5 @@ export function useAdminReports(from: string, to: string, courseId: string) {
         fetchData()
     }, [fetchData])
 
-    return {
-        data,
-        loading,
-        error,
-        refresh: fetchData,
-    }
+    return { data, loading, error, refresh: fetchData }
 }

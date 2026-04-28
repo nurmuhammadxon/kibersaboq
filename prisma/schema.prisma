@@ -5,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") 
 }
 
 enum Role {
@@ -26,60 +25,40 @@ enum LessonType {
 }
 
 model User {
-  id             String       @id @default(cuid())
-  name           String
-  email          String       @unique
+  id             String    @id @default(cuid())
+  firstName      String
+  lastName       String
+  email          String    @unique
   hashedPassword String
-
-  role           Role         @default(USER)
-  organizationName String     // qo'shildi
-
+  role           Role      @default(USER)
+  organizationName String
+  isBlocked Boolean @default(false)
   resetToken       String?   @unique
   resetTokenExpiry DateTime?
 
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
-
-  enrollments Enrollment[]
-  progress    Progress[]
-  results     QuizResult[]
-
-  certificates Certificate[]
-}
-
-model Organization {
-  id        String   @id @default(cuid())
-  name      String
-  logo      String?
-  slug      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  users       User[]
-  enrollments Enrollment[]
-  courses     Course[]     
+  enrollments  Enrollment[]
+  progress     Progress[]
+  results      QuizResult[]
+  certificates Certificate[]
 }
 
 model Course {
-  id             String      @id @default(cuid())
-  title          String
-  description    String?
-  thumbnail      String?
-  price          Decimal?    @db.Decimal(10, 2)
-  duration       Int?
-  level          CourseLevel @default(BEGINNER)
-  isPublished    Boolean     @default(false)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  organizationId String?
-  organization   Organization? @relation(fields: [organizationId], references: [id])
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  thumbnail   String?
+  price       Decimal?    @db.Decimal(10, 2)
+  duration    Int?
+  level       CourseLevel @default(BEGINNER)
+  isPublished Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
-  modules     Module[]
-  enrollments Enrollment[]
-
+  modules      Module[]
+  enrollments  Enrollment[]
   certificates Certificate[]
 }
 
@@ -103,22 +82,21 @@ model Lesson {
   order    Int
   moduleId String
   module   Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  minDuration Int?
 
   progress Progress[]
   quizzes  Quiz[]
 }
 
 model Enrollment {
-  id             String    @id @default(cuid())
-  userId         String
-  courseId       String
-  organizationId String
-  completedAt    DateTime?
-  createdAt      DateTime  @default(now())
+  id          String    @id @default(cuid())
+  userId      String
+  courseId    String
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
 
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course       Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  organization Organization @relation(fields: [organizationId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
 }
@@ -154,9 +132,9 @@ model Question {
 }
 
 model Option {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   text       String
-  isCorrect  Boolean @default(false)
+  isCorrect  Boolean  @default(false)
   questionId String
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
@@ -184,4 +162,14 @@ model Certificate {
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
+}
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  ip        String
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([ip])
 }

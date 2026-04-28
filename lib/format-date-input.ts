@@ -1,4 +1,3 @@
-/** HTML `type="date"` uchun `YYYY-MM-DD` (UTC kun kesimi). */
 export function formatDateInput(d: Date): string {
     return d.toISOString().slice(0, 10)
 }

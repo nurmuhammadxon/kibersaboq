@@ -4,9 +4,9 @@ import { prisma } from "@/lib/prisma"
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password, organizationName } = await req.json()
+    const { firstName, lastName, email, password, organizationName } = await req.json()
 
-    if (!name || !email || !password || !organizationName) {
+    if (!firstName || !lastName || !email || !password || !organizationName) {
       return NextResponse.json(
         { error: "Barcha maydonlarni to'ldiring" },
         { status: 400 }
@@ -24,28 +24,16 @@ export async function POST(req: Request) {
       )
     }
 
-    const slug = organizationName
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "")
-
-    const organization = await prisma.organization.create({
-      data: {
-        name: organizationName,
-        slug: `${slug}-${Date.now()}`,
-      },
-    })
-
     const hashedPassword = await bcrypt.hash(password, 12)
 
     const user = await prisma.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         hashedPassword,
         role: "USER",
-        organizationId: organization.id,
-        organizationName
+        organizationName,
       },
     })
 

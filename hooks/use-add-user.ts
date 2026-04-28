@@ -1,15 +1,12 @@
 "use client"
-import { useState, useEffect } from "react"
-
-interface Organization {
-    id: string
-    name: string
-}
+import { useState } from "react"
 
 interface AddUserForm {
-    name: string
+    firstName: string
+    lastName: string
     email: string
     password: string
+    organizationName: string
 }
 
 interface UseAddUserProps {
@@ -18,26 +15,19 @@ interface UseAddUserProps {
 }
 
 export function useAddUser({ onSuccess, onClose }: UseAddUserProps) {
-    const [form, setForm] = useState<AddUserForm>({ name: "", email: "", password: "" })
-    const [organization, setOrganization] = useState<Organization | null>(null)
+    const [form, setForm] = useState<AddUserForm>({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        organizationName: "",
+    })
     const [error, setError] = useState("")
     const [saving, setSaving] = useState(false)
 
-    useEffect(() => {
-        fetch("/api/auth/session")
-            .then(res => res.json())
-            .then(data => {
-                if (data?.user?.organizationId) {
-                    fetch(`/api/organizations/${data.user.organizationId}`)
-                        .then(res => res.json())
-                        .then(org => setOrganization(org))
-                }
-            })
-    }, [])
-
     const handleSave = async () => {
         setError("")
-        if (!form.name || !form.email || !form.password) {
+        if (!form.firstName || !form.lastName || !form.email || !form.password || !form.organizationName) {
             setError("Barcha maydonlar to'ldirilishi shart")
             return
         }
@@ -53,7 +43,7 @@ export function useAddUser({ onSuccess, onClose }: UseAddUserProps) {
                 setError(data.error)
                 return
             }
-            setForm({ name: "", email: "", password: "" })
+            setForm({ firstName: "", lastName: "", email: "", password: "", organizationName: "" })
             onSuccess()
             onClose()
         } catch {
@@ -65,7 +55,6 @@ export function useAddUser({ onSuccess, onClose }: UseAddUserProps) {
 
     return {
         form, setForm,
-        organization,
         error,
         saving,
         handleSave,

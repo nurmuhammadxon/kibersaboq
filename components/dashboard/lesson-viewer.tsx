@@ -4,6 +4,15 @@ interface LessonViewerProps {
     lesson: LearnerLesson
 }
 
+function getYoutubeEmbedUrl(url: string): string {
+    const watchMatch = url.match(/[?&]v=([^&]+)/)
+    if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
+    const shortMatch = url.match(/youtu\.be\/([^?&]+)/)
+    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
+    if (url.includes("/embed/")) return url
+    return url
+}
+
 export function LessonViewer({ lesson }: LessonViewerProps) {
     const type = lesson.type
 
@@ -22,22 +31,16 @@ export function LessonViewer({ lesson }: LessonViewerProps) {
                     {lesson.videoUrl ? (
                         <div className="aspect-video rounded-xl overflow-hidden bg-secondary">
                             <iframe
-                                src={lesson.videoUrl.replace("watch?v=", "embed/")}
+                                src={getYoutubeEmbedUrl(lesson.videoUrl)}  // ← o'zgartiring
                                 className="w-full h-full"
                                 allowFullScreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 title={lesson.title}
                             />
                         </div>
                     ) : (
-                        <p className="text-sm text-muted-foreground">
-                            Video havolasi qo‘shilmagan.
-                        </p>
+                        <p className="text-sm text-muted-foreground">Video havolasi qo'shilmagan.</p>
                     )}
-                    {lesson.content ? (
-                        <div className="prose prose-sm dark:prose-invert max-w-none whitespace-pre-wrap">
-                            {lesson.content}
-                        </div>
-                    ) : null}
                 </div>
             )}
 

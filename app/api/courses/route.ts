@@ -10,7 +10,6 @@ export async function GET() {
     }
 
     const role = (session.user as any).role as string
-    const orgId = (session.user as any).organizationId as string
     const userId = (session.user as any).id as string
 
     const where =
@@ -42,6 +41,8 @@ export async function GET() {
                     title: true,
                     order: true,
                     type: true,
+                    videoUrl: true,  
+                    content: true,
                   },
                 },
               },
@@ -80,7 +81,6 @@ export async function POST(req: Request) {
         price,
         duration,
         thumbnail,
-        organizationId: (session.user as any).organizationId,
       }
     })
 

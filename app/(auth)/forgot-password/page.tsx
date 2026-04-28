@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
                                     setEmail(e.target.value)
                                     setError("")
                                 }}
-                                placeholder="example@gmail.com"
+                                placeholder="kibersaboq@example.com"
                                 disabled={loading}
                                 className="pl-10"
                             />

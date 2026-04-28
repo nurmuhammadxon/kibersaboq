@@ -19,6 +19,7 @@ export default function LessonDetailPage() {
         content, setContent,
         videoUrl, setVideoUrl,
         fileUrl, setFileUrl,
+        minDuration, setMinDuration,
         saving, saved, handleSaveContent,
         quizModal, setQuizModal,
         questionText, setQuestionText,
@@ -35,7 +36,6 @@ export default function LessonDetailPage() {
 
     return (
         <div className="max-w-3xl mx-auto space-y-6">
-            {/* Header */}
             <div className="flex items-center gap-3">
                 <Link href={`/admin/courses/${id}`}>
                     <Button variant="ghost" size="icon">
@@ -48,28 +48,27 @@ export default function LessonDetailPage() {
                 </div>
             </div>
 
-            {/* Content */}
             <LessonContent
                 type={lesson.type}
                 content={content}
                 videoUrl={videoUrl}
                 fileUrl={fileUrl}
+                minDuration={minDuration}
                 onContentChange={setContent}
                 onVideoUrlChange={setVideoUrl}
                 onFileUrlChange={setFileUrl}
+                onMinDurationChange={setMinDuration}
                 onSave={handleSaveContent}
                 saving={saving}
                 saved={saved}
             />
 
-            {/* Quiz */}
             <LessonQuiz
                 quizzes={lesson.quizzes}
                 onAddQuestion={() => setQuizModal(true)}
                 onDeleteQuestion={handleDeleteQuestion}
             />
 
-            {/* Add Question Modal */}
             <AddQuestionModal
                 open={quizModal}
                 onClose={() => setQuizModal(false)}
@@ -88,7 +87,6 @@ export default function LessonDetailPage() {
                 error={quizError}
             />
 
-            {/* Delete Question Confirm */}
             <ConfirmDialog
                 open={!!deleteQuizId}
                 onClose={() => setDeleteQuizId(null)}

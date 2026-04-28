@@ -135,7 +135,7 @@ export default function DashboardCertificatesPage() {
                             courseTitle={selected.course.title}
                             courseLevel={selected.course.level}
                             issuedAt={selected.issuedAt}
-                            userName={selected.user.name}
+                            userName={`${selected.user.firstName} ${selected.user.lastName}`}
                         />
                     )}
                 </DialogContent>

@@ -12,7 +12,8 @@ export interface MyCertificate {
         level: string
     }
     user: {
-        name: string
+        firstName: string
+        lastName: string
     }
 }
 

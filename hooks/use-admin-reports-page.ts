@@ -7,6 +7,7 @@ import { useAdminReports, type AdminReportsData } from "@/hooks/use-admin-report
 function buildCsv(data: AdminReportsData, from: string, to: string) {
     const header = [
         "Kurs",
+        "Narx",       
         "Yozilishlar",
         "Yakunlangan",
         "Sertifikatlar",
@@ -17,6 +18,7 @@ function buildCsv(data: AdminReportsData, from: string, to: string) {
         ...data.courses.map((row) =>
             [
                 `"${row.title.replace(/"/g, '""')}"`,
+                row.price ?? "Bepul", 
                 row.enrollments,
                 row.completed,
                 row.certificates,
@@ -63,16 +65,11 @@ export function useAdminReportsPage() {
     }, [data, applied.from, applied.to])
 
     return {
-        from,
-        setFrom,
-        to,
-        setTo,
-        courseId,
-        setCourseId,
+        from, setFrom,
+        to, setTo,
+        courseId, setCourseId,
         applied,
-        data,
-        loading,
-        error,
+        data, loading, error,
         refresh,
         applyFilters,
         downloadCsv,

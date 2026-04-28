@@ -25,7 +25,9 @@ export function CertificateTableRow({ certificate, isDeleting, onDelete }: Props
         <TableRow>
             <TableCell>
                 <div>
-                    <p className="font-medium">{certificate.user.name}</p>
+                    <p className="font-medium">
+                        {certificate.user.firstName} {certificate.user.lastName}
+                    </p>
                     <p className="text-xs text-muted-foreground">{certificate.user.email}</p>
                 </div>
             </TableCell>
@@ -50,7 +52,7 @@ export function CertificateTableRow({ certificate, isDeleting, onDelete }: Props
 
             <TableCell className="text-right">
                 <CertificateDeleteDialog
-                    userName={certificate.user.name}
+                    userName={`${certificate.user.firstName} ${certificate.user.lastName}`}
                     courseTitle={certificate.course.title}
                     isDeleting={isDeleting}
                     onDelete={() => onDelete(certificate.id)}

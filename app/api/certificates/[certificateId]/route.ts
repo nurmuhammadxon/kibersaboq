@@ -10,18 +10,16 @@ export async function DELETE(
         const session = await auth()
         if (!session) return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
 
-        // Sertifikat shu organizationga tegishli ekanini tekshirish
+        if ((session.user as any).role !== "SUPER_ADMIN") {
+            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
+        }
+
         const certificate = await prisma.certificate.findUnique({
             where: { id: params.id },
-            include: { user: true },
         })
 
         if (!certificate) {
             return NextResponse.json({ error: "Sertifikat topilmadi" }, { status: 404 })
-        }
-
-        if (certificate.user.organizationId !== (session.user as any).organizationId) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
         }
 
         await prisma.certificate.delete({ where: { id: params.id } })

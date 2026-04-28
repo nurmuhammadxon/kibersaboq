@@ -8,7 +8,8 @@ import {
 import type { User } from "@/hooks/use-users"
 
 interface UserForm {
-    name: string
+    firstName: string
+    lastName: string
     email: string
     password: string
     organizationName: string
@@ -38,20 +39,31 @@ export function UserModal({ open, onClose, editUser, form, onChange, onSave, sav
                     {error && (
                         <p className="text-destructive text-sm bg-destructive/10 px-3 py-2 rounded-lg">{error}</p>
                     )}
-                    <div className="space-y-1.5">
-                        <Label className="text-foreground">Ism</Label>
-                        <Input
-                            placeholder="Ali Valiyev"
-                            value={form.name}
-                            onChange={e => onChange(f => ({ ...f, name: e.target.value }))}
-                            className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                        />
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                            <Label className="text-foreground">Ism</Label>
+                            <Input
+                                placeholder="Ali"
+                                value={form.firstName}
+                                onChange={e => onChange(f => ({ ...f, firstName: e.target.value }))}
+                                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <Label className="text-foreground">Familya</Label>
+                            <Input
+                                placeholder="Valiyev"
+                                value={form.lastName}
+                                onChange={e => onChange(f => ({ ...f, lastName: e.target.value }))}
+                                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                            />
+                        </div>
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-foreground">Email</Label>
                         <Input
                             type="email"
-                            placeholder="ali@example.com"
+                            placeholder="kibersaboq@example.com"
                             value={form.email}
                             onChange={e => onChange(f => ({ ...f, email: e.target.value }))}
                             className="bg-input border-border text-foreground placeholder:text-muted-foreground"

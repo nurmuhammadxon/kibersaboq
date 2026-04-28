@@ -64,6 +64,8 @@ export async function GET(
                     title: true,
                     order: true,
                     type: true,
+                    videoUrl: true, 
+                    content: true,
                   },
                 },
               },

@@ -3,14 +3,16 @@ import { useState, useEffect, useCallback } from "react"
 
 export interface User {
     id: string
-    name: string
+    firstName: string
+    lastName: string
     email: string
     role: string
     organizationName: string
     createdAt: string
+    isBlocked: boolean
 }
 
-const emptyForm = { name: "", email: "", password: "", organizationName: "" }
+const emptyForm = { firstName: "", lastName: "", email: "", password: "", organizationName: "" }
 
 export function useUsers() {
     const [users, setUsers] = useState<User[]>([])
@@ -40,10 +42,11 @@ export function useUsers() {
 
     useEffect(() => { fetchUsers() }, [fetchUsers])
 
-    const filtered = users.filter(u =>
-        u.name.toLowerCase().includes(search.toLowerCase()) ||
-        u.email.toLowerCase().includes(search.toLowerCase())
-    )
+    const filtered = users.filter(u => {
+        const fullName = `${u.firstName} ${u.lastName}`.toLowerCase()
+        const q = search.toLowerCase()
+        return fullName.includes(q) || u.email.toLowerCase().includes(q)
+    })
 
     const openAdd = () => {
         setEditUser(null)
@@ -54,7 +57,13 @@ export function useUsers() {
 
     const openEdit = (user: User) => {
         setEditUser(user)
-        setForm({ name: user.name, email: user.email, password: "", organizationName: user.organizationName })
+        setForm({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: "",
+            organizationName: user.organizationName,
+        })
         setFormError("")
         setModalOpen(true)
     }
@@ -70,7 +79,7 @@ export function useUsers() {
         setSaving(true)
         setFormError("")
 
-        if (!editUser && (!form.name || !form.email || !form.password || !form.organizationName)) {
+        if (!editUser && (!form.firstName || !form.lastName || !form.email || !form.password || !form.organizationName)) {
             setFormError("Barcha maydonlar to'ldirilishi shart")
             setSaving(false)
             return
@@ -78,7 +87,12 @@ export function useUsers() {
 
         try {
             if (editUser) {
-                const body: any = { name: form.name, email: form.email, organizationName: form.organizationName }
+                const body: any = {
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    email: form.email,
+                    organizationName: form.organizationName,
+                }
                 if (form.password) body.password = form.password
                 const res = await fetch(`/api/users/${editUser.id}`, {
                     method: "PATCH",
@@ -107,11 +121,42 @@ export function useUsers() {
 
     const handleDelete = async (id: string) => {
         try {
-            await fetch(`/api/users/${id}`, { method: "DELETE" })
+            const res = await fetch(`/api/users/${id}`, { method: "DELETE" })
+            if (!res.ok) {
+                const data = await res.json().catch(() => null)
+                setError(data?.error || "O'chirishda xatolik yuz berdi")
+                return
+            }
             setDeleteId(null)
             await fetchUsers()
         } catch {
             setError("O'chirishda xatolik yuz berdi")
+        }
+    }
+
+    const handleUnblock = async (email: string) => {
+        try {
+            await fetch("/api/admin/unblock", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            })
+            await fetchUsers()
+        } catch {
+            setError("Blokdan chiqarishda xatolik")
+        }
+    }
+
+    const handleBlock = async (email: string) => {
+        try {
+            await fetch("/api/admin/block", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            })
+            await fetchUsers()
+        } catch {
+            setError("Bloklashda xatolik")
         }
     }
 
@@ -122,5 +167,6 @@ export function useUsers() {
         formError, saving, deleteId, setDeleteId,
         openAdd, openEdit, closeModal,
         handleSave, handleDelete,
+        handleUnblock, handleBlock,
     }
 }

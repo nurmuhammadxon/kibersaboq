@@ -10,7 +10,7 @@ export async function PATCH(req: Request) {
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
         }
 
-        const { name, email, currentPassword, newPassword } = await req.json()
+        const { firstName, lastName, email, currentPassword, newPassword } = await req.json()
 
         const user = await prisma.user.findUnique({
             where: { id: (session.user as any).id },
@@ -20,7 +20,7 @@ export async function PATCH(req: Request) {
             return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 })
         }
 
-        const updateData: any = { name }
+        const updateData: any = { firstName, lastName }
 
         if (email && user.role === "SUPER_ADMIN") {
             const existingEmail = await prisma.user.findUnique({
@@ -57,7 +57,8 @@ export async function PATCH(req: Request) {
             data: updateData,
             select: {
                 id: true,
-                name: true,
+                firstName: true,
+                lastName: true,
                 email: true,
                 role: true,
             },

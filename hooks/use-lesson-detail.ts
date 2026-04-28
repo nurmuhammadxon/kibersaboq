@@ -25,6 +25,7 @@ export interface Lesson {
     content: string
     videoUrl?: string
     fileUrl?: string
+    minDuration?: number | null
     quizzes: Quiz[]
 }
 
@@ -35,12 +36,11 @@ export function useLessonDetail(lessonId: string) {
     const [saving, setSaving] = useState(false)
     const [saved, setSaved] = useState(false)
 
-    // Content
     const [content, setContent] = useState("")
     const [videoUrl, setVideoUrl] = useState("")
     const [fileUrl, setFileUrl] = useState("")
+    const [minDuration, setMinDuration] = useState<number | null>(null)
 
-    // Quiz
     const [quizModal, setQuizModal] = useState(false)
     const [questionText, setQuestionText] = useState("")
     const [options, setOptions] = useState(["", "", "", ""])
@@ -60,6 +60,7 @@ export function useLessonDetail(lessonId: string) {
             setContent(data.content || "")
             setVideoUrl(data.videoUrl || "")
             setFileUrl(data.fileUrl || "")
+            setMinDuration(data.minDuration ?? null)
         } catch {
             setError("Dars yuklanmadi")
         } finally {
@@ -75,7 +76,10 @@ export function useLessonDetail(lessonId: string) {
             await fetch(`/api/lessons/${lessonId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ content, videoUrl, fileUrl })
+                body: JSON.stringify({
+                    content, videoUrl, fileUrl,
+                    minDuration: minDuration !== null ? minDuration * 60 : null
+                })
             })
             setSaved(true)
             setTimeout(() => setSaved(false), 2000)
@@ -92,7 +96,6 @@ export function useLessonDetail(lessonId: string) {
         setQuizSaving(true)
         setQuizError("")
         try {
-            // Quiz yo'q bo'lsa yaratamiz
             let quizId = lesson?.quizzes[0]?.id
             if (!quizId) {
                 const quizRes = await fetch(`/api/lessons/${lessonId}/quiz`, {
@@ -109,10 +112,7 @@ export function useLessonDetail(lessonId: string) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     text: questionText,
-                    options: options.map((text, i) => ({
-                        text,
-                        isCorrect: i === correctIndex
-                    }))
+                    options: options.map((text, i) => ({ text, isCorrect: i === correctIndex }))
                 })
             })
 
@@ -138,6 +138,7 @@ export function useLessonDetail(lessonId: string) {
         content, setContent,
         videoUrl, setVideoUrl,
         fileUrl, setFileUrl,
+        minDuration, setMinDuration,
         saving, saved, handleSaveContent,
         quizModal, setQuizModal,
         questionText, setQuestionText,

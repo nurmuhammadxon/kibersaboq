@@ -5,13 +5,10 @@ import { prisma } from "@/lib/prisma"
 export async function GET() {
     try {
         const session = await auth()
-        console.log("Session:", session)
 
         if (!session) {
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
         }
-
-        const orgId = (session.user as any).organizationId
 
         const [
             totalUsers,
@@ -23,49 +20,41 @@ export async function GET() {
             topUsers,
         ] = await Promise.all([
             prisma.user.count({
-                where: { organizationId: orgId, role: "USER" },
+                where: { role: "USER" },
             }),
 
-            prisma.course.count({
-                where: { organizationId: orgId }
-            }),
+            prisma.course.count(),
 
-            prisma.enrollment.count({
-                where: { user: { organizationId: orgId } },
-            }),
+            prisma.enrollment.count(),
 
             prisma.enrollment.count({
-                where: {
-                    user: { organizationId: orgId },
-                    completedAt: { not: null },
-                },
+                where: { completedAt: { not: null } },
             }),
 
             prisma.quizResult.findMany({
-                where: {
-                    user: { organizationId: orgId },
-                },
                 select: { score: true },
             }),
 
             prisma.user.findMany({
-                where: { organizationId: orgId, role: "USER" },
+                where: { role: "USER" },
                 orderBy: { createdAt: "desc" },
                 take: 5,
                 select: {
                     id: true,
-                    name: true,
+                    firstName: true,
+                    lastName: true,
                     email: true,
                     createdAt: true,
                 },
             }),
 
             prisma.user.findMany({
-                where: { organizationId: orgId, role: "USER" },
+                where: { role: "USER" },
                 take: 5,
                 select: {
                     id: true,
-                    name: true,
+                    firstName: true,
+                    lastName: true,
                     email: true,
                     results: {
                         select: { score: true },
@@ -88,7 +77,7 @@ export async function GET() {
         const topUsersFormatted = topUsers
             .map((u) => ({
                 id: u.id,
-                name: u.name,
+                name: `${u.firstName} ${u.lastName}`,
                 email: u.email,
                 avgScore:
                     u.results.length > 0
@@ -99,6 +88,11 @@ export async function GET() {
                 completedCourses: u.enrollments.length,
             }))
             .sort((a, b) => b.avgScore - a.avgScore)
+
+        const recentUsersFormatted = recentUsers.map((u) => ({
+            ...u,
+            name: `${u.firstName} ${u.lastName}`,
+        }))
 
         return NextResponse.json({
             stats: {
@@ -112,7 +106,7 @@ export async function GET() {
                         ? Math.round((completedEnrollments / totalEnrollments) * 100)
                         : 0,
             },
-            recentUsers,
+            recentUsers: recentUsersFormatted,
             topUsers: topUsersFormatted,
         })
     } catch (error) {

@@ -18,13 +18,13 @@ export default function RegisterPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Ism Familya</Label>
+            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Ism</Label>
             <div className="relative group">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <Input
-                value={form.name}
-                onChange={(e) => updateForm("name", e.target.value)}
-                placeholder="Ali Valiyev"
+                value={form.firstName}
+                onChange={(e) => updateForm("firstName", e.target.value)}
+                placeholder="Ali"
                 className="pl-10"
                 required
               />
@@ -32,17 +32,31 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Tashkilot</Label>
+            <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Familya</Label>
             <div className="relative group">
-              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <Input
-                value={form.organizationName}
-                onChange={(e) => updateForm("organizationName", e.target.value)}
-                placeholder="Kiber Saboq"
+                value={form.lastName}
+                onChange={(e) => updateForm("lastName", e.target.value)}
+                placeholder="Valiyev"
                 className="pl-10"
                 required
               />
             </div>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-muted-foreground text-[10px] sm:text-xs uppercase font-bold ml-1">Tashkilot</Label>
+          <div className="relative group">
+            <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+            <Input
+              value={form.organizationName}
+              onChange={(e) => updateForm("organizationName", e.target.value)}
+              placeholder="Kiber Saboq"
+              className="pl-10"
+              required
+            />
           </div>
         </div>
 
@@ -54,7 +68,7 @@ export default function RegisterPage() {
               type="email"
               value={form.email}
               onChange={(e) => updateForm("email", e.target.value)}
-              placeholder="kibersaboq@gmail.com"
+              placeholder="kibersaboq@example.com"
               className="pl-10"
               required
             />

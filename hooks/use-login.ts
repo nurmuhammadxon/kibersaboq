@@ -23,10 +23,22 @@ export const useLogin = () => {
       })
 
       if (res?.error) {
-        setError("Email yoki parol noto'g'ri")
+        const checkRes = await fetch("/api/auth/check-blocked", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        })
+        const check = await checkRes.json()
+
+        if (check.isBlocked) {
+          setError("Hisobingiz bloklangan. Admin bilan bog'laning.")
+        } else if (check.tooManyAttempts) {
+          setError("Juda ko'p urinish. 15 daqiqadan so'ng qayta urinib ko'ring.")
+        } else {
+          setError("Email yoki parol noto'g'ri")
+        }
         setLoading(false)
       } else {
-        // Sessiyani tekshirib, rolega qarab yo'naltirish
         const sessionRes = await fetch("/api/auth/session")
         const session = await sessionRes.json()
         const role = session?.user?.role

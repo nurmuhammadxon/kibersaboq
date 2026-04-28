@@ -11,17 +11,16 @@ export async function GET() {
     }
 
     const users = await prisma.user.findMany({
-      where: {
-        organizationId: (session.user as any).organizationId,
-        role: "USER",
-      },
+      where: { role: "USER" },
       select: {
         id: true,
-        name: true,
+        firstName: true,
+        lastName: true,
         email: true,
         role: true,
         organizationName: true,
         createdAt: true,
+        isBlocked: true,
       },
     })
 
@@ -39,9 +38,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
     }
 
-    const { name, email, password, role, organizationName } = await req.json()
+    const { firstName, lastName, email, password, role, organizationName } = await req.json()
 
-    if (!name || !email || !password || !organizationName) {
+    if (!firstName || !lastName || !email || !password || !organizationName) {
       return NextResponse.json({ error: "Barcha maydonlarni to'ldiring" }, { status: 400 })
     }
 
@@ -54,18 +53,17 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         hashedPassword,
         role: role || "USER",
         organizationName,
-        organization: {
-          connect: { id: (session.user as any).organizationId },
-        },
       },
       select: {
         id: true,
-        name: true,
+        firstName: true,
+        lastName: true,
         email: true,
         role: true,
         organizationName: true,

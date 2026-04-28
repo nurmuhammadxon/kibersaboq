@@ -4,22 +4,33 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Save, Check } from "lucide-react"
 
+function getYoutubeEmbedUrl(url: string): string {
+    const watchMatch = url.match(/[?&]v=([^&]+)/)
+    if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
+    const shortMatch = url.match(/youtu\.be\/([^?&]+)/)
+    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
+    if (url.includes("/embed/")) return url
+    return url
+}
+
 interface Props {
     type: string
     content: string
     videoUrl: string
     fileUrl: string
+    minDuration: number | null
     onContentChange: (v: string) => void
     onVideoUrlChange: (v: string) => void
     onFileUrlChange: (v: string) => void
+    onMinDurationChange: (v: number | null) => void
     onSave: () => void
     saving: boolean
     saved: boolean
 }
 
 export function LessonContent({
-    type, content, videoUrl, fileUrl,
-    onContentChange, onVideoUrlChange, onFileUrlChange,
+    type, content, videoUrl, fileUrl, minDuration,
+    onContentChange, onVideoUrlChange, onFileUrlChange, onMinDurationChange,
     onSave, saving, saved
 }: Props) {
     return (
@@ -34,7 +45,28 @@ export function LessonContent({
                 </Button>
             </div>
 
-            {/* Text */}
+            {/* ─── Minimum vaqt ─────────────────────────────────── */}
+            <div className="space-y-1.5">
+                <Label className="text-foreground">
+                    Minimum o'qish vaqti (daqiqa)
+                </Label>
+                <Input
+                    type="number"
+                    min={0}
+                    placeholder="Masalan: 5 (5 daqiqa)"
+                    value={minDuration ?? ""}
+                    onChange={e => {
+                        const v = e.target.value
+                        onMinDurationChange(v === "" ? null : Number(v))
+                    }}
+                    className="bg-input border-border text-foreground placeholder:text-muted-foreground w-60"
+                />
+                <p className="text-xs text-muted-foreground">
+                    Foydalanuvchi bu vaqt o'tmasdan darsni yakunlay olmaydi. Bo'sh qoldiring — cheklov yo'q.
+                </p>
+            </div>
+
+            {/* ─── TEXT ─────────────────────────────────────────── */}
             {type === "TEXT" && (
                 <div className="space-y-1.5">
                     <Label className="text-foreground">Matn</Label>
@@ -48,13 +80,13 @@ export function LessonContent({
                 </div>
             )}
 
-            {/* Video */}
+            {/* ─── VIDEO ────────────────────────────────────────── */}
             {type === "VIDEO" && (
                 <div className="space-y-4">
                     <div className="space-y-1.5">
                         <Label className="text-foreground">Video URL</Label>
                         <Input
-                            placeholder="https://youtube.com/..."
+                            placeholder="https://youtube.com/watch?v=..."
                             value={videoUrl}
                             onChange={e => onVideoUrlChange(e.target.value)}
                             className="bg-input border-border text-foreground placeholder:text-muted-foreground"
@@ -63,9 +95,10 @@ export function LessonContent({
                     {videoUrl && (
                         <div className="aspect-video rounded-xl overflow-hidden bg-secondary">
                             <iframe
-                                src={videoUrl.replace("watch?v=", "embed/")}
+                                src={getYoutubeEmbedUrl(videoUrl)}
                                 className="w-full h-full"
                                 allowFullScreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             />
                         </div>
                     )}
@@ -82,7 +115,7 @@ export function LessonContent({
                 </div>
             )}
 
-            {/* File */}
+            {/* ─── FILE ─────────────────────────────────────────── */}
             {type === "FILE" && (
                 <div className="space-y-4">
                     <div className="space-y-1.5">

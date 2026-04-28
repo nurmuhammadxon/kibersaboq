@@ -2,18 +2,6 @@ import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
-function startOfDay(d: Date) {
-    const x = new Date(d)
-    x.setHours(0, 0, 0, 0)
-    return x
-}
-
-function endOfDay(d: Date) {
-    const x = new Date(d)
-    x.setHours(23, 59, 59, 999)
-    return x
-}
-
 export async function GET(req: Request) {
     try {
         const session = await auth()
@@ -21,17 +9,18 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
         }
 
-        const orgId = (session.user as any).organizationId as string
         const { searchParams } = new URL(req.url)
-
         const fromParam = searchParams.get("from")
         const toParam = searchParams.get("to")
         const courseId = searchParams.get("courseId") || undefined
 
-        const to = toParam ? endOfDay(new Date(toParam)) : endOfDay(new Date())
+        const to = toParam
+            ? new Date(toParam + "T23:59:59.999Z")
+            : new Date(new Date().toISOString().slice(0, 10) + "T23:59:59.999Z")
+
         const from = fromParam
-            ? startOfDay(new Date(fromParam))
-            : startOfDay(new Date(to.getTime() - 29 * 24 * 60 * 60 * 1000))
+            ? new Date(fromParam + "T00:00:00.000Z")
+            : new Date(new Date(to.getTime() - 29 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10) + "T00:00:00.000Z")
 
         if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) {
             return NextResponse.json({ error: "Noto'g'ri sana formati" }, { status: 400 })
@@ -44,43 +33,24 @@ export async function GET(req: Request) {
             )
         }
 
-        if (courseId) {
-            const course = await prisma.course.findFirst({
-                where: { id: courseId, organizationId: orgId },
-            })
-            if (!course) {
-                return NextResponse.json({ error: "Kurs topilmadi" }, { status: 404 })
-            }
-        }
-
         const coursesList = await prisma.course.findMany({
-            where: { organizationId: orgId },
-            select: { id: true, title: true },
+            select: { id: true, title: true, price: true },
             orderBy: { title: "asc" },
         })
 
         const enrollmentWhereBase = {
-            organizationId: orgId,
             createdAt: { gte: from, lte: to },
             ...(courseId ? { courseId } : {}),
         }
 
         const completedWhereBase = {
-            organizationId: orgId,
             completedAt: { not: null, gte: from, lte: to },
             ...(courseId ? { courseId } : {}),
         }
 
         const quizResultWhereBase = {
             createdAt: { gte: from, lte: to },
-            user: { organizationId: orgId },
-            ...(courseId
-                ? {
-                      quiz: {
-                          lesson: { module: { courseId } },
-                      },
-                  }
-                : {}),
+            ...(courseId ? { quiz: { lesson: { module: { courseId } } } } : {}),
         }
 
         const [
@@ -93,7 +63,6 @@ export async function GET(req: Request) {
         ] = await Promise.all([
             prisma.user.count({
                 where: {
-                    organizationId: orgId,
                     role: "USER",
                     createdAt: { gte: from, lte: to },
                 },
@@ -103,7 +72,6 @@ export async function GET(req: Request) {
             prisma.certificate.count({
                 where: {
                     issuedAt: { gte: from, lte: to },
-                    user: { organizationId: orgId },
                     ...(courseId ? { courseId } : {}),
                 },
             }),
@@ -117,9 +85,9 @@ export async function GET(req: Request) {
         const avgQuizScore =
             quizResultsForAvg.length > 0
                 ? Math.round(
-                      quizResultsForAvg.reduce((s, r) => s + r.score, 0) /
-                          quizResultsForAvg.length
-                  )
+                    quizResultsForAvg.reduce((s, r) => s + r.score, 0) /
+                    quizResultsForAvg.length
+                )
                 : 0
 
         const coursesForBreakdown = courseId
@@ -131,14 +99,12 @@ export async function GET(req: Request) {
                 const [enrollments, completed, certs, scores] = await Promise.all([
                     prisma.enrollment.count({
                         where: {
-                            organizationId: orgId,
                             courseId: c.id,
                             createdAt: { gte: from, lte: to },
                         },
                     }),
                     prisma.enrollment.count({
                         where: {
-                            organizationId: orgId,
                             courseId: c.id,
                             completedAt: { not: null, gte: from, lte: to },
                         },
@@ -147,13 +113,11 @@ export async function GET(req: Request) {
                         where: {
                             courseId: c.id,
                             issuedAt: { gte: from, lte: to },
-                            user: { organizationId: orgId },
                         },
                     }),
                     prisma.quizResult.findMany({
                         where: {
                             createdAt: { gte: from, lte: to },
-                            user: { organizationId: orgId },
                             quiz: { lesson: { module: { courseId: c.id } } },
                         },
                         select: { score: true },
@@ -163,13 +127,14 @@ export async function GET(req: Request) {
                 const avgScore =
                     scores.length > 0
                         ? Math.round(
-                              scores.reduce((s, r) => s + r.score, 0) / scores.length
-                          )
+                            scores.reduce((s, r) => s + r.score, 0) / scores.length
+                        )
                         : null
 
                 return {
                     id: c.id,
                     title: c.title,
+                    price: c.price ? Number(c.price) : null,
                     enrollments,
                     completed,
                     certificates: certs,

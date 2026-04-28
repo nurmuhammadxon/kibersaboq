@@ -34,3 +34,21 @@ export const STATS_CONFIG = [
     { key: "completionRate", label: "Yakunlash darajasi", icon: TrendingUp, color: "text-teal-500", bg: "bg-teal-500/10", suffix: "%" },
     { key: "totalEnrollments", label: "Jami yozilishlar", icon: Clock, color: "text-pink-500", bg: "bg-pink-500/10" },
 ]
+
+export const features = [
+    {
+        icon: BookOpen,
+        title: "Interaktiv kurslar",
+        description: "Video, matn va testlar orqali qulay o'qish imkoniyati",
+    },
+    {
+        icon: Award,
+        title: "Sertifikatlar",
+        description: "Kursni yakunlagan xodimlar rasmiy sertifikat oladi",
+    },
+    {
+        icon: Users,
+        title: "Tashkilot boshqaruvi",
+        description: "Xodimlar progressini kuzating va hisobotlar oling",
+    },
+]

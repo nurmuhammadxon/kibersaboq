@@ -6,7 +6,8 @@ export interface Certificate {
     issuedAt: string
     user: {
         id: string
-        name: string
+        firstName: string
+        lastName: string
         email: string
         organizationName: string
     }

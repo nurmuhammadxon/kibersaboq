@@ -2,6 +2,10 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import { headers } from "next/headers"
+
+const MAX_ATTEMPTS = 5
+const BLOCK_DURATION = 15 * 60 * 1000
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -18,28 +22,62 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) return null
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
+        const email = credentials.email as string
+        const ip = (await headers()).get("x-forwarded-for") ?? "unknown"
+
+        const since = new Date(Date.now() - BLOCK_DURATION)
+
+        const attempts = await prisma.loginAttempt.count({
+          where: {
+            email,
+            createdAt: { gte: since },
+          },
         })
 
-        if (!user) return null
+        if (attempts >= MAX_ATTEMPTS) {
+          throw new Error("Juda ko'p urinish. 15 daqiqadan so'ng qayta urinib ko'ring.")
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email },
+        })
+
+        if (!user) {
+          await prisma.loginAttempt.create({
+            data: { email, ip },
+          })
+          return null
+        }
+
+        if (user.isBlocked) {
+          throw new Error("Hisobingiz bloklangan. Admin bilan bog'laning.")
+        }
 
         const isValid = await bcrypt.compare(
           credentials.password as string,
           user.hashedPassword
         )
 
-        if (!isValid) return null
+        if (!isValid) {
+          await prisma.loginAttempt.create({
+            data: { email, ip },
+          })
+          return null
+        }
+
+        await prisma.loginAttempt.deleteMany({
+          where: { email },
+        })
 
         return {
           id: user.id,
-          name: user.name,
+          name: `${user.firstName} ${user.lastName}`,
           email: user.email,
           role: user.role,
-          organizationId: user.organizationId,
+          organizationName: user.organizationName,
         }
       },
     }),
@@ -47,15 +85,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
-        token.organizationId = user.organizationId
+        token.role = (user as any).role
+        token.organizationName = (user as any).organizationName
       }
       return token
     },
     async session({ session, token }) {
       session.user.id = token.sub!
-      session.user.role = token.role
-      session.user.organizationId = token.organizationId
+        ; (session.user as any).role = token.role
+        ; (session.user as any).organizationName = token.organizationName
       return session
     },
   },
