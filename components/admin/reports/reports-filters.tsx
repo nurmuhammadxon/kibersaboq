@@ -46,7 +46,7 @@ export function ReportsFilters({
 }: ReportsFiltersProps) {
     return (
         <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:flex-wrap sm:items-end">
-            <div className="grid gap-2 sm:flex-1 sm:min-w-[140px]">
+            <div className="grid gap-2 sm:flex-1 sm:min-w-35">
                 <Label htmlFor="report-from">Boshlanish</Label>
                 <input
                     id="report-from"
@@ -56,7 +56,7 @@ export function ReportsFilters({
                     className={dateInputClassName}
                 />
             </div>
-            <div className="grid gap-2 sm:flex-1 sm:min-w-[140px]">
+            <div className="grid gap-2 sm:flex-1 sm:min-w-35">
                 <Label htmlFor="report-to">Tugash</Label>
                 <input
                     id="report-to"
@@ -66,7 +66,7 @@ export function ReportsFilters({
                     className={dateInputClassName}
                 />
             </div>
-            <div className="grid gap-2 sm:flex-[2] sm:min-w-[200px]">
+            <div className="grid gap-2 sm:flex-2 sm:min-w-50">
                 <Label>Kurs</Label>
                 <Select
                     value={courseId || "__all__"}

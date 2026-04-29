@@ -26,7 +26,7 @@ export function ReportsCourseTable({ rows }: ReportsCourseTableProps) {
                     bo'yicha ma'lumot yo'q.
                 </p>
             ) : (
-                <Table className="min-w-[760px]">
+                <Table className="min-w-190">
                     <TableHeader>
                         <TableRow>
                             <TableHead>Kurs</TableHead>

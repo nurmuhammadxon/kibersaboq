@@ -51,7 +51,7 @@ export function RichEditor({ content, onChange }: Props) {
         },
         editorProps: {
             attributes: {
-                class: "min-h-[300px] p-4 focus:outline-none prose prose-sm dark:prose-invert max-w-none text-foreground"
+                class: "min-h-75 p-4 focus:outline-none prose prose-sm dark:prose-invert max-w-none text-foreground"
             }
         }
     })

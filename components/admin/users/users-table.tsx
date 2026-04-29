@@ -18,7 +18,7 @@ interface Props {
 export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Props) {
     return (
         <div className="border border-border rounded-2xl overflow-hidden">
-            <Table className="min-w-[720px]">
+            <Table className="min-w-180">
                 <TableHeader>
                     <TableRow>
                         <TableHead className="text-secondary-foreground">Ism</TableHead>
