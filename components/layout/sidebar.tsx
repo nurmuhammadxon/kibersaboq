@@ -45,7 +45,7 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
                                     : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                                 }`}
                         >
-                            <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-primary-foreground" : "group-hover:scale-110 transition-transform"}`} />
+                            <Icon className={`w-5 h-5 shrink-0 ${isActive ? "text-primary-foreground" : "group-hover:scale-110 transition-transform"}`} />
                             <span className="text-sm font-medium">{label}</span>
                         </Link>
                     )
@@ -56,7 +56,7 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
                     onClick={() => signOut({ callbackUrl: "/login" })}
                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all w-full group cursor-pointer"
                 >
-                    <LogOut className="w-5 h-5 flex-shrink-0 group-hover:-translate-x-1 transition-transform" />
+                    <LogOut className="w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform" />
                     <span className="text-sm font-medium">Chiqish</span>
                 </button>
             </div>

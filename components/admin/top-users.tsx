@@ -28,7 +28,7 @@ export function TopUsers({ users }: { users: TopUser[] }) {
             {/* Header */}
             <CardHeader className="pb-3 sm:pb-4 px-3 sm:px-6 pt-3 sm:pt-6">
                 <CardTitle className="text-foreground text-base sm:text-lg flex items-center gap-2">
-                    <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center shrink-0">
                         <Trophy className="w-4 h-4 text-amber-500" />
                     </div>
                     Top foydalanuvchilar
@@ -53,7 +53,7 @@ export function TopUsers({ users }: { users: TopUser[] }) {
                     >
                         {/* Rank Badge */}
                         <div
-                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs sm:text-sm font-black flex-shrink-0 transition-transform ${getMedalColor(index)}`}
+                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-xs sm:text-sm font-black shrink-0 transition-transform ${getMedalColor(index)}`}
                         >
                             {index < 3 ? (
                                 <span>
@@ -65,7 +65,7 @@ export function TopUsers({ users }: { users: TopUser[] }) {
                         </div>
 
                         {/* Avatar */}
-                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs font-black flex-shrink-0 shadow-lg shadow-blue-900/20">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-linear-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs font-black shrink-0 shadow-lg shadow-blue-900/20">
                             {user.name.substring(0, 2).toUpperCase()}
                         </div>
 
@@ -80,7 +80,7 @@ export function TopUsers({ users }: { users: TopUser[] }) {
                         </div>
 
                         {/* Score & Courses */}
-                        <div className="text-right flex-shrink-0 flex flex-col items-end gap-0.5">
+                        <div className="text-right shrink-0 flex flex-col items-end gap-0.5">
                             <p className="text-amber-400 text-xs sm:text-sm font-bold">
                                 {user.avgScore}%
                             </p>

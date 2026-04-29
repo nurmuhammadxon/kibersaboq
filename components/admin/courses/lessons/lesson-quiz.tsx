@@ -36,7 +36,7 @@ export function LessonQuiz({ quizzes, onAddQuestion, onDeleteQuestion }: Props) 
                                 </p>
                                 <Button
                                     size="icon" variant="ghost"
-                                    className="text-destructive hover:bg-destructive/10 w-7 h-7 flex-shrink-0"
+                                    className="text-destructive hover:bg-destructive/10 w-7 h-7 shrink-0"
                                     onClick={() => onDeleteQuestion(quiz.id, question.id)}
                                 >
                                     <Trash2 className="w-3.5 h-3.5" />
@@ -48,7 +48,7 @@ export function LessonQuiz({ quizzes, onAddQuestion, onDeleteQuestion }: Props) 
                                         ? "bg-emerald-500/10 text-emerald-400"
                                         : "text-muted-foreground"
                                         }`}>
-                                        {opt.isCorrect && <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" />}
+                                        {opt.isCorrect && <CheckCircle className="w-3.5 h-3.5 shrink-0" />}
                                         {opt.text}
                                     </div>
                                 ))}

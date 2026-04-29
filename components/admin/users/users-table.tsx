@@ -43,7 +43,7 @@ export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Prop
                             <TableRow key={user.id}>
                                 <TableCell>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-[10px] font-black flex-shrink-0">
+                                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white text-[10px] font-black shrink-0">
                                             {initials}
                                         </div>
                                         <span className="text-sm font-medium text-foreground">{fullName}</span>

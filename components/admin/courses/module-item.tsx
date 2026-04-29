@@ -27,8 +27,8 @@ export function ModuleItem({
             >
                 <span className="text-muted-foreground/50 text-xs font-mono w-5">{index + 1}</span>
                 {expanded
-                    ? <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                    : <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    ? <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                    : <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
                 }
                 <span className="text-foreground font-medium text-sm flex-1">{module.title}</span>
                 <span className="text-muted-foreground/50 text-xs">{module.lessons.length} dars</span>

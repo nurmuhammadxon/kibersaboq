@@ -47,7 +47,7 @@ export function AddQuestionModal({
                             <div key={i} className="flex items-center gap-2">
                                 <button
                                     onClick={() => onCorrectChange(i)}
-                                    className={`w-5 h-5 rounded-full border-2 flex-shrink-0 transition-colors ${correctIndex === i
+                                    className={`w-5 h-5 rounded-full border-2 shrink-0 transition-colors ${correctIndex === i
                                         ? "border-primary bg-primary"
                                         : "border-border"
                                         }`}

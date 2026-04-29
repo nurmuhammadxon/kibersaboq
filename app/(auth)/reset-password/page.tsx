@@ -60,7 +60,7 @@ function ResetPasswordForm() {
 
                 {!token && (
                     <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                        <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                         <span>Token topilmadi. Havolani emaildan qayta tekshiring.</span>
                     </div>
                 )}

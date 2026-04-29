@@ -27,14 +27,14 @@ export function RecentUsers({ users }: { users: RecentUser[] }) {
                     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
                     return (
                         <div key={user.id} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-xl">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center text-white text-xs font-black flex-shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-linear-to-{dir} from-violet-600 to-purple-600 flex items-center justify-center text-white text-xs font-black shrink-0">
                                 {initials}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <p className="text-foreground text-sm font-medium truncate">{fullName}</p>
                                 <p className="text-muted-foreground text-xs truncate">{user.email}</p>
                             </div>
-                            <p className="text-muted-foreground text-xs flex-shrink-0">
+                            <p className="text-muted-foreground text-xs shrink-0">
                                 {new Date(user.createdAt).toLocaleDateString("uz-UZ")}
                             </p>
                         </div>

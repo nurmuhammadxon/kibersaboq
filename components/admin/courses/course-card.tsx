@@ -47,7 +47,7 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                     className="w-full h-36 object-cover"
                 />
             ) : (
-                <div className="w-full h-36 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 flex items-center justify-center">
+                <div className="w-full h-36 bg-linear-to-{dir} from-blue-600/20 to-indigo-600/20 flex items-center justify-center">
                     <BookOpen className="w-10 h-10 text-primary/40" />
                 </div>
             )}
@@ -56,7 +56,7 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                 {/* Title & Badge */}
                 <div className="flex items-start justify-between gap-2">
                     <h3 className="text-foreground font-semibold text-sm leading-snug">{course.title}</h3>
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${levelColor[course.level]}`}>
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${levelColor[course.level]}`}>
                         {levelLabel[course.level]}
                     </span>
                 </div>
