@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Save, Check } from "lucide-react"
+import { RichEditor } from "./rich-editor"
 
 function getYoutubeEmbedUrl(url: string): string {
     const watchMatch = url.match(/[?&]v=([^&]+)/)
@@ -17,11 +17,9 @@ interface Props {
     type: string
     content: string
     videoUrl: string
-    fileUrl: string
     minDuration: number | null
     onContentChange: (v: string) => void
     onVideoUrlChange: (v: string) => void
-    onFileUrlChange: (v: string) => void
     onMinDurationChange: (v: number | null) => void
     onSave: () => void
     saving: boolean
@@ -29,8 +27,8 @@ interface Props {
 }
 
 export function LessonContent({
-    type, content, videoUrl, fileUrl, minDuration,
-    onContentChange, onVideoUrlChange, onFileUrlChange, onMinDurationChange,
+    type, content, videoUrl, minDuration,
+    onContentChange, onVideoUrlChange, onMinDurationChange,
     onSave, saving, saved
 }: Props) {
     return (
@@ -45,55 +43,37 @@ export function LessonContent({
                 </Button>
             </div>
 
-            {/* ─── Minimum vaqt ─────────────────────────────────── */}
+            {/* Minimum vaqt */}
             <div className="space-y-1.5">
-                <Label className="text-foreground">
-                    Minimum o'qish vaqti (daqiqa)
-                </Label>
+                <Label className="text-foreground">Minimum o'qish vaqti (daqiqa)</Label>
                 <Input
                     type="number"
                     min={0}
-                    placeholder="Masalan: 5 (5 daqiqa)"
+                    placeholder="Masalan: 5"
                     value={minDuration ?? ""}
                     onChange={e => {
                         const v = e.target.value
                         onMinDurationChange(v === "" ? null : Number(v))
                     }}
-                    className="bg-input border-border text-foreground placeholder:text-muted-foreground w-60"
+                    className="bg-input border-border text-foreground placeholder:text-muted-foreground w-48"
                 />
                 <p className="text-xs text-muted-foreground">
-                    Foydalanuvchi bu vaqt o'tmasdan darsni yakunlay olmaydi. Bo'sh qoldiring — cheklov yo'q.
+                    Bo'sh qoldiring — cheklov yo'q.
                 </p>
             </div>
 
-            {/* ─── TEXT ─────────────────────────────────────────── */}
-            {type === "TEXT" && (
-                <div className="space-y-1.5">
-                    <Label className="text-foreground">Matn</Label>
-                    <Textarea
-                        placeholder="Dars matni..."
-                        value={content}
-                        onChange={e => onContentChange(e.target.value)}
-                        rows={12}
-                        className="font-mono text-sm resize-none bg-input border-border text-foreground placeholder:text-muted-foreground"
-                    />
-                </div>
-            )}
-
-            {/* ─── VIDEO ────────────────────────────────────────── */}
+            {/* Video URL — faqat VIDEO turida */}
             {type === "VIDEO" && (
-                <div className="space-y-4">
-                    <div className="space-y-1.5">
-                        <Label className="text-foreground">Video URL</Label>
-                        <Input
-                            placeholder="https://youtube.com/watch?v=..."
-                            value={videoUrl}
-                            onChange={e => onVideoUrlChange(e.target.value)}
-                            className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                        />
-                    </div>
+                <div className="space-y-1.5">
+                    <Label className="text-foreground">Video URL</Label>
+                    <Input
+                        placeholder="https://youtube.com/watch?v=..."
+                        value={videoUrl}
+                        onChange={e => onVideoUrlChange(e.target.value)}
+                        className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                    />
                     {videoUrl && (
-                        <div className="aspect-video rounded-xl overflow-hidden bg-secondary">
+                        <div className="aspect-video rounded-xl overflow-hidden bg-secondary mt-2">
                             <iframe
                                 src={getYoutubeEmbedUrl(videoUrl)}
                                 className="w-full h-full"
@@ -102,43 +82,16 @@ export function LessonContent({
                             />
                         </div>
                     )}
-                    <div className="space-y-1.5">
-                        <Label className="text-foreground">Qo'shimcha matn</Label>
-                        <Textarea
-                            placeholder="Video haqida qo'shimcha ma'lumot..."
-                            value={content}
-                            onChange={e => onContentChange(e.target.value)}
-                            rows={4}
-                            className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                        />
-                    </div>
                 </div>
             )}
 
-            {/* ─── FILE ─────────────────────────────────────────── */}
-            {type === "FILE" && (
-                <div className="space-y-4">
-                    <div className="space-y-1.5">
-                        <Label className="text-foreground">Fayl URL</Label>
-                        <Input
-                            placeholder="https://..."
-                            value={fileUrl}
-                            onChange={e => onFileUrlChange(e.target.value)}
-                            className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                        />
-                    </div>
-                    <div className="space-y-1.5">
-                        <Label className="text-foreground">Tavsif</Label>
-                        <Textarea
-                            placeholder="Fayl haqida qisqacha..."
-                            value={content}
-                            onChange={e => onContentChange(e.target.value)}
-                            rows={4}
-                            className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                        />
-                    </div>
-                </div>
-            )}
+            {/* Rich text editor — har ikki turda ham */}
+            <div className="space-y-1.5">
+                <Label className="text-foreground">
+                    {type === "VIDEO" ? "Qo'shimcha matn" : "Matn"}
+                </Label>
+                <RichEditor content={content} onChange={onContentChange} />
+            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { FileText, Video, File } from "lucide-react"
+import { FileText, Video } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label"
 const LESSON_TYPES = [
     { value: "TEXT", label: "Matn", icon: <FileText className="w-4 h-4" /> },
     { value: "VIDEO", label: "Video", icon: <Video className="w-4 h-4" /> },
-    { value: "FILE", label: "Fayl", icon: <File className="w-4 h-4" /> },
 ]
 
 interface Props {
@@ -43,7 +42,7 @@ export function AddLessonModal({ open, onClose, title, onTitleChange, type, onTy
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-foreground">Tur</Label>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                             {LESSON_TYPES.map(t => (
                                 <button
                                     key={t.value}

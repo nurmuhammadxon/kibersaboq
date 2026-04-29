@@ -18,7 +18,6 @@ export default function LessonDetailPage() {
         lesson, loading, error, fetchLesson,
         content, setContent,
         videoUrl, setVideoUrl,
-        fileUrl, setFileUrl,
         minDuration, setMinDuration,
         saving, saved, handleSaveContent,
         quizModal, setQuizModal,
@@ -52,11 +51,9 @@ export default function LessonDetailPage() {
                 type={lesson.type}
                 content={content}
                 videoUrl={videoUrl}
-                fileUrl={fileUrl}
                 minDuration={minDuration}
                 onContentChange={setContent}
                 onVideoUrlChange={setVideoUrl}
-                onFileUrlChange={setFileUrl}
                 onMinDurationChange={setMinDuration}
                 onSave={handleSaveContent}
                 saving={saving}

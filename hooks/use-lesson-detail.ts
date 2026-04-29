@@ -1,151 +1,151 @@
-"use client"
-import { useState, useEffect, useCallback } from "react"
+    "use client"
+    import { useState, useEffect, useCallback } from "react"
 
-export interface Option {
-    id: string
-    text: string
-    isCorrect: boolean
-}
-
-export interface Question {
-    id: string
-    text: string
-    options: Option[]
-}
-
-export interface Quiz {
-    id: string
-    questions: Question[]
-}
-
-export interface Lesson {
-    id: string
-    title: string
-    type: string
-    content: string
-    videoUrl?: string
-    fileUrl?: string
-    minDuration?: number | null
-    quizzes: Quiz[]
-}
-
-export function useLessonDetail(lessonId: string) {
-    const [lesson, setLesson] = useState<Lesson | null>(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState("")
-    const [saving, setSaving] = useState(false)
-    const [saved, setSaved] = useState(false)
-
-    const [content, setContent] = useState("")
-    const [videoUrl, setVideoUrl] = useState("")
-    const [fileUrl, setFileUrl] = useState("")
-    const [minDuration, setMinDuration] = useState<number | null>(null)
-
-    const [quizModal, setQuizModal] = useState(false)
-    const [questionText, setQuestionText] = useState("")
-    const [options, setOptions] = useState(["", "", "", ""])
-    const [correctIndex, setCorrectIndex] = useState(0)
-    const [quizSaving, setQuizSaving] = useState(false)
-    const [quizError, setQuizError] = useState("")
-    const [deleteQuizId, setDeleteQuizId] = useState<string | null>(null)
-
-    const fetchLesson = useCallback(async () => {
-        setLoading(true)
-        setError("")
-        try {
-            const res = await fetch(`/api/lessons/${lessonId}`)
-            if (!res.ok) throw new Error()
-            const data = await res.json()
-            setLesson(data)
-            setContent(data.content || "")
-            setVideoUrl(data.videoUrl || "")
-            setFileUrl(data.fileUrl || "")
-            setMinDuration(data.minDuration ?? null)
-        } catch {
-            setError("Dars yuklanmadi")
-        } finally {
-            setLoading(false)
-        }
-    }, [lessonId])
-
-    useEffect(() => { fetchLesson() }, [fetchLesson])
-
-    const handleSaveContent = async () => {
-        setSaving(true)
-        try {
-            await fetch(`/api/lessons/${lessonId}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    content, videoUrl, fileUrl,
-                    minDuration: minDuration !== null ? minDuration * 60 : null
-                })
-            })
-            setSaved(true)
-            setTimeout(() => setSaved(false), 2000)
-        } catch {
-            setError("Saqlashda xatolik yuz berdi")
-        } finally {
-            setSaving(false)
-        }
+    export interface Option {
+        id: string
+        text: string
+        isCorrect: boolean
     }
 
-    const handleAddQuiz = async () => {
-        if (!questionText) { setQuizError("Savol matni kiritilishi shart"); return }
-        if (options.some(o => !o)) { setQuizError("Barcha variantlarni to'ldiring"); return }
-        setQuizSaving(true)
-        setQuizError("")
-        try {
-            let quizId = lesson?.quizzes[0]?.id
-            if (!quizId) {
-                const quizRes = await fetch(`/api/lessons/${lessonId}/quiz`, {
+    export interface Question {
+        id: string
+        text: string
+        options: Option[]
+    }
+
+    export interface Quiz {
+        id: string
+        questions: Question[]
+    }
+
+    export interface Lesson {
+        id: string
+        title: string
+        type: string
+        content: string
+        videoUrl?: string
+        fileUrl?: string
+        minDuration?: number | null
+        quizzes: Quiz[]
+    }
+
+    export function useLessonDetail(lessonId: string) {
+        const [lesson, setLesson] = useState<Lesson | null>(null)
+        const [loading, setLoading] = useState(true)
+        const [error, setError] = useState("")
+        const [saving, setSaving] = useState(false)
+        const [saved, setSaved] = useState(false)
+
+        const [content, setContent] = useState("")
+        const [videoUrl, setVideoUrl] = useState("")
+        const [fileUrl, setFileUrl] = useState("")
+        const [minDuration, setMinDuration] = useState<number | null>(null)
+
+        const [quizModal, setQuizModal] = useState(false)
+        const [questionText, setQuestionText] = useState("")
+        const [options, setOptions] = useState(["", "", "", ""])
+        const [correctIndex, setCorrectIndex] = useState(0)
+        const [quizSaving, setQuizSaving] = useState(false)
+        const [quizError, setQuizError] = useState("")
+        const [deleteQuizId, setDeleteQuizId] = useState<string | null>(null)
+
+        const fetchLesson = useCallback(async () => {
+            setLoading(true)
+            setError("")
+            try {
+                const res = await fetch(`/api/lessons/${lessonId}`)
+                if (!res.ok) throw new Error()
+                const data = await res.json()
+                setLesson(data)
+                setContent(data.content || "")
+                setVideoUrl(data.videoUrl || "")
+                setFileUrl(data.fileUrl || "")
+                setMinDuration(data.minDuration ?? null)
+            } catch {
+                setError("Dars yuklanmadi")
+            } finally {
+                setLoading(false)
+            }
+        }, [lessonId])
+
+        useEffect(() => { fetchLesson() }, [fetchLesson])
+
+        const handleSaveContent = async () => {
+            setSaving(true)
+            try {
+                await fetch(`/api/lessons/${lessonId}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content, videoUrl, fileUrl,
+                        minDuration: minDuration !== null ? minDuration * 60 : null
+                    })
+                })
+                setSaved(true)
+                setTimeout(() => setSaved(false), 2000)
+            } catch {
+                setError("Saqlashda xatolik yuz berdi")
+            } finally {
+                setSaving(false)
+            }
+        }
+
+        const handleAddQuiz = async () => {
+            if (!questionText) { setQuizError("Savol matni kiritilishi shart"); return }
+            if (options.some(o => !o)) { setQuizError("Barcha variantlarni to'ldiring"); return }
+            setQuizSaving(true)
+            setQuizError("")
+            try {
+                let quizId = lesson?.quizzes[0]?.id
+                if (!quizId) {
+                    const quizRes = await fetch(`/api/lessons/${lessonId}/quiz`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({})
+                    })
+                    const quiz = await quizRes.json()
+                    quizId = quiz.id
+                }
+
+                await fetch(`/api/quizzes/${quizId}/questions`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({
+                        text: questionText,
+                        options: options.map((text, i) => ({ text, isCorrect: i === correctIndex }))
+                    })
                 })
-                const quiz = await quizRes.json()
-                quizId = quiz.id
+
+                setQuizModal(false)
+                setQuestionText("")
+                setOptions(["", "", "", ""])
+                setCorrectIndex(0)
+                await fetchLesson()
+            } catch {
+                setQuizError("Xatolik yuz berdi")
+            } finally {
+                setQuizSaving(false)
             }
+        }
 
-            await fetch(`/api/quizzes/${quizId}/questions`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    text: questionText,
-                    options: options.map((text, i) => ({ text, isCorrect: i === correctIndex }))
-                })
-            })
-
-            setQuizModal(false)
-            setQuestionText("")
-            setOptions(["", "", "", ""])
-            setCorrectIndex(0)
+        const handleDeleteQuestion = async (quizId: string, questionId: string) => {
+            await fetch(`/api/quizzes/${quizId}/questions/${questionId}`, { method: "DELETE" })
             await fetchLesson()
-        } catch {
-            setQuizError("Xatolik yuz berdi")
-        } finally {
-            setQuizSaving(false)
+        }
+
+        return {
+            lesson, loading, error, fetchLesson,
+            content, setContent,
+            videoUrl, setVideoUrl,
+            fileUrl, setFileUrl,
+            minDuration, setMinDuration,
+            saving, saved, handleSaveContent,
+            quizModal, setQuizModal,
+            questionText, setQuestionText,
+            options, setOptions,
+            correctIndex, setCorrectIndex,
+            quizSaving, quizError,
+            deleteQuizId, setDeleteQuizId,
+            handleAddQuiz, handleDeleteQuestion,
         }
     }
-
-    const handleDeleteQuestion = async (quizId: string, questionId: string) => {
-        await fetch(`/api/quizzes/${quizId}/questions/${questionId}`, { method: "DELETE" })
-        await fetchLesson()
-    }
-
-    return {
-        lesson, loading, error, fetchLesson,
-        content, setContent,
-        videoUrl, setVideoUrl,
-        fileUrl, setFileUrl,
-        minDuration, setMinDuration,
-        saving, saved, handleSaveContent,
-        quizModal, setQuizModal,
-        questionText, setQuestionText,
-        options, setOptions,
-        correctIndex, setCorrectIndex,
-        quizSaving, quizError,
-        deleteQuizId, setDeleteQuizId,
-        handleAddQuiz, handleDeleteQuestion,
-    }
-}
