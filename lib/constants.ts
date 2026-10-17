@@ -22,7 +22,7 @@ export const adminNav = [
 export const directorNav = [
     { href: "/director", label: "Dashboard", icon: LayoutDashboard },
     { href: "/director/employees", label: "Xodimlar", icon: Users },
-    { href: "/director/courses", label: "Kurslar", icon: BookOpen },
+  
     { href: "/director/certificates", label: "Sertifikatlar", icon: Award },
     { href: "/director/reports", label: "Hisobotlar", icon: BarChart3 },
 ]
