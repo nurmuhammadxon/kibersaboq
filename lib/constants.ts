@@ -19,6 +19,14 @@ export const adminNav = [
     { href: "/admin/reports", label: "Hisobotlar", icon: BarChart3 },
 ]
 
+export const directorNav = [
+    { href: "/director", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/director/employees", label: "Xodimlar", icon: Users },
+    { href: "/director/courses", label: "Kurslar", icon: BookOpen },
+    { href: "/director/certificates", label: "Sertifikatlar", icon: Award },
+    { href: "/director/reports", label: "Hisobotlar", icon: BarChart3 },
+]
+
 export const userNav = [
     { href: "/dashboard", label: "Bosh sahifa", icon: LayoutDashboard },
     { href: "/dashboard/courses", label: "Kurslarim", icon: BookOpen },

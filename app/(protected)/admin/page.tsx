@@ -25,7 +25,6 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-background p-4 sm:p-6 space-y-6">
-            {/* Statistika Kartalari */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {STATS_CONFIG.map((config) => (
                     <StatCard
@@ -39,7 +38,6 @@ export default function AdminDashboard() {
                 ))}
             </div>
 
-            {/* Foydalanuvchilar Ro'yxati */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TopUsers users={data.topUsers} />
                 <RecentUsers users={data.recentUsers} />

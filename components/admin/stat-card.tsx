@@ -14,7 +14,6 @@ export function StatCard({ label, value, icon: Icon, color, bg }: StatCardProps)
         <Card className="bg-card border-border rounded-lg sm:rounded-xl hover:border-muted transition-colors">
             <CardContent className="p-3 sm:p-5">
 
-                {/* Header with Icon */}
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
                     <p className="text-muted-foreground text-xs sm:text-sm font-medium">
                         {label}
@@ -24,12 +23,10 @@ export function StatCard({ label, value, icon: Icon, color, bg }: StatCardProps)
                     </div>
                 </div>
 
-                {/* Value */}
                 <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground wrap-break-word">
                     {value}
                 </p>
 
-                {/* Optional subtle indicator */}
                 <div className="h-0.5 w-full bg-linear-to-r from-transparent via-border to-transparent mt-3 sm:mt-4" />
             </CardContent>
         </Card>

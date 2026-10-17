@@ -42,6 +42,8 @@ next-env.d.ts
 
 /lib/generated/prisma
 
-scripts/create-super-admin.ts
 
+# uzim kiritgan filelar
+scripts/create-super-admin.ts
 kurs.txt
+news.txt

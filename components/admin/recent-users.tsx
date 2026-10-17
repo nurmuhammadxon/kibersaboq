@@ -1,10 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users } from "lucide-react"
-
 interface RecentUser {
     id: string
-    firstName: string
-    lastName: string
+    name: string
     email: string
     createdAt: string
 }
@@ -23,15 +21,19 @@ export function RecentUsers({ users }: { users: RecentUser[] }) {
                     <p className="text-muted-foreground text-sm text-center py-4">Ma'lumot yo'q</p>
                 )}
                 {users.map((user) => {
-                    const fullName = `${user.firstName} ${user.lastName}`
-                    const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
+                    const initials = user.name
+                        .split(" ")
+                        .map(n => n[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2)
                     return (
                         <div key={user.id} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-xl">
-                            <div className="w-8 h-8 rounded-lg bg-linear-to-{dir} from-violet-600 to-purple-600 flex items-center justify-center text-white text-xs font-black shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-600 to-purple-600 flex items-center justify-center text-white text-xs font-black shrink-0">
                                 {initials}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground text-sm font-medium truncate">{fullName}</p>
+                                <p className="text-foreground text-sm font-medium truncate">{user.name}</p>
                                 <p className="text-muted-foreground text-xs truncate">{user.email}</p>
                             </div>
                             <p className="text-muted-foreground text-xs shrink-0">

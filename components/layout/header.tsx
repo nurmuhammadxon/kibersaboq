@@ -1,6 +1,6 @@
 "use client"
 import { usePathname } from "next/navigation"
-import { adminNav, userNav } from "@/lib/constants"
+import { adminNav, userNav, directorNav } from "@/lib/constants"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,9 +20,20 @@ interface HeaderProps {
 
 export function Header({ role, name, onMenuClick }: HeaderProps) {
     const pathname = usePathname()
-    const isAdmin = role === "SUPER_ADMIN"
-    const navItems = isAdmin ? adminNav : userNav
+
+    const navItems = role === "SUPER_ADMIN"
+        ? adminNav
+        : role === "DIRECTOR"
+            ? directorNav
+            : userNav
+
     const currentPage = navItems.find(i => i.href === pathname)?.label || "Boshqaruv paneli"
+
+    const roleLabel = role === "SUPER_ADMIN"
+        ? "Administrator"
+        : role === "DIRECTOR"
+            ? "Direktor"
+            : "Xodim"
 
     return (
         <header className="h-16 bg-card/50 backdrop-blur-md border-b border-border flex items-center justify-between px-6 sticky top-0 z-30">
@@ -49,7 +60,7 @@ export function Header({ role, name, onMenuClick }: HeaderProps) {
                             <div className="hidden sm:block text-left">
                                 <p className="text-foreground text-sm font-medium leading-none mb-1 group-hover:text-foreground transition-colors">{name}</p>
                                 <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-tighter">
-                                    {role === "SUPER_ADMIN" ? "Administrator" : ""}
+                                    {roleLabel}
                                 </p>
                             </div>
                             <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />

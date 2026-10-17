@@ -9,6 +9,7 @@ datasource db {
 
 enum Role {
   SUPER_ADMIN
+  DIRECTOR
   USER
 }
 
@@ -24,6 +25,19 @@ enum LessonType {
   FILE
 }
 
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  code        String   @unique 
+  directorId  String   @unique
+  employeeCount Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  director    User     @relation("CompanyDirector", fields: [directorId], references: [id])
+  employees   User[]   @relation("CompanyEmployees")
+}
+
 model User {
   id             String    @id @default(cuid())
   firstName      String
@@ -32,12 +46,19 @@ model User {
   hashedPassword String
   role           Role      @default(USER)
   organizationName String
-  isBlocked Boolean @default(false)
+  field          String?  
+  isBlocked      Boolean   @default(false)
+
   resetToken       String?   @unique
   resetTokenExpiry DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  ownedCompany    Company?  @relation("CompanyDirector")
+
+  companyId       String?
+  company         Company?  @relation("CompanyEmployees", fields: [companyId], references: [id])
 
   enrollments  Enrollment[]
   progress     Progress[]
@@ -73,15 +94,15 @@ model Module {
 }
 
 model Lesson {
-  id       String     @id @default(cuid())
-  title    String
-  content  String     @db.Text
-  videoUrl String?
-  fileUrl  String?
-  type     LessonType @default(TEXT)
-  order    Int
-  moduleId String
-  module   Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  id          String     @id @default(cuid())
+  title       String
+  content     String     @db.Text
+  videoUrl    String?
+  fileUrl     String?
+  type        LessonType @default(TEXT)
+  order       Int
+  moduleId    String
+  module      Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   minDuration Int?
 
   progress Progress[]

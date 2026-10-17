@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { LogOut, X } from "lucide-react"
-import { adminNav, userNav } from "@/lib/constants"
+import { adminNav, userNav, directorNav } from "@/lib/constants"
 import { Logo } from "./logo"
 
 interface SidebarProps {
@@ -15,7 +15,7 @@ interface SidebarProps {
 }
 
 function isSidebarActive(pathname: string, href: string): boolean {
-    const exactRoots = new Set(["/dashboard", "/admin"])
+    const exactRoots = new Set(["/dashboard", "/admin", "/director"])
     if (pathname === href) return true
     if (exactRoots.has(href)) return false
     return pathname.startsWith(`${href}/`)
@@ -23,8 +23,12 @@ function isSidebarActive(pathname: string, href: string): boolean {
 
 export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
     const pathname = usePathname()
-    const isAdmin = role === "SUPER_ADMIN"
-    const navItems = isAdmin ? adminNav : userNav
+
+    const navItems = role === "SUPER_ADMIN"
+        ? adminNav
+        : role === "DIRECTOR"
+            ? directorNav
+            : userNav
 
     useEffect(() => {
         onClose()
@@ -65,7 +69,6 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
 
     return (
         <>
-            {/* DESKTOP */}
             <aside className="w-64 bg-sidebar border-r border-sidebar-border fixed left-0 top-0 bottom-0 z-40 hidden lg:flex flex-col">
                 <div className="h-16 flex items-center px-5 border-b border-sidebar-border">
                     <Logo />
@@ -73,7 +76,6 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
                 <NavContent />
             </aside>
 
-            {/* MOBILE OVERLAY */}
             {mobileOpen && (
                 <div
                     className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
@@ -81,7 +83,6 @@ export function Sidebar({ role, name, mobileOpen, onClose }: SidebarProps) {
                 />
             )}
 
-            {/* MOBILE DRAWER */}
             <aside className={`lg:hidden fixed left-0 top-0 bottom-0 z-50 w-72 bg-sidebar border-r border-sidebar-border flex flex-col transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
                 <div className="h-16 flex items-center justify-between px-5 border-b border-sidebar-border">
                     <Logo />
