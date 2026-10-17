@@ -43,13 +43,11 @@ export function useCertificateDownload(fileName: string) {
             const d = new Date(data.issuedAt)
             const date = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
 
-            // ─── ISM FAMILIYA ─────────────────────────────────────────
             ctx.font = `italic ${W * 0.1013}px Georgia, serif`
             ctx.fillStyle = "#C9A84C"
             ctx.textAlign = "center"
             ctx.fillText(data.userName, W * 0.5, H * 0.4532 + W * 0.1013 * 0.35)
 
-            // ─── KURS NOMI ────────────────────────────────────────────
             ctx.font = `${W * 0.0174}px Arial, sans-serif`
             ctx.fillStyle = "#2B2D42"
             ctx.textAlign = "center"
@@ -59,7 +57,6 @@ export function useCertificateDownload(fileName: string) {
                 H * 0.5535 + W * 0.0174 * 0.35
             )
 
-            // ─── SANA ─────────────────────────────────────────────────
             ctx.font = `italic bold ${W * 0.0198}px Georgia, serif`
             ctx.fillStyle = "#2B2D42"
             ctx.textAlign = "center"

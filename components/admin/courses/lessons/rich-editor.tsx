@@ -107,7 +107,6 @@ export function RichEditor({ content, onChange }: Props) {
     return (
         <>
             <div className="border border-border rounded-xl overflow-hidden bg-input">
-                {/* Toolbar */}
                 <div className="flex flex-wrap items-center gap-0.5 p-2 border-b border-border bg-card">
                     <Btn onClick={() => editor.chain().focus().undo().run()} title="Orqaga"><Undo className="w-4 h-4" /></Btn>
                     <Btn onClick={() => editor.chain().focus().redo().run()} title="Oldinga"><Redo className="w-4 h-4" /></Btn>
@@ -136,11 +135,9 @@ export function RichEditor({ content, onChange }: Props) {
                     <Btn onClick={() => { setHtmlInput(""); setHtmlOpen(true) }} title="HTML yuklash"><FileCode className="w-4 h-4" /></Btn>
                 </div>
 
-                {/* Editor */}
                 <EditorContent editor={editor} />
             </div>
 
-            {/* Link modal */}
             <Dialog open={linkOpen} onOpenChange={setLinkOpen}>
                 <DialogContent className="max-w-sm bg-card border-border text-foreground">
                     <DialogHeader>
@@ -165,7 +162,6 @@ export function RichEditor({ content, onChange }: Props) {
                 </DialogContent>
             </Dialog>
 
-            {/* Image modal */}
             <Dialog open={imageOpen} onOpenChange={setImageOpen}>
                 <DialogContent className="max-w-sm bg-card border-border text-foreground">
                     <DialogHeader>
@@ -201,7 +197,6 @@ export function RichEditor({ content, onChange }: Props) {
                 </DialogContent>
             </Dialog>
 
-            {/* HTML yuklash modal */}
             <Dialog open={htmlOpen} onOpenChange={setHtmlOpen}>
                 <DialogContent className="max-w-2xl bg-card border-border text-foreground">
                     <DialogHeader>

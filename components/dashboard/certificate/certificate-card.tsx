@@ -37,7 +37,6 @@ export function CertificateCard({
 
     return (
         <div className="space-y-4">
-            {/* Preview */}
             <div className="relative w-full rounded-xl overflow-hidden border border-border">
                 <img
                     src="/certificate-template.png"
@@ -66,7 +65,6 @@ export function CertificateCard({
                 </div>
             </div>
 
-            {/* Info */}
             <div className="flex items-center justify-between text-sm text-muted-foreground px-1">
                 <span>{levelUz[courseLevel] ?? courseLevel}</span>
                 <span className="font-mono text-xs">{certificateNumber}</span>

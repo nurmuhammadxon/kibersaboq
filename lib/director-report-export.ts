@@ -76,7 +76,6 @@ export function downloadDirectorReportCsv(data: DirectorReportsData) {
     )
 }
 
-// jsPDF standart shriftlari faqat Latin-1 ni qo'llaydi
 function safe(v: string | number | null | undefined) {
     if (v === null || v === undefined || v === "") return "-"
     return String(v)
@@ -170,7 +169,6 @@ export async function downloadDirectorReportPdf(data: DirectorReportsData) {
         y += 6
     }
 
-    // ── Sarlavha ──
     pdf.setFont("helvetica", "bold")
     pdf.setFontSize(18)
     pdf.setTextColor(30, 64, 175)
@@ -187,7 +185,6 @@ export async function downloadDirectorReportPdf(data: DirectorReportsData) {
     pdf.text(`Yaratilgan: ${new Date().toISOString().slice(0, 10)}`, M + 110, y)
     y += 9
 
-    // ── Umumiy ──
     heading("Umumiy ko'rsatkichlar")
     const s = data.stats
     table(
@@ -204,7 +201,6 @@ export async function downloadDirectorReportPdf(data: DirectorReportsData) {
         [1, 1, 1, 1, 1, 1, 1]
     )
 
-    // ── Xodimlar ──
     heading("Xodimlar bo'yicha")
     table(
         ["Xodim", "Email", "Yo'nalish", "Yozilgan", "Yakunlangan", "Darslar", "Sertif.", "Ball", "Holat"],
@@ -222,7 +218,6 @@ export async function downloadDirectorReportPdf(data: DirectorReportsData) {
         [3, 4, 2.5, 1.4, 1.7, 1.3, 1.3, 1.1, 1.8]
     )
 
-    // ── Kurslar ──
     heading("Kurslar bo'yicha")
     table(
         ["Kurs", "Yozilishlar", "Yakunlangan", "Sertifikatlar", "O'rtacha ball"],
@@ -236,7 +231,6 @@ export async function downloadDirectorReportPdf(data: DirectorReportsData) {
         [5, 1.5, 1.5, 1.5, 1.5]
     )
 
-    // ── Sahifa raqamlari ──
     const pages = pdf.getNumberOfPages()
     for (let i = 1; i <= pages; i++) {
         pdf.setPage(i)

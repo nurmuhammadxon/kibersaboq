@@ -18,7 +18,6 @@ export function LessonViewer({ lesson }: LessonViewerProps) {
         <div className="rounded-xl border border-border bg-card p-5 space-y-4">
             <h3 className="font-medium text-sm text-foreground">Materiallar</h3>
 
-            {/* Video */}
             {lesson.type === "VIDEO" && lesson.videoUrl && (
                 <div className="aspect-video rounded-xl overflow-hidden bg-secondary">
                     <iframe
@@ -31,7 +30,6 @@ export function LessonViewer({ lesson }: LessonViewerProps) {
                 </div>
             )}
 
-            {/* Rich text content */}
             {lesson.content && (
                 <div
                     className="prose prose-sm dark:prose-invert max-w-none text-foreground"

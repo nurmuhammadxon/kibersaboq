@@ -30,7 +30,7 @@ export const directorNav = [
 export const userNav = [
     { href: "/dashboard", label: "Bosh sahifa", icon: LayoutDashboard },
     { href: "/dashboard/courses", label: "Kurslarim", icon: BookOpen },
-    { href: "/dashboard/catalog", label: "Katalog", icon: GraduationCap }, // ← yangi
+    { href: "/dashboard/catalog", label: "Katalog", icon: GraduationCap },
     { href: "/dashboard/certificates", label: "Sertifikatlarim", icon: Award },
 ]
 

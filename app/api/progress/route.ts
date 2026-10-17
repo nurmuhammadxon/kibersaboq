@@ -48,7 +48,6 @@ export async function POST(req: Request) {
       create: { userId, lessonId, completedAt: new Date() },
     })
 
-    // Dars qaysi kursga tegishli
     const lesson = await prisma.lesson.findUnique({
       where: { id: lessonId },
       include: { module: { select: { courseId: true } } },
@@ -60,13 +59,11 @@ export async function POST(req: Request) {
 
     const courseId = lesson.module.courseId
 
-    // Kursning barcha darslarini topamiz
     const allLessons = await prisma.lesson.findMany({
       where: { module: { courseId } },
       select: { id: true },
     })
 
-    // Foydalanuvchi tugatgan darslar
     const completedLessons = await prisma.progress.findMany({
       where: {
         userId,
@@ -79,13 +76,11 @@ export async function POST(req: Request) {
     const courseCompleted = allLessons.length > 0 && completedLessons.length === allLessons.length
 
     if (courseCompleted) {
-      // Enrollment ni yakunlangan deb belgilaymiz
       await prisma.enrollment.update({
         where: { userId_courseId: { userId, courseId } },
         data: { completedAt: new Date() },
       })
 
-      // Sertifikat allaqachon bormi
       const existing = await prisma.certificate.findFirst({
         where: { userId, courseId },
       })

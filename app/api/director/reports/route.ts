@@ -154,7 +154,6 @@ export async function GET(req: Request) {
             }),
         ])
 
-        // ── Faollik grafigi: 31 kungacha kunlik, undan ko'p bo'lsa haftalik ──
         const bucketSize = totalDays > 31 ? 7 : 1
         const bucketCount = Math.ceil(totalDays / bucketSize)
         const fromDay = dayStart(from)
@@ -181,7 +180,6 @@ export async function GET(req: Request) {
             activity[bucketOf(r.issuedAt)].certificates++
         })
 
-        // ── Xodimlar bo'yicha ──
         const byUser = new Map(
             employees.map((e) => [
                 e.id,
@@ -215,7 +213,6 @@ export async function GET(req: Request) {
                     `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
             )
 
-        // faol xodim: davrda yozilgan, dars/kurs tugatgan yoki test topshirgan
         const activeIds = new Set<string>([
             ...enrollmentRows.map((r) => r.userId),
             ...completedRows.map((r) => r.userId),
@@ -223,7 +220,6 @@ export async function GET(req: Request) {
             ...quizRows.map((r) => r.userId),
         ])
 
-        // ── Kurslar bo'yicha ──
         const courseRows = courseOptions
             .filter((c) => !courseId || c.id === courseId)
             .map((c) => ({

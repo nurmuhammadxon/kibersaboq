@@ -20,7 +20,6 @@ export function ModuleItem({
 }: Props) {
     return (
         <div className="bg-card border border-border rounded-xl overflow-hidden">
-            {/* Module Header */}
             <div
                 className="flex items-center gap-3 p-4 cursor-pointer hover:bg-secondary/50 transition-colors"
                 onClick={() => onToggle(module.id)}
@@ -41,7 +40,6 @@ export function ModuleItem({
                 </Button>
             </div>
 
-            {/* Lessons */}
             {expanded && (
                 <div className="border-t border-border">
                     {module.lessons.map((lesson, li) => (

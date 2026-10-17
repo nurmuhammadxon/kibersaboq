@@ -1,11 +1,15 @@
 "use client"
 
 import Loading from "@/components/_components/loading"
+import { ReportsCompaniesTable } from "@/components/admin/reports/reports-companies-table"
 import { ReportsCourseTable } from "@/components/admin/reports/reports-course-table"
 import { ReportsErrorAlert } from "@/components/admin/reports/reports-error-alert"
 import { ReportsFilters } from "@/components/admin/reports/reports-filters"
 import { ReportsHeader } from "@/components/admin/reports/reports-header"
 import { ReportsSummary } from "@/components/admin/reports/reports-summary"
+import { ReportsTotals } from "@/components/admin/reports/reports-totals"
+import { ReportsUsersTable } from "@/components/admin/reports/reports-users-table"
+import { DirectorActivityChart } from "@/components/director/reports/director-activity-chart"
 import { useAdminReportsPage } from "@/hooks/use-admin-reports-page"
 
 export default function AdminReportsPage() {
@@ -22,18 +26,19 @@ export default function AdminReportsPage() {
         refresh,
         applyFilters,
         downloadCsv,
+        downloadPdf,
+        pdfLoading,
     } = useAdminReportsPage()
-
-    const courseOptions = data?.courseOptions ?? []
-    const courseRows = data?.courses ?? []
 
     if (loading && !data && !error) return <Loading fullScreen={true} />
 
     return (
         <div className="space-y-6">
             <ReportsHeader
-                disableCsv={!data || courseRows.length === 0}
+                disableExport={!data}
                 onDownloadCsv={downloadCsv}
+                onDownloadPdf={downloadPdf}
+                pdfLoading={pdfLoading}
             />
 
             {error && (
@@ -44,7 +49,7 @@ export default function AdminReportsPage() {
                 from={from}
                 to={to}
                 courseId={courseId}
-                courseOptions={courseOptions}
+                courseOptions={data?.courseOptions ?? []}
                 loading={loading}
                 onFromChange={setFrom}
                 onToChange={setTo}
@@ -59,8 +64,15 @@ export default function AdminReportsPage() {
                     </div>
                 ) : (
                     <>
+                        <ReportsTotals totals={data.totals} />
                         <ReportsSummary stats={data.stats} />
-                        <ReportsCourseTable rows={courseRows} />
+                        <DirectorActivityChart
+                            activity={data.activity}
+                            bucketSize={data.bucketSize}
+                        />
+                        <ReportsCompaniesTable rows={data.companies} />
+                        <ReportsUsersTable rows={data.users} total={data.usersTotal} />
+                        <ReportsCourseTable rows={data.courses} />
                     </>
                 ))}
         </div>

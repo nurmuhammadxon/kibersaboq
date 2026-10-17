@@ -1,11 +1,19 @@
+import { Download, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ReportsHeaderProps {
-    disableCsv: boolean
+    disableExport: boolean
     onDownloadCsv: () => void
+    onDownloadPdf: () => void
+    pdfLoading: boolean
 }
 
-export function ReportsHeader({ disableCsv, onDownloadCsv }: ReportsHeaderProps) {
+export function ReportsHeader({
+    disableExport,
+    onDownloadCsv,
+    onDownloadPdf,
+    pdfLoading,
+}: ReportsHeaderProps) {
     return (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -14,16 +22,28 @@ export function ReportsHeader({ disableCsv, onDownloadCsv }: ReportsHeaderProps)
                     Tanlangan davr va kurs bo'yicha faollik va natijalar
                 </p>
             </div>
-            <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={onDownloadCsv}
-                disabled={disableCsv}
-                className="shrink-0"
-            >
-                CSV yuklab olish
-            </Button>
+            <div className="flex shrink-0 gap-2">
+                <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={onDownloadCsv}
+                    disabled={disableExport}
+                >
+                    <Download className="h-4 w-4" />
+                    Excel (CSV)
+                </Button>
+                <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={onDownloadPdf}
+                    disabled={disableExport || pdfLoading}
+                >
+                    <FileText className="h-4 w-4" />
+                    {pdfLoading ? "Tayyorlanmoqda..." : "PDF"}
+                </Button>
+            </div>
         </div>
     )
 }

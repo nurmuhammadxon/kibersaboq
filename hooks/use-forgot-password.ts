@@ -11,7 +11,6 @@ export const useForgotPassword = () => {
     e.preventDefault()
     setError("")
 
-    // Validatsiya
     if (!email) return setError("Email manzilini kiriting")
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Email manzil noto'g'ri")
 

@@ -5,23 +5,69 @@ import { useState, useEffect, useCallback } from "react"
 export interface AdminReportsCourseRow {
     id: string
     title: string
-    price: number | null  // ← qo'shildi
+    price: number | null
     enrollments: number
     completed: number
     certificates: number
     avgScore: number | null
 }
 
+export interface AdminReportsUserRow {
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    company: string
+    isBlocked: boolean
+    enrollments: number
+    completed: number
+    lessons: number
+    certificates: number
+    avgScore: number | null
+}
+
+export interface AdminReportsCompanyRow {
+    id: string
+    name: string
+    code: string
+    employees: number
+    activeEmployees: number
+    enrollments: number
+    completed: number
+    lessons: number
+    certificates: number
+    avgScore: number | null
+}
+
+export interface AdminReportsActivity {
+    date: string
+    lessons: number
+    completions: number
+    certificates: number
+}
+
 export interface AdminReportsData {
     range: { from: string; to: string }
+    bucketSize: number
+    totals: {
+        totalUsers: number
+        totalCompanies: number
+        totalCourses: number
+        totalCertificates: number
+    }
     stats: {
         newUsers: number
         enrollmentsStarted: number
         enrollmentsCompleted: number
         certificatesIssued: number
+        lessonsCompleted: number
         avgQuizScore: number
         quizAttempts: number
     }
+    activity: AdminReportsActivity[]
+    companies: AdminReportsCompanyRow[]
+    users: AdminReportsUserRow[]
+    usersTotal: number
     courses: AdminReportsCourseRow[]
     courseOptions: { id: string; title: string }[]
 }

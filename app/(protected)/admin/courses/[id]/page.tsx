@@ -34,7 +34,6 @@ export default function CourseDetailPage() {
 
     return (
         <div className="max-w-3xl mx-auto space-y-6">
-            {/* Header */}
             <div className="flex items-center gap-3">
                 <Link href="/admin/courses">
                     <Button variant="ghost" size="icon">
@@ -55,7 +54,6 @@ export default function CourseDetailPage() {
                 </span>
             </div>
 
-            {/* Module List */}
             <ModuleList
                 modules={course.modules}
                 courseId={id}
@@ -69,7 +67,6 @@ export default function CourseDetailPage() {
                 }}
             />
 
-            {/* Add Module Modal */}
             <AddModuleModal
                 open={moduleModal}
                 onClose={() => setModuleModal(false)}
@@ -80,7 +77,6 @@ export default function CourseDetailPage() {
                 error={moduleError}
             />
 
-            {/* Add Lesson Modal */}
             <AddLessonModal
                 open={lessonModal}
                 onClose={() => setLessonModal(false)}
@@ -93,7 +89,6 @@ export default function CourseDetailPage() {
                 error={lessonError}
             />
 
-            {/* Delete Module Confirm */}
             <ConfirmDialog
                 open={!!deleteModuleId}
                 onClose={() => setDeleteModuleId(null)}
@@ -101,7 +96,6 @@ export default function CourseDetailPage() {
                 description="Bu modul va unga tegishli barcha darslar o'chiriladi."
             />
 
-            {/* Delete Lesson Confirm */}
             <ConfirmDialog
                 open={!!deleteLessonId}
                 onClose={() => setDeleteLessonId(null)}

@@ -33,7 +33,6 @@ export const useResetPassword = () => {
 
             if (res.ok) {
                 setSuccess(true)
-                // 60 soniyadan so'ng login sahifasiga o'tkazish
                 setTimeout(() => router.push("/login"), 10000)
             } else {
                 setError(data.error || "Xatolik yuz berdi")

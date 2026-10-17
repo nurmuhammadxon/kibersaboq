@@ -37,7 +37,6 @@ export function useLearnerLesson(lessonId: string) {
     const [marking, setMarking] = useState(false)
     const [courseCompleted, setCourseCompleted] = useState(false)
 
-    // Timer
     const [elapsed, setElapsed] = useState(0)
     const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 

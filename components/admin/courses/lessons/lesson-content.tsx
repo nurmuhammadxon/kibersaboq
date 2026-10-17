@@ -43,7 +43,6 @@ export function LessonContent({
                 </Button>
             </div>
 
-            {/* Minimum vaqt */}
             <div className="space-y-1.5">
                 <Label className="text-foreground">Minimum o'qish vaqti (daqiqa)</Label>
                 <Input
@@ -62,7 +61,6 @@ export function LessonContent({
                 </p>
             </div>
 
-            {/* Video URL — faqat VIDEO turida */}
             {type === "VIDEO" && (
                 <div className="space-y-1.5">
                     <Label className="text-foreground">Video URL</Label>
@@ -85,7 +83,6 @@ export function LessonContent({
                 </div>
             )}
 
-            {/* Rich text editor — har ikki turda ham */}
             <div className="space-y-1.5">
                 <Label className="text-foreground">
                     {type === "VIDEO" ? "Qo'shimcha matn" : "Matn"}

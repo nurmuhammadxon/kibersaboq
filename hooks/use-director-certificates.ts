@@ -45,7 +45,6 @@ export function useDirectorCertificates() {
         }
     }, [userSearch, courseSearch])
 
-    // qidiruvda har bir harfga so'rov yubormaslik uchun biroz kutiladi
     useEffect(() => {
         const t = setTimeout(fetchCertificates, 300)
         return () => clearTimeout(t)

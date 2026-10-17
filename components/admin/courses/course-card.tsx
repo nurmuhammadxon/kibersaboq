@@ -39,7 +39,6 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
 
     return (
         <div className="bg-card border border-border rounded-2xl overflow-hidden hover:border-muted transition-colors flex flex-col">
-            {/* Thumbnail */}
             {course.thumbnail ? (
                 <img
                     src={course.thumbnail}
@@ -53,7 +52,6 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
             )}
 
             <div className="p-4 space-y-3 flex-1 flex flex-col">
-                {/* Title & Badge */}
                 <div className="flex items-start justify-between gap-2">
                     <h3 className="text-foreground font-semibold text-sm leading-snug">{course.title}</h3>
                     <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${levelColor[course.level]}`}>
@@ -61,12 +59,10 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                     </span>
                 </div>
 
-                {/* Description */}
                 {course.description && (
                     <p className="text-muted-foreground text-xs line-clamp-2">{course.description}</p>
                 )}
 
-                {/* Stats */}
                 <div className="flex items-center gap-3 text-muted-foreground text-xs">
                     <span className="flex items-center gap-1">
                         <BookOpen className="w-3.5 h-3.5" />
@@ -84,7 +80,6 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                     )}
                 </div>
 
-                {/* Price & Status */}
                 <div className="flex items-center justify-between">
                     <span className="text-foreground text-sm font-medium">
                         {course.price ? `$${course.price}` : "Bepul"}
@@ -94,7 +89,6 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                     </span>
                 </div>
 
-                {/* Actions */}
                 <div className="flex items-center gap-2 pt-1 mt-auto">
                     <Link href={`/admin/courses/${course.id}`} className="flex-1">
                         <Button variant="outline" size="sm" className="w-full text-xs cursor-pointer">

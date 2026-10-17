@@ -1,41 +1,13 @@
 "use client"
 
 import { useCallback, useMemo, useState } from "react"
+import { toast } from "sonner"
 import { defaultReportDateRange } from "@/lib/format-date-input"
-import { useAdminReports, type AdminReportsData } from "@/hooks/use-admin-reports"
-
-function buildCsv(data: AdminReportsData, from: string, to: string) {
-    const header = [
-        "Kurs",
-        "Narx",       
-        "Yozilishlar",
-        "Yakunlangan",
-        "Sertifikatlar",
-        "O'rtacha ball",
-    ]
-    const lines = [
-        header.join(","),
-        ...data.courses.map((row) =>
-            [
-                `"${row.title.replace(/"/g, '""')}"`,
-                row.price ?? "Bepul", 
-                row.enrollments,
-                row.completed,
-                row.certificates,
-                row.avgScore ?? "",
-            ].join(",")
-        ),
-    ]
-    const blob = new Blob([lines.join("\n")], {
-        type: "text/csv;charset=utf-8;",
-    })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `hisobot-${from}-${to}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
-}
+import { useAdminReports } from "@/hooks/use-admin-reports"
+import {
+    downloadAdminReportCsv,
+    downloadAdminReportPdf,
+} from "@/lib/admin-report-export"
 
 export function useAdminReportsPage() {
     const initial = useMemo(() => defaultReportDateRange(), [])
@@ -48,6 +20,7 @@ export function useAdminReportsPage() {
         to: initial.to,
         courseId: "",
     })
+    const [pdfLoading, setPdfLoading] = useState(false)
 
     const { data, loading, error, refresh } = useAdminReports(
         applied.from,
@@ -60,9 +33,22 @@ export function useAdminReportsPage() {
     }, [from, to, courseId])
 
     const downloadCsv = useCallback(() => {
-        if (!data || data.courses.length === 0) return
-        buildCsv(data, applied.from, applied.to)
-    }, [data, applied.from, applied.to])
+        if (!data) return
+        downloadAdminReportCsv(data)
+    }, [data])
+
+    const downloadPdf = useCallback(async () => {
+        if (!data) return
+        try {
+            setPdfLoading(true)
+            await downloadAdminReportPdf(data)
+        } catch (err) {
+            console.error(err)
+            toast.error("PDF yaratishda xatolik")
+        } finally {
+            setPdfLoading(false)
+        }
+    }, [data])
 
     return {
         from, setFrom,
@@ -73,5 +59,7 @@ export function useAdminReportsPage() {
         refresh,
         applyFilters,
         downloadCsv,
+        downloadPdf,
+        pdfLoading,
     }
 }

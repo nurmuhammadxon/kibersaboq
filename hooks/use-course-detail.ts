@@ -30,14 +30,12 @@ export function useCourseDetail(courseId: string) {
     const [error, setError] = useState("")
     const [expandedModules, setExpandedModules] = useState<string[]>([])
 
-    // Module modal
     const [moduleModal, setModuleModal] = useState(false)
     const [moduleTitle, setModuleTitle] = useState("")
     const [moduleSaving, setModuleSaving] = useState(false)
     const [moduleError, setModuleError] = useState("")
     const [deleteModuleId, setDeleteModuleId] = useState<string | null>(null)
 
-    // Lesson modal
     const [lessonModal, setLessonModal] = useState(false)
     const [lessonModuleId, setLessonModuleId] = useState<string | null>(null)
     const [lessonTitle, setLessonTitle] = useState("")
@@ -72,7 +70,6 @@ export function useCourseDetail(courseId: string) {
         )
     }
 
-    // Module
     const openModuleModal = () => {
         setModuleTitle("")
         setModuleError("")
@@ -109,7 +106,6 @@ export function useCourseDetail(courseId: string) {
         await fetchCourse()
     }
 
-    // Lesson
     const openLessonModal = (moduleId: string) => {
         setLessonModuleId(moduleId)
         setLessonTitle("")
