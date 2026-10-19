@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(
@@ -7,10 +7,8 @@ export async function POST(
     { params }: { params: Promise<{ id: string; moduleId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { moduleId } = await params
         const { title, type, order, content } = await req.json()

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(
@@ -7,12 +7,10 @@ export async function POST(
     { params }: { params: Promise<{ quizId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser()
+        if (guard.error) return guard.error
 
-        const userId = (session.user as any).id as string
+        const userId = guard.user.id
         const { quizId } = await params
         const { answers, lessonId } = await req.json()
 
@@ -22,11 +20,25 @@ export async function POST(
                 questions: {
                     include: { options: true },
                 },
+                lesson: { select: { module: { select: { courseId: true } } } },
             },
         })
 
         if (!quiz) {
             return NextResponse.json({ error: "Quiz topilmadi" }, { status: 404 })
+        }
+
+        const enrolled = await prisma.enrollment.findUnique({
+            where: {
+                userId_courseId: { userId, courseId: quiz.lesson.module.courseId },
+            },
+        })
+        if (!enrolled) {
+            return NextResponse.json({ error: "Bu kursga yozilinmagan" }, { status: 403 })
+        }
+
+        if (!Array.isArray(answers)) {
+            return NextResponse.json({ error: "Javoblar noto'g'ri" }, { status: 400 })
         }
 
         let correct = 0

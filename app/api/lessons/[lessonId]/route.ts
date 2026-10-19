@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(
@@ -7,14 +7,12 @@ export async function GET(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser()
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
-        const role = (session.user as any).role as string
-        const userId = (session.user as any).id as string
+        const role = guard.user.role
+        const userId = guard.user.id
 
         const lesson = await prisma.lesson.findUnique({
             where: { id: lessonId },
@@ -86,14 +84,8 @@ export async function PATCH(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
-
-        if ((session.user as any).role !== "SUPER_ADMIN") {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
         const { content, videoUrl, fileUrl, minDuration } = await req.json()
@@ -115,14 +107,8 @@ export async function DELETE(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
-
-        if ((session.user as any).role !== "SUPER_ADMIN") {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
 

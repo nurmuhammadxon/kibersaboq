@@ -102,13 +102,16 @@ export function useLearnerLesson(lessonId: string) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ lessonId }),
             })
-            if (!res.ok) throw new Error()
+            if (!res.ok) {
+                const body = await res.json().catch(() => ({}))
+                throw new Error(typeof body?.error === "string" ? body.error : "")
+            }
             const data = await res.json()
             setCompleted(true)
             stopTimer()
             if (data.courseCompleted) setCourseCompleted(true)
-        } catch {
-            setError("Progress saqlanmadi")
+        } catch (err) {
+            setError(err instanceof Error && err.message ? err.message : "Progress saqlanmadi")
         } finally {
             setMarking(false)
         }

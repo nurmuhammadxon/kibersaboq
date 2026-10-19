@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
 export async function PATCH(req: Request) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser()
+        if (guard.error) return guard.error
 
         const { firstName, lastName, email, currentPassword, newPassword } = await req.json()
 
         const user = await prisma.user.findUnique({
-            where: { id: (session.user as any).id },
+            where: { id: guard.user.id },
         })
 
         if (!user) {

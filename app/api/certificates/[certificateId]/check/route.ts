@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(
     req: Request,
-    { params }: { params: Promise<{ courseId: string }> }
+    { params }: { params: Promise<{ certificateId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser()
+        if (guard.error) return guard.error
 
-        const { courseId } = await params
-        const userId = (session.user as any).id as string
+        const { certificateId: courseId } = await params // papka nomi [certificateId], lekin bu yerda kurs ID keladi
+        const userId = guard.user.id
 
         const certificate = await prisma.certificate.findFirst({
             where: { userId, courseId },

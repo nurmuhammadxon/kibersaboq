@@ -1,27 +1,48 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import crypto from "crypto";
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma"
+import crypto from "crypto"
+import nodemailer from "nodemailer"
+import { clientIp, isLimited, recordHit } from "@/lib/rate-limit"
+
+const WINDOW = 60 * 60 * 1000
+
+// Foydalanuvchi bor-yo'qligidan qat'i nazar har doim bir xil javob qaytariladi,
+// shunda bu endpoint orqali emaillarni terib ko'rib bo'lmaydi.
+const OK = { message: "Agar bu email ro'yxatdan o'tgan bo'lsa, havola yuborildi" }
 
 export async function POST(req: Request) {
     try {
-        const { email } = await req.json();
-        const user = await prisma.user.findUnique({ where: { email } });
-
-        if (!user) {
-            return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 });
+        const { email } = await req.json()
+        if (typeof email !== "string" || !email) {
+            return NextResponse.json({ error: "Email kiritilmagan" }, { status: 400 })
         }
 
-        const resetToken = crypto.randomBytes(32).toString("hex");
-        const expiry = new Date(Date.now() + 3600000);
+        const ip = clientIp(req)
+        const ipKey = `forgot-ip:${ip}`
+        const emailKey = `forgot-email:${email.toLowerCase()}`
+
+        if ((await isLimited(ipKey, 10, WINDOW)) || (await isLimited(emailKey, 3, WINDOW))) {
+            return NextResponse.json(
+                { error: "Juda ko'p urinish. Keyinroq qayta urinib ko'ring." },
+                { status: 429 }
+            )
+        }
+        await Promise.all([recordHit(ipKey, ip), recordHit(emailKey, ip)])
+
+        const user = await prisma.user.findUnique({ where: { email } })
+        if (!user) return NextResponse.json(OK)
+
+        // Bazada faqat token xeshi saqlanadi: baza oqib chiqsa ham havolalarni ishlatib bo'lmaydi
+        const resetToken = crypto.randomBytes(32).toString("hex")
+        const tokenHash = crypto.createHash("sha256").update(resetToken).digest("hex")
 
         await prisma.user.update({
             where: { email },
             data: {
-                resetToken,
-                resetTokenExpiry: expiry,
+                resetToken: tokenHash,
+                resetTokenExpiry: new Date(Date.now() + 3600000),
             },
-        });
+        })
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -29,13 +50,13 @@ export async function POST(req: Request) {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASSWORD,
             },
-        });
+        })
 
-        const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`;
+        const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`
 
         await transporter.sendMail({
             from: `"KiberSaboq" <${process.env.EMAIL_USER}>`,
-            to: email,
+            to: user.email,
             subject: "Parolni tiklash havolasi",
             html: `
         <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
@@ -49,11 +70,11 @@ export async function POST(req: Request) {
             <p style="color: #666; font-size: 12px;">Agar siz bu so'rovni yubormagan bo'lsangiz, ushbu xatni e'tiborsiz qoldiring.</p>
         </div>
     `,
-        });
+        })
 
-        return NextResponse.json({ message: "Havola yuborildi" });
+        return NextResponse.json(OK)
     } catch (error) {
-        console.error("EMAIL_ERROR:", error);
-        return NextResponse.json({ error: "Xabar yuborishda xatolik" }, { status: 500 });
+        console.error("EMAIL_ERROR:", error)
+        return NextResponse.json({ error: "Xabar yuborishda xatolik" }, { status: 500 })
     }
 }

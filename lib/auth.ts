@@ -4,8 +4,13 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { headers } from "next/headers"
 
-const MAX_ATTEMPTS = 5
 const BLOCK_DURATION = 15 * 60 * 1000
+// Bir xil email + bir xil IP dan 5 ta xato urinish; bitta IP dan 30 ta;
+// bitta email ga barcha manbalardan 50 ta. Shunda begona odam 5 ta xato
+// parol bilan boshqa birovning (masalan admin) akkauntini qulflab qo'ya olmaydi.
+const MAX_PER_EMAIL_IP = 5
+const MAX_PER_IP = 30
+const MAX_PER_EMAIL = 50
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -26,15 +31,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null
 
         const email = credentials.email as string
-        const ip = (await headers()).get("x-forwarded-for") ?? "unknown"
+        const ip =
+          (await headers()).get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown"
 
         const since = new Date(Date.now() - BLOCK_DURATION)
 
-        const attempts = await prisma.loginAttempt.count({
-          where: { email, createdAt: { gte: since } },
-        })
+        const [byEmailIp, byIp, byEmail] = await Promise.all([
+          prisma.loginAttempt.count({ where: { email, ip, createdAt: { gte: since } } }),
+          prisma.loginAttempt.count({ where: { ip, createdAt: { gte: since } } }),
+          prisma.loginAttempt.count({ where: { email, createdAt: { gte: since } } }),
+        ])
 
-        if (attempts >= MAX_ATTEMPTS) return null
+        if (byEmailIp >= MAX_PER_EMAIL_IP || byIp >= MAX_PER_IP || byEmail >= MAX_PER_EMAIL) {
+          return null
+        }
 
         const user = await prisma.user.findUnique({
           where: { email },
@@ -59,7 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null
         }
 
-        await prisma.loginAttempt.deleteMany({ where: { email } })
+        await prisma.loginAttempt.deleteMany({ where: { email, ip } })
 
         return {
           id: user.id,

@@ -3,15 +3,8 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Save, Check } from "lucide-react"
 import { RichEditor } from "./rich-editor"
+import { getYoutubeEmbedUrl } from "@/lib/youtube"
 
-function getYoutubeEmbedUrl(url: string): string {
-    const watchMatch = url.match(/[?&]v=([^&]+)/)
-    if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
-    const shortMatch = url.match(/youtu\.be\/([^?&]+)/)
-    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
-    if (url.includes("/embed/")) return url
-    return url
-}
 
 interface Props {
     type: string
@@ -70,7 +63,7 @@ export function LessonContent({
                         onChange={e => onVideoUrlChange(e.target.value)}
                         className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                     />
-                    {videoUrl && (
+                    {videoUrl && getYoutubeEmbedUrl(videoUrl) && (
                         <div className="aspect-video rounded-xl overflow-hidden bg-secondary mt-2">
                             <iframe
                                 src={getYoutubeEmbedUrl(videoUrl)}

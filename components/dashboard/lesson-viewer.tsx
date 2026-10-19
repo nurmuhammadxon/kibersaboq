@@ -1,13 +1,6 @@
 import type { LearnerLesson } from "@/hooks/use-learner-lesson"
+import { getYoutubeEmbedUrl } from "@/lib/youtube"
 
-function getYoutubeEmbedUrl(url: string): string {
-    const watchMatch = url.match(/[?&]v=([^&]+)/)
-    if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
-    const shortMatch = url.match(/youtu\.be\/([^?&]+)/)
-    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
-    if (url.includes("/embed/")) return url
-    return url
-}
 
 interface LessonViewerProps {
     lesson: LearnerLesson
@@ -18,7 +11,7 @@ export function LessonViewer({ lesson }: LessonViewerProps) {
         <div className="rounded-xl border border-border bg-card p-5 space-y-4">
             <h3 className="font-medium text-sm text-foreground">Materiallar</h3>
 
-            {lesson.type === "VIDEO" && lesson.videoUrl && (
+            {lesson.type === "VIDEO" && lesson.videoUrl && getYoutubeEmbedUrl(lesson.videoUrl) && (
                 <div className="aspect-video rounded-xl overflow-hidden bg-secondary">
                     <iframe
                         src={getYoutubeEmbedUrl(lesson.videoUrl)}

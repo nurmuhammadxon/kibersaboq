@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(
@@ -7,14 +7,12 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
+    const guard = await requireUser()
+    if (guard.error) return guard.error
 
     const { id } = await params
-    const role = (session.user as any).role as string
-    const userId = (session.user as any).id as string
+    const role = guard.user.role
+    const userId = guard.user.id
 
     const minimal = await prisma.course.findUnique({
       where: { id },
@@ -92,17 +90,15 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
-
-    if ((session.user as any).role !== "SUPER_ADMIN") {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-    }
+    const guard = await requireUser(["SUPER_ADMIN"])
+    if (guard.error) return guard.error
 
     const { id } = await params
-    const data = await req.json()
+    const body = await req.json()
+    const data: Record<string, unknown> = {}
+    for (const key of ["title", "description", "thumbnail", "price", "duration", "level", "isPublished"]) {
+      if (key in body) data[key] = body[key]
+    }
 
     const course = await prisma.course.update({
       where: { id },
@@ -121,14 +117,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
-
-    if ((session.user as any).role !== "SUPER_ADMIN") {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-    }
+    const guard = await requireUser(["SUPER_ADMIN"])
+    if (guard.error) return guard.error
 
     const { id } = await params
 

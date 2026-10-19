@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
@@ -8,10 +8,8 @@ export async function PATCH(
     { params }: { params: Promise<{ userId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { userId } = await params
         const { firstName, lastName, email, password, organizationName } = await req.json()
@@ -21,7 +19,15 @@ export async function PATCH(
         if (lastName) updateData.lastName = lastName
         if (email) updateData.email = email
         if (organizationName) updateData.organizationName = organizationName
-        if (password) updateData.hashedPassword = await bcrypt.hash(password, 12)
+        if (password) {
+            if (typeof password !== "string" || password.length < 8) {
+                return NextResponse.json(
+                    { error: "Parol kamida 8 ta belgidan iborat bo'lishi kerak" },
+                    { status: 400 }
+                )
+            }
+            updateData.hashedPassword = await bcrypt.hash(password, 12)
+        }
 
         const user = await prisma.user.update({
             where: { id: userId },
@@ -49,15 +55,8 @@ export async function DELETE(
     { params }: { params: Promise<{ userId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
-
-        const role = (session.user as any)?.role
-        if (role !== "SUPER_ADMIN") {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { userId } = await params
 

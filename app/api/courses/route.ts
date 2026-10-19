@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET() {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
+    const guard = await requireUser()
+    if (guard.error) return guard.error
 
-    const role = (session.user as any).role as string
-    const userId = (session.user as any).id as string
+    const role = guard.user.role
+    const userId = guard.user.id
 
     const where =
       role === "SUPER_ADMIN"
@@ -53,7 +51,22 @@ export async function GET() {
           },
     })
 
-    return NextResponse.json(courses)
+    if (role === "SUPER_ADMIN") return NextResponse.json(courses)
+
+    // Yozilmagan foydalanuvchiga dars mazmuni va video havolasi berilmaydi
+    const safe = courses.map((c: any) =>
+      c.enrollments.length > 0
+        ? c
+        : {
+            ...c,
+            modules: c.modules.map((m: any) => ({
+              ...m,
+              lessons: m.lessons.map(({ content, videoUrl, ...rest }: any) => rest),
+            })),
+          }
+    )
+
+    return NextResponse.json(safe)
   } catch (error) {
     console.error("Courses GET xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
@@ -62,10 +75,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
+    const guard = await requireUser(["SUPER_ADMIN"])
+    if (guard.error) return guard.error
 
     const { title, description, level, price, duration, thumbnail } = await req.json()
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(
@@ -7,10 +7,8 @@ export async function GET(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
 
@@ -43,13 +41,15 @@ export async function PATCH(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
-        const data = await req.json()
+        const body = await req.json()
+        const data: Record<string, unknown> = {}
+        for (const key of ["title", "content", "videoUrl", "fileUrl", "type", "order", "minDuration"]) {
+            if (key in body) data[key] = body[key]
+        }
 
         const lesson = await prisma.lesson.update({
             where: { id: lessonId },
@@ -68,10 +68,8 @@ export async function DELETE(
     { params }: { params: Promise<{ lessonId: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { lessonId } = await params
 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import crypto from "crypto"
 
 export async function POST(req: Request) {
     try {
@@ -14,8 +15,13 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Parol kamida 8 ta belgidan iborat bo'lishi kerak" }, { status: 400 })
         }
 
+        if (typeof token !== "string" || typeof password !== "string") {
+            return NextResponse.json({ error: "Noto'g'ri so'rov" }, { status: 400 })
+        }
+
+        const tokenHash = crypto.createHash("sha256").update(token).digest("hex")
         const user = await prisma.user.findUnique({
-            where: { resetToken: token }
+            where: { resetToken: tokenHash }
         })
 
         if (!user) {
@@ -36,6 +42,9 @@ export async function POST(req: Request) {
                 resetTokenExpiry: null,
             }
         })
+
+        // Parol tiklangach eski xato urinishlar akkauntni qulflab turmasligi uchun
+        await prisma.loginAttempt.deleteMany({ where: { email: user.email } })
 
         return NextResponse.json({ message: "Parol muvaffaqiyatli yangilandi" })
 

@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
 export async function GET() {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
+    const guard = await requireUser(["SUPER_ADMIN"])
+    if (guard.error) return guard.error
 
     const users = await prisma.user.findMany({
       where: { role: "USER" },
@@ -33,15 +31,17 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await auth()
-    if (!session) {
-      return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-    }
+    const guard = await requireUser(["SUPER_ADMIN"])
+    if (guard.error) return guard.error
 
-    const { firstName, lastName, email, password, role, organizationName } = await req.json()
+    const { firstName, lastName, email, password, organizationName } = await req.json()
 
     if (!firstName || !lastName || !email || !password || !organizationName) {
       return NextResponse.json({ error: "Barcha maydonlarni to'ldiring" }, { status: 400 })
+    }
+
+    if (typeof password !== "string" || password.length < 8) {
+      return NextResponse.json({ error: "Parol kamida 8 ta belgidan iborat bo'lishi kerak" }, { status: 400 })
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } })
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         lastName,
         email,
         hashedPassword,
-        role: role || "USER",
+        role: "USER", // admin faqat oddiy xodim yaratadi; SUPER_ADMIN API orqali yaratilmaydi
         organizationName,
       },
       select: {

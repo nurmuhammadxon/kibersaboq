@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(req: Request) {
     try {
-        const session = await auth()
-        if (!session) return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
+        const guard = await requireUser()
+        if (guard.error) return guard.error
 
-        const role = (session.user as any).role as string
-        const sessionUserId = (session.user as any).id as string
+        const role = guard.user.role
+        const sessionUserId = guard.user.id
 
         const { searchParams } = new URL(req.url)
         const userSearch = searchParams.get("user") || ""
