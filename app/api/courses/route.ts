@@ -53,7 +53,6 @@ export async function GET() {
 
     if (role === "SUPER_ADMIN") return NextResponse.json(courses)
 
-    // Yozilmagan foydalanuvchiga dars mazmuni va video havolasi berilmaydi
     const safe = courses.map((c: any) =>
       c.enrollments.length > 0
         ? c

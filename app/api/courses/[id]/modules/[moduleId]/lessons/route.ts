@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { requireUser } from "@/lib/authz"
+import { cleanLessonHtml } from "@/lib/sanitize-html"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(
@@ -22,7 +23,7 @@ export async function POST(
                 title,
                 type: type || "TEXT",
                 order,
-                content: content || "",
+                content: cleanLessonHtml(content),
                 moduleId,
             }
         })

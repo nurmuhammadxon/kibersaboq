@@ -43,7 +43,6 @@ export async function POST(req: Request) {
             }
         })
 
-        // Parol tiklangach eski xato urinishlar akkauntni qulflab turmasligi uchun
         await prisma.loginAttempt.deleteMany({ where: { email: user.email } })
 
         return NextResponse.json({ message: "Parol muvaffaqiyatli yangilandi" })

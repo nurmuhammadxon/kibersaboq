@@ -98,7 +98,6 @@ export async function POST(req: Request) {
         )
       }
 
-      // Korxona kodini terib ko'rishni to'xtatish: bitta IP dan 15 daqiqada 10 ta xato kod
       const ip = clientIp(req)
       const limitKey = `company-code:${ip}`
       if (await isLimited(limitKey, 10, 15 * 60 * 1000)) {

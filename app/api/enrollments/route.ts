@@ -2,8 +2,6 @@ import { NextResponse } from "next/server"
 import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
-// Boshqa foydalanuvchi nomidan ish ko'rish faqat SUPER_ADMIN uchun.
-// Boshqalar uchun `userId` parametri e'tiborga olinmaydi.
 export async function GET(req: Request) {
   try {
     const guard = await requireUser()

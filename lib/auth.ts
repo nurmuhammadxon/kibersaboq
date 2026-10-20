@@ -5,9 +5,6 @@ import bcrypt from "bcryptjs"
 import { headers } from "next/headers"
 
 const BLOCK_DURATION = 15 * 60 * 1000
-// Bir xil email + bir xil IP dan 5 ta xato urinish; bitta IP dan 30 ta;
-// bitta email ga barcha manbalardan 50 ta. Shunda begona odam 5 ta xato
-// parol bilan boshqa birovning (masalan admin) akkauntini qulflab qo'ya olmaydi.
 const MAX_PER_EMAIL_IP = 5
 const MAX_PER_IP = 30
 const MAX_PER_EMAIL = 50

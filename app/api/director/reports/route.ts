@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
 const DAY = 24 * 60 * 60 * 1000
@@ -17,20 +17,11 @@ function avg(scores: number[]) {
 
 export async function GET(req: Request) {
     try {
-        const session = await auth()
-        if (!session) {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-        }
+        const guard = await requireUser(["DIRECTOR"])
+        if (guard.error) return guard.error
 
-        const role = (session.user as any).role
-        if (role !== "DIRECTOR") {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-        }
-
-        const companyId = (session.user as any).companyId
-        if (!companyId) {
-            return NextResponse.json({ error: "Korxona topilmadi" }, { status: 404 })
-        }
+        const companyId = guard.user.companyId
+        if (!companyId) return NextResponse.json({ error: "Korxona topilmadi" }, { status: 404 })
 
         const { searchParams } = new URL(req.url)
         const fromParam = searchParams.get("from")

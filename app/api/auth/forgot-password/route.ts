@@ -6,8 +6,6 @@ import { clientIp, isLimited, recordHit } from "@/lib/rate-limit"
 
 const WINDOW = 60 * 60 * 1000
 
-// Foydalanuvchi bor-yo'qligidan qat'i nazar har doim bir xil javob qaytariladi,
-// shunda bu endpoint orqali emaillarni terib ko'rib bo'lmaydi.
 const OK = { message: "Agar bu email ro'yxatdan o'tgan bo'lsa, havola yuborildi" }
 
 export async function POST(req: Request) {
@@ -32,7 +30,6 @@ export async function POST(req: Request) {
         const user = await prisma.user.findUnique({ where: { email } })
         if (!user) return NextResponse.json(OK)
 
-        // Bazada faqat token xeshi saqlanadi: baza oqib chiqsa ham havolalarni ishlatib bo'lmaydi
         const resetToken = crypto.randomBytes(32).toString("hex")
         const tokenHash = crypto.createHash("sha256").update(resetToken).digest("hex")
 

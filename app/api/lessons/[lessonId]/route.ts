@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { requireUser } from "@/lib/authz"
+import { cleanLessonHtml } from "@/lib/sanitize-html"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(
@@ -52,6 +53,12 @@ export async function GET(
                 )
             }
 
+            await prisma.progress.upsert({
+                where: { userId_lessonId: { userId, lessonId } },
+                update: {},
+                create: { userId, lessonId },
+            })
+
             const sanitized = {
                 ...lesson,
                 quizzes: lesson.quizzes.map((qz) => ({
@@ -67,7 +74,7 @@ export async function GET(
             }
             const { module: _m, ...rest } = sanitized
             void _m
-            return NextResponse.json(rest)
+            return NextResponse.json({ ...rest, content: cleanLessonHtml(rest.content) })
         }
 
         const { module: _m, ...rest } = lesson
@@ -92,7 +99,12 @@ export async function PATCH(
 
         const lesson = await prisma.lesson.update({
             where: { id: lessonId },
-            data: { content, videoUrl, fileUrl, minDuration },
+            data: {
+                content: content === undefined ? undefined : cleanLessonHtml(content),
+                videoUrl,
+                fileUrl,
+                minDuration,
+            },
         })
 
         return NextResponse.json(lesson)

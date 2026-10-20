@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         lastName,
         email,
         hashedPassword,
-        role: "USER", // admin faqat oddiy xodim yaratadi; SUPER_ADMIN API orqali yaratilmaydi
+        role: "USER", 
         organizationName,
       },
       select: {

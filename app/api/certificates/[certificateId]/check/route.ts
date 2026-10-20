@@ -10,7 +10,7 @@ export async function GET(
         const guard = await requireUser()
         if (guard.error) return guard.error
 
-        const { certificateId: courseId } = await params // papka nomi [certificateId], lekin bu yerda kurs ID keladi
+        const { certificateId: courseId } = await params 
         const userId = guard.user.id
 
         const certificate = await prisma.certificate.findFirst({
