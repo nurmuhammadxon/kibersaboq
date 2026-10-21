@@ -13,7 +13,7 @@ export function UsersSearch({ value, onChange }: Props) {
             <Input
                 value={value}
                 onChange={e => onChange(e.target.value)}
-                placeholder="Ism yoki email bo'yicha qidirish..."
+                placeholder="Ism, email yoki korxona kodi bo'yicha qidirish..."
                 className="pl-10 text-foreground"
             />
         </div>

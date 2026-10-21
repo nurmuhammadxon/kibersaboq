@@ -18,12 +18,14 @@ interface Props {
 export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Props) {
     return (
         <div className="border border-border rounded-2xl overflow-hidden">
-            <Table className="min-w-180">
+            <Table className="min-w-220">
                 <TableHeader>
                     <TableRow>
                         <TableHead className="text-secondary-foreground">Ism</TableHead>
                         <TableHead className="text-secondary-foreground">Email</TableHead>
                         <TableHead className="text-secondary-foreground hidden md:table-cell">Tashkilot</TableHead>
+                        <TableHead className="text-secondary-foreground hidden md:table-cell">Korxona kodi</TableHead>
+                        <TableHead className="text-secondary-foreground">Lavozim</TableHead>
                         <TableHead className="text-secondary-foreground">Holat</TableHead>
                         <TableHead className="text-secondary-foreground hidden sm:table-cell">Sana</TableHead>
                         <TableHead />
@@ -32,7 +34,7 @@ export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Prop
                 <TableBody>
                     {users.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                            <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                                 Foydalanuvchi topilmadi
                             </TableCell>
                         </TableRow>
@@ -51,6 +53,16 @@ export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Prop
                                 </TableCell>
                                 <TableCell className="text-foreground text-sm">{user.email}</TableCell>
                                 <TableCell className="text-foreground text-sm hidden md:table-cell">{user.organizationName}</TableCell>
+                                <TableCell className="text-foreground text-sm font-mono hidden md:table-cell">
+                                    {user.companyCode ?? "—"}
+                                </TableCell>
+                                <TableCell>
+                                    {user.role === "DIRECTOR" ? (
+                                        <Badge>Direktor</Badge>
+                                    ) : (
+                                        <Badge variant="outline">Xodim</Badge>
+                                    )}
+                                </TableCell>
                                 <TableCell>
                                     {user.isBlocked ? (
                                         <Badge variant="destructive">Bloklangan</Badge>

@@ -10,6 +10,14 @@ export async function POST(req: Request) {
 
     const { email } = await req.json()
 
+    const target = await prisma.user.findUnique({ where: { email }, select: { role: true } })
+    if (!target) {
+        return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 })
+    }
+    if (target.role === "SUPER_ADMIN") {
+        return NextResponse.json({ error: "Adminni bloklab bo'lmaydi" }, { status: 403 })
+    }
+
     await prisma.user.update({
         where: { email },
         data: { isBlocked: true },

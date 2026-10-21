@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
 import SessionWarning from "@/components/auth/session-warning";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <SessionWarning />
           {children}
         </Providers>
+        <Toaster theme="dark" position="top-center" richColors />
       </body>
     </html>
   );

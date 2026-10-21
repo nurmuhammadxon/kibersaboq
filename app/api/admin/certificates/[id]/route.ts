@@ -1,18 +1,50 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
+import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
+
+// Sertifikatni bekor qilish yoki qayta tiklash (faqat SUPER_ADMIN)
+export async function PATCH(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
+
+        const { id } = await params
+        const body = await req.json().catch(() => ({}))
+        const revoke = body?.revoke === true
+        const reason =
+            typeof body?.reason === "string" && body.reason.trim()
+                ? body.reason.trim().slice(0, 200)
+                : null
+
+        const exists = await prisma.certificate.findUnique({ where: { id }, select: { id: true } })
+        if (!exists) {
+            return NextResponse.json({ error: "Sertifikat topilmadi" }, { status: 404 })
+        }
+
+        const updated = await prisma.certificate.update({
+            where: { id },
+            data: revoke
+                ? { revokedAt: new Date(), revokedReason: reason }
+                : { revokedAt: null, revokedReason: null },
+            select: { id: true, revokedAt: true, revokedReason: true },
+        })
+        return NextResponse.json(updated)
+    } catch (error) {
+        console.error("Admin certificate PATCH xato:", error)
+        return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
+    }
+}
 
 export async function DELETE(
     req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await auth()
-        if (!session) return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 401 })
-
-        if ((session.user as any).role !== "SUPER_ADMIN") {
-            return NextResponse.json({ error: "Ruxsat yo'q" }, { status: 403 })
-        }
+        const guard = await requireUser(["SUPER_ADMIN"])
+        if (guard.error) return guard.error
 
         const { id } = await params
 

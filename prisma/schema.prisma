@@ -179,6 +179,8 @@ model Certificate {
   courseId          String
   issuedAt          DateTime @default(now())
   certificateNumber String   @unique @default(cuid())
+  revokedAt         DateTime?
+  revokedReason     String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

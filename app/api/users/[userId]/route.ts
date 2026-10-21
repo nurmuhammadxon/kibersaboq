@@ -60,6 +60,23 @@ export async function DELETE(
 
         const { userId } = await params
 
+        const target = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { role: true, ownedCompany: { select: { id: true } } },
+        })
+        if (!target) {
+            return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 })
+        }
+        if (target.role === "SUPER_ADMIN") {
+            return NextResponse.json({ error: "Admin akkauntini o'chirib bo'lmaydi" }, { status: 403 })
+        }
+        if (target.ownedCompany) {
+            return NextResponse.json(
+                { error: "Bu direktorning korxonasi bor. Uni o'chirish o'rniga bloklang." },
+                { status: 409 }
+            )
+        }
+
         await prisma.user.delete({ where: { id: userId } })
 
         return NextResponse.json({ message: "Foydalanuvchi o'chirildi" })

@@ -1,0 +1,664 @@
+{
+  "title": "Kiberxavfsizlik asoslari",
+  "description": "Barcha xodimlar uchun kiberxavfsizlik asoslari: fishing va ijtimoiy muhandislik, parollar va ikki bosqichli tasdiqlash, zararli dasturlar va qurilma xavfsizligi.",
+  "level": "BEGINNER",
+  "modules": [
+    {
+      "title": "Fishing va ijtimoiy muhandislik",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "1.1. Fishing nima va u qanday ishlaydi",
+          "order": 1,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Buxgalter ertalab \"direktor\"dan xat oladi: \"Shoshilinch, shu hisob raqamiga to'lovni hoziroq o'tkazing, keyin tushuntiraman.\" U tekshirmasdan o'tkazadi. Xat direktordan emas edi. Pul qaytmadi. Kiberhujumlarning katta qismi murakkab \"xakerlik\"dan emas, balki odamni aldashdan boshlanadi. Eng kuchli himoya dasturlar bilan birga sizning ehtiyotkorligingizdir.</p>\n<h3>ASOSIY TUSHUNCHALAR</h3>\n<ul><li>FISHING (inglizcha \"phishing\", baliq ovlash): firibgar sizga o'zini ishonchli tashkilot yoki shaxs qilib ko'rsatadigan xat, xabar yoki sayt yuboradi. Maqsadi: parolingizni, karta ma'lumotingizni olish yoki sizni zararli fayl ochtirish.</li><li>IJTIMOIY MUHANDISLIK: texnikani emas, odamni aldash usullarining umumiy nomi. Firibgar odamlarning his-tuyg'ularidan foydalanadi: qo'rquv, shoshilinchlik, ishonch, qiziqish, ochko'zlik.</li><li>\"Targetli fishing\" (spear phishing): ma'lum bir odam yoki korxonaga mo'ljallangan xat. Firibgar sizning ismingiz, lavozimingiz, hamkorlaringiz haqida oldindan ma'lumot yig'adi, shuning uchun xat juda ishonarli bo'ladi.</li></ul>\n<h3>FISHING HUJUMI QANDAY BOSQICHLARDAN IBORAT</h3>\n<ol><li>Firibgar bahona o'ylab topadi (to'lov, parol muddati tugagan, sovrin, ish haqida xat).</li><li>Xat yuboradi: havola yoki ilova bilan.</li><li>Siz havolani ochasiz, u haqiqiyga o'xshash soxta saytga olib boradi.</li><li>Siz u yerga login va parolni yozasiz, ma'lumot firibgarga tushadi.</li><li>Firibgar sizning hisobingizga kiradi va undan keyingi hujumlar uchun foydalanadi (hamkasblaringizga o'zingiz nomingizdan xat yuboradi).</li></ol>\n<h3>MISOL</h3>\n<p>Mavzu: \"Pochta qutingiz to'lib qoldi!\"<br>Matn: \"Hurmatli foydalanuvchi, pochta qutingiz 24 soatda o'chiriladi. Saqlab qolish uchun quyidagi havolaga kirib parolingizni tasdiqlang.\"<br>Nima noto'g'ri: umumiy murojaat, muddat bilan qo'rqitish, parol so'rash. Haqiqiy IT xizmati parolni havola orqali so'ramaydi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>To'xtang va o'ylang. Firibgarlik doim shoshiltirishga tayanadi</li><li>Pul yoki parol so'ralsa, boshqa yo'l bilan (telefon, shaxsan) tekshiring</li><li>Shubhali xatni [IT XIZMATI EMAILI] manziliga yuboring</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Shubhali xatdagi havolani bosmang, ilovani ochmang</li><li>Parolni xat, SMS yoki messenjer orqali hech kimga bermang</li><li>\"Hammasini keyin tushuntiraman\" degan shoshilinch so'rovga bo'ysunmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Fishing texnik emas, psixologik hujum: u sizni shoshiltiradi. 2. Haqiqiy tashkilotlar parolni xat orqali so'ramaydi. 3. Shubha bo'lsa: to'xtang, tekshiring, xabar bering.</p>",
+          "quiz": [
+            {
+              "text": "Fishing nima?",
+              "options": [
+                {
+                  "text": "Ishonchli tashkilot nomidan aldab, ma'lumot yoki pul olishga urinish",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Kompyuter tezligini oshiruvchi dastur",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Parolni tez tiklash usuli",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Antivirus turi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "\"Hisobingiz 24 soatda o'chiriladi, parolni tasdiqlang\" degan xat qaysi belgi bilan shubha uyg'otadi?",
+              "options": [
+                {
+                  "text": "Muddat bilan qo'rqitish va parol so'rash",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Xat o'zbek tilida yozilgani",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xat ish vaqtida kelgani",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xatda sarlavha borligi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Direktor nomidan \"shoshilinch to'lovni hoziroq o'tkazing\" degan xat keldi. Eng to'g'ri harakat qaysi?",
+              "options": [
+                {
+                  "text": "Darhol o'tkazish, direktorning topshirig'i-ku",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xatga javob yozib, tafsilotlarni so'rash",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Direktorga telefon qilib yoki shaxsan so'rab tasdiqlatish",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Xatni boshqa hamkasbga yuborish",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "1.2. Shubhali xat va havolani qanday tanib olish mumkin",
+          "order": 2,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Fishing xatlari tobora ishonarli bo'lib bormoqda, eski belgi \"imlo xatolari\" har doim ham ishlamaydi. Shuning uchun bir nechta belgini birgalikda tekshirish kerak.</p>\n<h3>XATNI TEKSHIRISH RO'YXATI</h3>\n<ol><li><strong>YUBORUVCHI MANZILI</strong><br> Ko'rinadigan ism soxta bo'lishi mumkin (\"Direktor Aliyev\"), lekin email manzilni ham tekshiring.<br>Masalan: ishonchli:   ism@kompaniya.uz<br>soxta:       ism@kompaniya-support.com yoki ism@kompaniya.uz.xyz.com Bitta harf almashtirilgan manzillarga e'tibor bering (rn o'rniga m, 0 o'rniga o, l o'rniga 1).</li><li><strong>MUROJAAT</strong><br> \"Hurmatli foydalanuvchi\", \"Hurmatli mijoz\" kabi umumiy murojaat, holbuki haqiqiy tashkilot sizni ismingiz bilan biladi.</li><li><strong>SHOSHILINCHLIK VA TAHDID</strong><br> \"Bugun\", \"24 soatda\", \"hisobingiz bloklanadi\", \"jarima to'laysiz\".</li><li><strong>KUTILMAGAN ILOVA YOKI HAVOLA</strong><br> Siz kutmagan hisob-faktura, \"rezyume\", \"buyurtma\" fayli; ayniqsa .exe, .zip, .js, hamda makro bor Office fayllari.</li><li><strong>PAROL, KARTA, SMS-KOD SO'RALISHI</strong><br> Hech bir haqiqiy xizmat bularni xat orqali so'ramaydi.</li><li><strong>HAVOLANING HAQIQIY MANZILI</strong><br> Havola ustiga bosmasdan sichqonchani olib boring (telefonda uzoq bosing): pastda haqiqiy manzil ko'rinadi. Matn \"bank.uz\" desa-yu, manzil boshqa bo'lsa, bu fishing. Manzilning ASOSIY QISMI slash (/) dan oldingi so'zdan iborat:<br>https://bank.uz.tekshiruv-kirish.com/login<br>Bu yerda haqiqiy sayt \"tekshiruv-kirish.com\"; \"bank.uz\" faqat bezak.</li><li><strong>SAYTNI TEKSHIRISH</strong><br> Qulf belgisi (HTTPS) saytning xavfsiz ekanini kafolatlamaydi: soxta saytlar ham HTTPS ishlatadi. Manzilni diqqat bilan o'qing. Muhim saytga havoladan emas, brauzerga o'zingiz manzilni yozib yoki saqlangan xatcho'pdan kiring.</li></ol>\n<h3>MISOL</h3>\n<p>Yuboruvchi: \"Soliq xizmati\" &lt;info@soliq-xizmat.online&gt;<br>Matn: \"Sizda qarzdorlik aniqlandi. 3 soat ichida quyidagi havola orqali to'lang, aks holda hisob raqamingiz bloklanadi.\"<br>Belgilar: noto'g'ri domen (.online), tahdid, qisqa muddat, to'lov havolasi. Davlat idoralari bunday xat yubormaydi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Xat shubhali bo'lsa, havolani bosmay, [IT XIZMATI EMAILI] ga yuboring</li><li>Tasdiqlash kerak bo'lsa, tashkilotning rasmiy telefoniga o'zingiz qo'ng'iroq qiling (xatdagi raqamga emas)</li><li>Xato bilan havolani bosib qo'ygan bo'lsangiz, darhol IT xizmatiga ayting (3-modulda va 6-modulda tushuntiriladi)</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Havoladan ochilgan sahifaga parol yozmang</li><li>Xatdagi \"Obunani bekor qilish\" yoki \"Rad etish\" tugmalarini shubhali xatda bosmang, bu ham tuzoq bo'lishi mumkin</li><li>Shubhali xatga javob yozmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Faqat ismga emas, email manzilning o'ziga qarang. 2. Havolani bosishdan oldin haqiqiy manzilini ko'ring. 3. HTTPS qulfi saytning to'g'riligini isbotlamaydi.</p>",
+          "quiz": [
+            {
+              "text": "Quyidagi manzillardan qaysi biri fishing ekanligidan eng ko'p shubha uyg'otadi (kompaniya sayti: kompaniya.uz)?",
+              "options": [
+                {
+                  "text": "info@kompaniya.uz",
+                  "isCorrect": false
+                },
+                {
+                  "text": "hr@kompaniya.uz",
+                  "isCorrect": false
+                },
+                {
+                  "text": "info@kompaniya.uz.mening-saytim.com",
+                  "isCorrect": true
+                },
+                {
+                  "text": "buxgalteriya@kompaniya.uz",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Xatdagi havolaning haqiqiy manzilini qanday bilish mumkin?",
+              "options": [
+                {
+                  "text": "Havolani bosib, ochilgan sahifaga qarash",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xat matniga ishonish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xatni qayta yuborish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sichqonchani havola ustiga olib borish (telefonda uzoq bosib turish)",
+                  "isCorrect": true
+                }
+              ]
+            },
+            {
+              "text": "Saytda qulf belgisi (HTTPS) bor. Bu nimani anglatadi?",
+              "options": [
+                {
+                  "text": "Sayt albatta haqiqiy va xavfsiz",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sayt bilan aloqa shifrlangan, lekin sayt firibgarniki ham bo'lishi mumkin",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Sayt davlat nazoratidan o'tgan",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sayt ichida virus yo'q",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "1.3. Telefon, SMS va messenjerdagi firibgarlik",
+          "order": 3,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Firibgarlik faqat emailda emas. Telefon qo'ng'irog'i (vishing), SMS (smishing) va Telegram kabi messenjerlar ham keng qo'llaniladi. Odamlar telefon xabariga emaildan ko'ra ko'proq ishonadi.</p>\n<h3>KENG TARQALGAN USULLAR</h3>\n<ol><li><strong>\"BANK XODIMI\" QO'NG'IROG'I</strong><br> \"Kartangizdan shubhali pul yechilmoqda, hisobingizni saqlab qolish uchun SMS-kodni ayting.\" SMS-kod yoki karta ma'lumotini so'ragan har qanday \"bank xodimi\" firibgardir. Haqiqiy bank bunday kodni so'ramaydi.</li><li><strong>\"HAMKASB / RAHBAR\" MESSENJERDA</strong><br> Rahbar yoki hamkasbning fotosuratini qo'ygan yangi akkauntdan xabar: \"Bu mening yangi raqamim, shoshilinch yordam kerak, kartaga pul tashlab tur.\" Yoki: \"Mana bu faylni ochib ko'r.\"</li><li><strong>BUZILGAN AKKAUNT</strong><br> Hamkasbingizning haqiqiy akkaunti buzilgan bo'lishi mumkin va undan firibgar yozayotgan bo'ladi. Pul yoki kod so'ralsa, uni boshqa kanal (telefon, shaxsan) orqali tekshiring.</li><li><strong>SOVRIN, KREDIT, ISH TAKLIFI</strong><br> \"Siz yutdingiz\", \"Oldindan tasdiqlangan kredit\", \"Uydan turib kuniga katta daromad\". Birinchi to'lovni yoki ma'lumotni so'raydi.</li><li><strong>\"TEXNIK YORDAM\" QO'NG'IROG'I</strong><br> \"Kompyuteringizda virus aniqlandi, masofadan boshqarish dasturini o'rnating.\" Bu dastur orqali firibgar kompyuteringizni egallaydi.</li><li><strong>SMS ICHIDAGI HAVOLA</strong><br> Kutilmagan \"yetkazib berish\", \"jarima\", \"to'lov\" SMS'lari.</li></ol>\n<h3>FIRIBGARNING UCH BELGISI</h3>\n<ul><li>SHOSHILTIRADI (hozir, tez, bugun)</li><li>MAXFIYLIKNI TALAB QILADI (\"hech kimga aytma\")</li><li>SMS-KOD, PAROL YOKI PUL SO'RAYDI Shu uchtadan bittasi bo'lsa ham to'xtang.</li></ul>\n<h3>MISOL</h3>\n<p>\"Salom, men sizning bankingiz xavfsizlik xizmatidanman. Kartangizdan 5 million so'm yechishga urinish bo'ldi. Hozir telefoningizga kod keladi, uni ayting, operatsiyani bekor qilamiz.\"<br>Bu firibgarlik: kod aynan firibgarning o'zi boshlagan to'lovni tasdiqlash uchun keladi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Qo'ng'iroqni to'xtating. Bankning rasmiy raqamiga (kartaning orqasida yozilgan) o'zingiz qo'ng'iroq qiling</li><li>Rahbar yoki hamkasb pul so'rasa, uning o'zi bilan boshqa yo'l bilan bog'laning</li><li>Shubhali holatni [IT XIZMATI TELEFONI] raqamiga xabar qiling</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>SMS-kod, karta raqami, CVV, parolni hech kimga aytmang</li><li>Notanish odam talabi bilan dastur o'rnatmang, masofadan ulanishga ruxsat bermang</li><li>Shoshilinch pul o'tkazmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Bank va IT xizmati sizdan SMS-kod yoki parolni hech qachon so'ramaydi. 2. Shoshiltirish, sir tutish, pul yoki kod so'rash: firibgarlik belgisi. 3. Tasdiqlash uchun o'zingiz rasmiy raqamga qo'ng'iroq qiling.</p>",
+          "quiz": [
+            {
+              "text": "\"Bank xodimi\" qo'ng'iroq qilib, kartangizga kelgan SMS-kodni so'radi. Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Kodni aytaman, bu xavfsizlik uchun",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kodning yarmini aytaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Qo'ng'iroqni to'xtatib, bankning rasmiy raqamiga o'zim qo'ng'iroq qilaman",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Boshqa hamkasbimga ayttirib beraman",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Messenjerda yangi raqamdan rahbaringiz nomidan \"shoshilinch pul tashla\" degan xabar keldi. Eng to'g'ri harakat?",
+              "options": [
+                {
+                  "text": "Pulni tashlayman, rahbarni ranjitmayman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Xabarga \"ha\" deb javob yozaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Rahbarning eski raqamiga qo'ng'iroq qilib yoki shaxsan tasdiqlatib olaman",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Boshqa hamkasblarga yozaman, kim pul tashlaganini so'rayman",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Quyidagilardan qaysi biri firibgarlikning umumiy belgisi EMAS?",
+              "options": [
+                {
+                  "text": "Shoshiltirish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sizni ismingiz bilan chaqirib, rasmiy aloqa kanalidan yozish va parol so'ramaslik",
+                  "isCorrect": true
+                },
+                {
+                  "text": "\"Hech kimga aytma\" deb sir tutishni talab qilish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "SMS-kod, parol yoki pul so'rash",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Parollar va ikki bosqichli tasdiqlash",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "2.1. Yaxshi parol nima",
+          "order": 1,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Hisobga ruxsatsiz kirishlarning katta qismi zaif yoki o'g'irlangan parol tufayli sodir bo'ladi. \"123456\", \"qwerty\", \"password\" va tug'ilgan sana hamisha eng ommabop parollar qatorida. Firibgarlar parollarni kompyuter yordamida soniyada millionlab marta sinab ko'radi.</p>\n<h3>ASOSIY TUSHUNCHALAR</h3>\n<ul><li>Parol qancha UZUN bo'lsa, shuncha qiyin topiladi. Uzunlik murakkablikdan muhimroq.</li><li>\"P@ssw0rd!\" kabi parollar murakkab ko'rinadi, lekin juda keng tarqalgan o'zgartirish bo'lgani uchun firibgar ularni birinchi sinab ko'radi.</li><li>Eng yaxshi usul: PAROL-IBORA. Bir-biriga bog'liq bo'lmagan 4-5 ta so'zdan iborat uzun ibora. Misol (shunday ishlatmang, faqat namuna): \"daryo-qizil-mashina-olma-47\" Eslab qolish oson (rasm tasavvur qiling), topish juda qiyin.</li></ul>\n<h3>NIMALARNI PAROLDA ISHLATMANG</h3>\n<ul><li>Ismingiz, familiyangiz, farzandingiz, uy hayvoningiz ismi</li><li>Tug'ilgan sana, telefon raqami, avtomobil raqami</li><li>\"123456\", \"qwerty\", \"parol\", korxona nomi</li><li>Klaviaturadagi ketma-ketliklar (qwerty, 1qaz2wsx)</li><li>Ijtimoiy tarmoqda ko'rinib turadigan ma'lumotlar</li></ul>\n<h3>TAVSIYA ETILADIGAN MEZONLAR (KORXONA SIYOSATI UCHUN TAKLIF)</h3>\n<ul><li>Kamida 12 ta belgi, afzali 14 va undan ko'p</li><li>Har bir xizmat uchun alohida parol</li><li>Parolni majburan muntazam almashtirish shart emas; faqat u fosh bo'lgan yoki shubha bo'lganda darhol almashtiriladi [Bu band korxona IT siyosatiga qarab o'zgartiriladi]</li></ul>\n<h3>MISOL: ZAIF VA KUCHLI</h3>\n<p>Zaif:   Ali1990!      (ism + yil, qisqa, taxmin qilish oson)<br>Zaif:   P@ssw0rd      (keng tarqalgan o'zgartirish)<br>Kuchli: sariq-kitob-yomg'ir-chiroq-22  (uzun, so'zlar bog'lanmagan)</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Uzun parol-ibora tuzing</li><li>Har xizmatga boshqa parol qo'ying</li><li>Parolni xavfsiz joyda saqlang (2.2-dars)</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Parolni qog'ozga yozib monitorga yopishtirmang</li><li>Parolni hamkasbingizga bermang, hatto \"IT xodimi\" so'rasa ham</li><li>Shaxsiy ma'lumotlardan parol tuzmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Uzunlik muhim: parol-ibora qisqa murakkab paroldan yaxshi. 2. Shaxsiy ma'lumotlardan va ommabop so'zlardan foydalanmang. 3. Parolni hech kimga bermang.</p>",
+          "quiz": [
+            {
+              "text": "Quyidagilardan qaysi biri eng kuchli parol?",
+              "options": [
+                {
+                  "text": "sariq-kitob-yomg'ir-chiroq-22",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Ali1990!",
+                  "isCorrect": false
+                },
+                {
+                  "text": "P@ssw0rd",
+                  "isCorrect": false
+                },
+                {
+                  "text": "qwerty123456",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Nima uchun \"P@ssw0rd\" kabi parol zaif hisoblanadi?",
+              "options": [
+                {
+                  "text": "U juda uzun",
+                  "isCorrect": false
+                },
+                {
+                  "text": "U faqat harflardan iborat",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Uni eslab bo'lmaydi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Harflar o'rniga belgi qo'yish keng tarqalgan, firibgar buni birinchi sinab ko'radi",
+                  "isCorrect": true
+                }
+              ]
+            },
+            {
+              "text": "Parolga qaysi ma'lumotni qo'shish eng xavfli?",
+              "options": [
+                {
+                  "text": "Bir-biriga bog'liq bo'lmagan tasodifiy so'zlar",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Tug'ilgan sana va farzandingiz ismi",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Kamida 12 ta belgi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Raqamlar va tinish belgilari aralashmasi",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "2.2. Parol menejeri va parolni takrorlamaslik",
+          "order": 2,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Siz o'nlab xizmatdan foydalanasiz: ish pochtasi, ijtimoiy tarmoq, bank, internet-do'konlar. Hammasiga bitta parol qo'ysangiz, bitta sayt buzilganda hammasi xavf ostida qoladi. Bu \"domino effekti\".</p>\n<h3>ASOSIY TUSHUNCHALAR</h3>\n<ul><li>\"CREDENTIAL STUFFING\": biror sayt buzilgach, undagi email va parollar boshqa saytlarda avtomatik sinab ko'riladi. Agar parol takrorlansa, firibgar sizning boshqa hisoblaringizga ham kirib oladi.</li><li>PAROL MENEJERI: barcha parollarni shifrlangan holda saqlaydigan dastur. Siz faqat bitta \"asosiy parol\"ni eslab qolasiz, menejer qolgan murakkab va takrorlanmaydigan parollarni o'zi yaratadi va saqlaydi.</li><li>Parol menejeri saytning haqiqiy manzilini tekshiradi: soxta saytda parolni to'ldirmaydi. Bu fishingdan ham himoya qiladi.</li></ul>\n<h3>MISOL</h3>\n<p>Xodim bitta parolni ham ish pochtasi, ham o'yin saytida ishlatgan. O'yin sayti buzildi, parollar internetga tarqaldi. Firibgar shu emailni va parolni ish pochtasida sinab ko'rdi va kirdi.</p>\n<h3>BRAUZER BILAN SAQLASH VA ALOHIDA MENEJER</h3>\n<p>Brauzerning o'z parol saqlash funksiyasi, hech bo'lmaganda, parollarni eslab qolishdan yaxshiroq. Lekin korxonada tavsiya etilgan parol menejerini ishlatish afzal. [KORXONA TAVSIYA ETADIGAN MENEJER] Qaysi dasturdan foydalanishni IT xizmati belgilaydi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Eng muhim hisoblar (ish pochtasi, bank, asosiy email) uchun alohida va eng kuchli parol</li><li>Asosiy parolni (parol menejeriniki) hech qayerga yozmang, faqat eslab qoling</li><li>Parol qaysidir saytda fosh bo'lganini bilsangiz, o'sha parol ishlatilgan barcha joyda uni almashtiring</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Bitta parolni bir necha joyda ishlatmang</li><li>Parollarni telefon eslatmasi, Excel fayl yoki oddiy matn faylida saqlamang</li><li>Ish paroli bilan shaxsiy saytlarga kirmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Har xizmat uchun alohida parol: bitta buzilsa, boshqalari xavfsiz. 2. Parol menejeri murakkab parollarni siz o'rningizga eslaydi. 3. Ish va shaxsiy parollarni aralashtirmang.</p>",
+          "quiz": [
+            {
+              "text": "Nima uchun bitta parolni bir necha saytda ishlatish xavfli?",
+              "options": [
+                {
+                  "text": "Parol tezda eskiradi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Bitta sayt buzilsa, firibgar shu parolni boshqa hisoblarda sinab ko'radi",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Brauzer bunga yo'l qo'ymaydi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Parol sekinlashadi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Parol menejeri nima uchun foydali?",
+              "options": [
+                {
+                  "text": "U har xizmat uchun murakkab, takrorlanmaydigan parol yaratadi va saqlaydi",
+                  "isCorrect": true
+                },
+                {
+                  "text": "U parollarni hammaga ko'rsatadi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "U internetni tezlashtiradi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "U parolni hech qachon o'zgartirmaslikka imkon beradi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Parollarni saqlash uchun qaysi usul eng xavfli?",
+              "options": [
+                {
+                  "text": "Parol menejeri",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Telefondagi oddiy eslatma yoki Excel faylida ochiq yozib qo'yish",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Eslab qolish (kuchli parol-ibora)",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Korxona tavsiya qilgan menejer",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "2.3. Ikki bosqichli tasdiqlash (2FA)",
+          "order": 3,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Eng yaxshi parol ham fishing orqali o'g'irlanishi mumkin. Ikki bosqichli tasdiqlash (2FA) parol o'g'irlangan taqdirda ham hisobingizni himoya qiladi, chunki firibgarga parol bilan birga ikkinchi omil ham kerak.</p>\n<h3>ASOSIY TUSHUNCHALAR</h3>\n<p>Shaxsni tasdiqlashning uch turi bor:</p>\n<ol><li>Siz BILADIGAN narsa: parol, PIN-kod</li><li>Sizda BOR narsa: telefon, xavfsizlik kaliti</li><li>Siz O'ZINGIZ bo'lgan narsa: barmoq izi, yuz</li></ol>\n<p>2FA shulardan ikkitasini talab qiladi, masalan parol + telefondagi kod.</p>\n<h3>2FA TURLARI (KUCHLIDAN ZAIFROGIGA)</h3>\n<ul><li>Xavfsizlik kaliti (fizik kalit): eng kuchli, fishingdan himoya qiladi</li><li>Autentifikator ilovasi (Google Authenticator, Microsoft Authenticator va shu kabilar): har 30 soniyada yangi kod beradi. Yaxshi tanlov</li><li>SMS-kod: yo'qdan yaxshi, lekin zaifroq (SIM-kartani almashtirish orqali ushlab olinishi mumkin)<br>Qo'shimcha: telefon bildirishnomasidagi \"Tasdiqlash\" tugmasi.</li></ul>\n<h3>MFA CHARCHOQ HUJUMI</h3>\n<p>Firibgar paroldan foydalanib kiradi va sizning telefoningizga tasdiqlash so'rovlarini ketma-ket yuboradi. Siz charchab yoki tasodifan \"Ruxsat berish\" tugmasini bosib qo'yishingiz mumkin.<br>QOIDA: o'zingiz kirmayotgan bo'lsangiz va so'rov kelsa, hech qachon \"Ruxsat berish\"ni bosmang va IT xizmatiga xabar bering, parolingizni almashtiring.</p>\n<h3>KODNI KIMGA AYTISH MUMKIN?</h3>\n<p>Hech kimga. IT xodimi, bank, \"texnik yordam\" kodni so'raydi, deganlar hammasi firibgar.</p>\n<h3>MISOL</h3>\n<p>Xodim fishing saytga parolini yozdi. Firibgar uning pochtasiga kirmoqchi bo'ldi, lekin tizim telefondagi 2FA kodini so'radi. Kod bo'lmagani uchun firibgar kira olmadi. Xodim IT xizmatiga xabar berdi va parolni almashtirdi. Hisob saqlanib qoldi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Ish pochtasi, bank va ijtimoiy tarmoqlarda 2FA ni yoqing</li><li>Imkon bo'lsa, SMS emas, autentifikator ilovasidan foydalaning</li><li>Zaxira kodlarni xavfsiz joyda (parol menejerida) saqlang</li><li>Telefoningizni yo'qotsangiz, darhol IT xizmatiga xabar bering</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>2FA kodini hech kimga aytmang</li><li>O'zingiz boshlamagan tasdiqlash so'roviga ruxsat bermang</li><li>Kod keladigan telefonni ochiq qoldirmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. 2FA parol o'g'irlansa ham hisobni saqlab qoladi. 2. Kodni hech kimga aytmang, kutilmagan so'rovga ruxsat bermang. 3. SMS dan ko'ra autentifikator ilovasi xavfsizroq.</p>",
+          "quiz": [
+            {
+              "text": "Ikki bosqichli tasdiqlash (2FA) nima beradi?",
+              "options": [
+                {
+                  "text": "Parolni eslab qolishga hojat qoldirmaydi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Internetni tezlashtiradi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Parol o'g'irlansa ham firibgar ikkinchi omilsiz hisobga kira olmaydi",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Fishing xatlarini avtomatik o'chiradi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Siz kirmayapsiz, lekin telefoningizga \"Kirishni tasdiqlang\" so'rovlari ketma-ket kelyapti. Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Qo'ng'iroqdan qutulish uchun \"Ruxsat berish\"ni bosaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Telefonni o'chirib qo'yaman va unutaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Hamkasbimdan nima qilish kerakligini so'rayman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "\"Ruxsat berish\"ni bosmayman, IT xizmatiga xabar beraman va parolni almashtiraman",
+                  "isCorrect": true
+                }
+              ]
+            },
+            {
+              "text": "\"IT xizmati\" telefon qilib, sizning 2FA kodingizni so'radi. Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Kodni aytaman, bu IT xizmati-ku",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kodni aytmayman, bu firibgarlik; IT xizmatiga rasmiy raqam orqali xabar beraman",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Faqat birinchi uch raqamini aytaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kodni xat orqali yuboraman",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Zararli dasturlar va qurilma xavfsizligi",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "3.1. Zararli dasturlar: turlari va kirib kelish yo'llari",
+          "order": 1,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Bitta xodim shubhali faylni ochishi butun korxona tarmog'ini to'xtatib qo'yishi mumkin: hujjatlar shifrlanadi va ularni ochish uchun pul talab qilinadi. Bunday hodisalar dunyoda har kuni sodir bo'ladi.</p>\n<h3>ASOSIY TUSHUNCHALAR</h3>\n<p>ZARARLI DASTUR (malware): qurilmaga yoki ma'lumotga zarar yetkazish, ularni o'g'irlash yoki nazorat qilish uchun yaratilgan dastur.</p>\n<p>Asosiy turlari:</p>\n<ul><li>VIRUS va QURT: o'zini ko'paytirib, boshqa fayl yoki qurilmalarga tarqaladi</li><li>TROYAN: foydali dastur qiyofasida keladi, ichida zararli kod bor</li><li>SHPION DASTUR (spyware) va KEYLOGGER: nima yozayotganingizni, parollaringizni yashirincha kuzatadi</li><li>REKLAMA DASTURI (adware): ko'p reklama chiqaradi, ba'zan xavfli</li><li>TO'LOV TALAB QILUVCHI DASTUR (ransomware): fayllaringizni shifrlab, ochish uchun to'lov talab qiladi. Eng zararli turlardan biri</li><li>BOTNET: qurilmangiz egasidan yashirincha boshqa hujumlarda ishlatiladi</li></ul>\n<h3>QANDAY KIRIB KELADI</h3>\n<ol><li>Fishing xatidagi ilova yoki havola (eng keng tarqalgan yo'l)</li><li>Norasmiy saytlardan yuklab olingan dastur (\"krak\", bepul o'yin, film)</li><li>Noma'lum USB flesh-disk</li><li>Eskirgan, yangilanmagan dastur va operatsion tizim</li><li>Zararli reklama yoki soxta \"yangilash\" oynasi</li><li>Messenjerda kelgan fayl</li></ol>\n<h3>ZARARLANGAN QURILMA BELGILARI</h3>\n<ul><li>Kutilmagan sekinlik, ortiqcha reklama oynalari</li><li>Fayllar ochilmayapti yoki kengaytmasi o'zgargan</li><li>Ekranda \"Fayllaringiz shifrlandi\" yozuvi</li><li>Antivirus o'zi o'chib qolgan</li><li>Tanishlaringiz sizdan g'alati xabar kelganini aytishadi</li></ul>\n<h3>MISOL</h3>\n<p>Xodim \"hisob-faktura.zip\" faylini ochdi. Ichidagi dastur sezdirmasdan ishga tushdi, bir necha daqiqada ulashilgan papkadagi barcha hujjatlar shifrlanib, ekranda to'lov talabi chiqdi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Zararli dastur gumoni bo'lsa, qurilmani tarmoqdan (Wi-Fi, kabel) uzing va darhol [IT XIZMATI TELEFONI] ga qo'ng'iroq qiling</li><li>Qurilmani o'chirmang yoki qayta yuklamang, IT xodimi ko'rsatma bergunga qadar shunday qoldiring (aniq ko'rsatmani IT xizmati belgilaydi)</li><li>Nima bo'lganini yashirmasdan, to'liq aytib bering</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>To'lov talabiga o'zingiz to'lamang</li><li>Muammoni yashirib, o'zingiz \"hal qilishga\" urinmang</li><li>Zararlangan qurilmani korxona tarmog'ida qoldirmang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Zararli dasturning asosiy yo'li: fishing xati va norasmiy dastur. 2. Gumon bo'lsa: tarmoqdan uzing va darhol IT xizmatiga xabar bering. 3. Tez xabar berish zararni juda kamaytiradi. Yashirish uni oshiradi.</p>",
+          "quiz": [
+            {
+              "text": "Ransomware nima?",
+              "options": [
+                {
+                  "text": "Kompyuterni tezlashtiruvchi dastur",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Fayllarni shifrlab, ochish uchun to'lov talab qiladigan zararli dastur",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Reklama ko'rsatuvchi brauzer",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Parol menejerining bir turi",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Zararli dastur qurilmaga eng ko'p qaysi yo'l bilan kiradi?",
+              "options": [
+                {
+                  "text": "Antivirus yangilanishi orqali",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kompyuterni o'chirganda",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sichqonchani almashtirganda",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Fishing xatidagi ilova yoki havola orqali",
+                  "isCorrect": true
+                }
+              ]
+            },
+            {
+              "text": "Kompyuteringizda \"Fayllaringiz shifrlandi, to'lov qiling\" yozuvi chiqdi. Birinchi qadam qaysi?",
+              "options": [
+                {
+                  "text": "To'lovni amalga oshirish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Hech kimga aytmay, o'zim tiklashga urinish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Fayllarni flesh-diskka ko'chirib olish",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kompyuterni tarmoqdan uzib, darhol IT xizmatiga xabar berish",
+                  "isCorrect": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "3.2. Kompyuter va telefonni himoyalash",
+          "order": 2,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Dasturlarda zaifliklar doim topiladi. Ishlab chiqaruvchilar ularni yangilanishlar bilan tuzatadi. Yangilanmagan qurilma esa hujumchi uchun ochiq eshik bilan baravar.</p>\n<h3>ASOSIY QOIDALAR</h3>\n<ol><li><strong>YANGILANISHLAR</strong><br> Operatsion tizim (Windows, macOS, Android, iOS), brauzer va dasturlarni muntazam yangilab turing. Yangilanishni \"keyinga qoldirish\" tugmasini ketma-ket bosmang. Imkon bo'lsa, avtomatik yangilashni yoqing.</li><li><strong>ANTIVIRUS</strong><br> Korxona tomonidan o'rnatilgan antivirusni o'chirmang va uni sozlamasini o'zgartirmang. Skanerlash va yangilash ishlab tursin. [KORXONA ANTIVIRUSI NOMI]</li><li><strong>EKRANNI QULFLASH</strong><br> Joyingizdan turganda kompyuterni qulflang (Windows: Win + L). Telefon uchun PIN-kod, parol yoki biometriya.</li><li><strong>QURILMANI SHIFRLASH</strong><br> Noutbuk va telefon yo'qolsa, ma'lumotlar o'qilmasligi uchun diskni shifrlash yoqilgan bo'lishi kerak (IT xizmati bilan kelishing).</li><li><strong>ZAXIRA NUSXA</strong><br> Muhim fayllarni korxona ko'rsatgan joyda (server, bulut) saqlang, shunda qurilma buzilsa yoki shifrlansa, ma'lumot yo'qolmaydi.</li><li><strong>ISH VA SHAXSIY QURILMA</strong><br> Korxona hujjatlarini shaxsiy flesh-diskka, shaxsiy pochtaga yoki shaxsiy bulutga o'tkazmang. Shaxsiy telefon orqali ishlash tartibi bo'lsa, unga rioya qiling. [KORXONA SIYOSATI]</li><li><strong>YO'QOTISH</strong><br> Noutbuk yoki telefon yo'qolsa yoki o'g'irlansa, darhol IT xizmatiga xabar bering, ular masofadan blokirovka qilishi va parollarni almashtirishi mumkin.</li></ol>\n<h3>MISOL</h3>\n<p>Xodim noutbukni mashinada qoldirdi, uni o'g'irlashdi. Disk shifrlangan bo'lgani va xodim zudlik bilan IT xizmatiga xabar bergani uchun ma'lumotlar o'qilmadi, hisoblar blokirovka qilindi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Yangilanishlarni o'z vaqtida o'rnating</li><li>Ish joyidan turganda ekranni qulflang</li><li>Yo'qotishni zudlik bilan xabar qiling</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Antivirusni o'chirmang (\"kompyuter sekin ishlayapti\" desangiz ham)</li><li>Qurilmani kodsiz, ochiq qoldirmang</li><li>Qurilmaga begona odamni ruxsatsiz ishlatishga bermang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Yangilanishlar: eng oddiy va eng samarali himoya. 2. Ekranni qulflang, antivirusni o'chirmang. 3. Qurilma yo'qolsa, darhol xabar bering. Har daqiqa muhim.</p>",
+          "quiz": [
+            {
+              "text": "Nima uchun dastur va tizimni yangilab turish kerak?",
+              "options": [
+                {
+                  "text": "Yangilanishlar ko'rinishni o'zgartiradi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Yangilanishlar xotirani to'ldiradi",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Yangilanishlar xavfsizlik zaifliklarini tuzatadi",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Yangilanishlar faqat reklama uchun",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Joyingizdan turishingiz kerak, kompyuter ochiq. Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Ekranni qulflayman (masalan, Win + L)",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Hech narsa, 5 daqiqaga ketyapman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Monitorni o'chiraman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kompyuterni boshqa hamkasbga qarashga beraman",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Ish noutbuki yo'qoldi. Birinchi qadam qaysi?",
+              "options": [
+                {
+                  "text": "Darhol IT xizmatiga xabar beraman, ular blokirovka qilishi mumkin",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Kutaman, balki topilar",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Faqat do'stlarimga aytaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Parollarni o'zgartirmayman, chunki hech kim bilmaydi",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "3.3. USB, fayl va dasturlar bilan ehtiyotkorlik",
+          "order": 3,
+          "minDuration": 180,
+          "content": "<h3>NIMA UCHUN BU MUHIM?</h3>\n<p>Topib olingan flesh-disk, \"bepul\" dastur yoki kutilmagan fayl qurilmangizga zararli dastur olib kirishi mumkin. Firibgarlar ba'zan ataylab flesh-disklarni korxona avtoturargohiga tashlab ketadi: qiziqish odamni ularni kompyuterga ulashga undaydi.</p>\n<h3>USB QURILMALAR</h3>\n<ul><li>Notanish flesh-diskni kompyuteringizga HECH QACHON ulamang, hatto \"Maosh ro'yxati\" yoki \"Maxfiy\" deb yozilgan bo'lsa ham</li><li>Topilgan flesh-diskni IT xizmatiga topshiring</li><li>Shaxsiy flesh-diskni ham ishonchli bo'lmagan kompyuterga ulagandan keyin ish kompyuteriga ulamang</li><li>Ommaviy zaryadlash stansiyalarida telefon \"Ma'lumot uzatish\" so'rasa, rad eting (faqat zaryadlash rejimini tanlang)</li></ul>\n<h3>FAYLLAR</h3>\n<ul><li>Kutilmagan faylni ochishdan oldin yuboruvchidan boshqa yo'l bilan (telefon) so'rab tasdiqlang</li><li>Ehtiyot bo'ling: .exe, .scr, .js, .bat, .zip, .rar</li><li>Word/Excel fayli \"Makroslarni yoqing\" desa, YOQMANG. Bu odatiy usul</li><li>Fayl nomi aldamchi bo'lishi mumkin: \"hisobot.pdf.exe\" aslida dastur. Fayl kengaytmalarini ko'rsatishni yoqing</li></ul>\n<h3>DASTURLAR</h3>\n<ul><li>Dasturni faqat rasmiy sayt yoki rasmiy do'kondan (Google Play, App Store, Microsoft Store) yuklang</li><li>Ish kompyuteriga dasturni o'zingiz o'rnatmang, IT xizmatidan so'rang</li><li>\"Krak\", \"keygen\", litsenziyasiz dastur, bu eng ko'p uchraydigan zararli dastur manbalari</li><li>Brauzerda \"Kompyuteringiz zararlangan, hozir tozalang\" degan reklama oynasi, bu firibgarlik. Oynani yoping va hech narsani bosmang</li><li>Telefonda dastur so'ragan ruxsatlarga qarang: fonar dasturi kontaktlar va SMS'ga ruxsat so'rasa, shubhali</li></ul>\n<h3>MISOL</h3>\n<p>Xodim avtoturargohdan flesh-disk topib oldi, qiziqib kompyuterga ulab ko'rdi. Disk ichidagi dastur avtomatik ishga tushib, kompyuterni zararladi va tarmoqqa tarqaldi.</p>\n<h3>NIMA QILISH KERAK</h3>\n<ul><li>Notanish flesh-diskni IT xizmatiga topshiring</li><li>Dasturlarni faqat rasmiy manbadan yuklang va IT xizmati orqali</li><li>Fayl kengaytmalarini ko'rsatishni yoqing</li></ul>\n<h3>NIMA QILMASLIK KERAK</h3>\n<ul><li>Topilgan flesh-diskni ulamang</li><li>Fayldagi \"Makroslarni yoqing\" so'roviga rozi bo'lmang</li><li>Norasmiy saytdan dastur yoki \"krak\" yuklamang</li></ul>\n<h3>XULOSA (3 ta fikr)</h3>\n<p>1. Notanish flesh-diskni ulamang, IT xizmatiga bering. 2. Dasturni faqat rasmiy manbadan va IT xizmati orqali o'rnating. 3. \"Makroslarni yoqing\" yoki \"hozir tozalang\" deydigan oyna: xavf belgisi.</p>",
+          "quiz": [
+            {
+              "text": "Avtoturargohdan flesh-disk topdingiz. Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Ulamayman, IT xizmatiga topshiraman",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Qiziqib, kompyuterimga ulab ko'raman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Egasini topish uchun ichini ochib ko'raman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Uyga olib ketaman",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Excel fayl ochilganda \"Fayl to'g'ri ko'rinishi uchun makroslarni yoqing\" degan yozuv chiqdi (fayl kutilmagan xatdan). Nima qilasiz?",
+              "options": [
+                {
+                  "text": "Makroslarni yoqaman",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Faylni hamkasbimga yuboraman, u ko'rib bersin",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Yoqmayman, faylni yopaman va IT xizmatiga xabar beraman",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Faylni ish stoliga saqlab qo'yaman",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "text": "Dasturni qayerdan yuklash xavfsiz?",
+              "options": [
+                {
+                  "text": "\"Bepul krak\" ulashadigan saytlardan",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Messenjerda kelgan havoladan",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Reklama oynasida \"Hozir yuklang\" deganidan",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Rasmiy sayt yoki rasmiy do'kondan, ish kompyuteri uchun IT xizmati orqali",
+                  "isCorrect": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

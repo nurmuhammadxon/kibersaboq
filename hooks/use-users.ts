@@ -10,6 +10,7 @@ export interface User {
     organizationName: string
     createdAt: string
     isBlocked: boolean
+    companyCode: string | null
 }
 
 const emptyForm = { firstName: "", lastName: "", email: "", password: "", organizationName: "" }
@@ -45,7 +46,11 @@ export function useUsers() {
     const filtered = users.filter(u => {
         const fullName = `${u.firstName} ${u.lastName}`.toLowerCase()
         const q = search.toLowerCase()
-        return fullName.includes(q) || u.email.toLowerCase().includes(q)
+        return (
+            fullName.includes(q) ||
+            u.email.toLowerCase().includes(q) ||
+            (u.companyCode ?? "").toLowerCase().includes(q)
+        )
     })
 
     const openAdd = () => {

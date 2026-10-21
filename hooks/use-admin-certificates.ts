@@ -4,6 +4,8 @@ export interface Certificate {
     id: string
     certificateNumber: string
     issuedAt: string
+    revokedAt: string | null
+    revokedReason: string | null
     user: {
         id: string
         firstName: string
@@ -52,5 +54,22 @@ export function useAdminCertificates(userSearch: string, courseSearch: string) {
         }
     }
 
-    return { certificates, loading, deletingId, deleteCertificate }
+    async function setRevoked(id: string, revoke: boolean, reason?: string) {
+        const res = await fetch(`/api/admin/certificates/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ revoke, reason }),
+        })
+        if (!res.ok) return
+        const data = await res.json()
+        setCertificates((prev) =>
+            prev.map((c) =>
+                c.id === id
+                    ? { ...c, revokedAt: data.revokedAt, revokedReason: data.revokedReason }
+                    : c
+            )
+        )
+    }
+
+    return { certificates, loading, deletingId, deleteCertificate, setRevoked }
 }

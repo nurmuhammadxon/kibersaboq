@@ -13,7 +13,7 @@ export function AdminCertificatesTable() {
     const [userSearch, setUserSearch] = useState("")
     const [courseSearch, setCourseSearch] = useState("")
 
-    const { certificates, loading, deletingId, deleteCertificate } =
+    const { certificates, loading, deletingId, deleteCertificate, setRevoked } =
         useAdminCertificates(userSearch, courseSearch)
 
     return (
@@ -54,6 +54,7 @@ export function AdminCertificatesTable() {
                                     certificate={cert}
                                     isDeleting={deletingId === cert.id}
                                     onDelete={deleteCertificate}
+                                    onSetRevoked={setRevoked}
                                 />
                             ))}
                         </TableBody>

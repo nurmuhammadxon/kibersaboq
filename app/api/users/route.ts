@@ -9,7 +9,7 @@ export async function GET() {
     if (guard.error) return guard.error
 
     const users = await prisma.user.findMany({
-      where: { role: "USER" },
+      where: { role: { in: ["USER", "DIRECTOR"] } },
       select: {
         id: true,
         firstName: true,
@@ -19,10 +19,19 @@ export async function GET() {
         organizationName: true,
         createdAt: true,
         isBlocked: true,
+        // Direktorning korxonasi (ownedCompany) yoki xodim qo'shilgan korxona (company)
+        ownedCompany: { select: { code: true } },
+        company: { select: { code: true } },
       },
+      orderBy: { createdAt: "desc" },
     })
 
-    return NextResponse.json(users)
+    return NextResponse.json(
+      users.map(({ ownedCompany, company, ...u }) => ({
+        ...u,
+        companyCode: ownedCompany?.code ?? company?.code ?? null,
+      }))
+    )
   } catch (error) {
     console.error("Users GET xato:", error)
     return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
