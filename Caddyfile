@@ -1,0 +1,5 @@
+# HTTPS sertifikatni Caddy o'zi avtomatik oladi va yangilaydi.
+{$DOMAIN} {
+    encode gzip
+    reverse_proxy app:3000
+}

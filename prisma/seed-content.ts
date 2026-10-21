@@ -14,6 +14,7 @@ import { readFileSync } from "fs"
 import { join } from "path"
 import { PrismaClient } from "@prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
+import { pgOptions } from "../lib/pg-options"
 import { cleanLessonHtml } from "../lib/sanitize-html"
 
 type SeedOption = { text: string; isCorrect: boolean }
@@ -40,7 +41,7 @@ async function main() {
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL topilmadi (.env faylini tekshiring)")
 
   const prisma = new PrismaClient({
-    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+    adapter: new PrismaPg(pgOptions(process.env.DATABASE_URL)),
   })
 
   try {

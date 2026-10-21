@@ -11,6 +11,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
+  // Faqat Docker build'da (Vercel o'zi hal qiladi)
+  output: process.env.DOCKER_BUILD ? "standalone" : undefined,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

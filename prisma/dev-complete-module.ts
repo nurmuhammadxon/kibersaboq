@@ -14,6 +14,7 @@ import "dotenv/config"
 import { randomBytes } from "crypto"
 import { PrismaClient } from "@prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
+import { pgOptions } from "../lib/pg-options"
 
 const COURSE_TITLE = "Kiberxavfsizlik asoslari"
 
@@ -34,7 +35,7 @@ async function main() {
     process.exit(1)
   }
 
-  const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: url }) })
+  const prisma = new PrismaClient({ adapter: new PrismaPg(pgOptions(url)) })
   try {
     const user = await prisma.user.findUnique({ where: { email } })
     if (!user) throw new Error(`Foydalanuvchi topilmadi: ${email}`)
