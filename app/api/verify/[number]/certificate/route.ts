@@ -3,9 +3,6 @@ import { CERT_NUMBER_RE } from "@/lib/certificate-verify"
 import { clientIp, isLimited, recordHit } from "@/lib/rate-limit"
 import { prisma } from "@/lib/prisma"
 
-// Ochiq (login talab qilmaydi): faqat YAROQLI sertifikat uchun PDF yaratishga
-// kerakli ma'lumotni qaytaradi. To'liq ism faqat shu yerda, tugma bosilganda
-// beriladi (tekshiruv sahifasining o'zida ism qisqartirilgan holda turadi).
 export async function GET(
     req: Request,
     { params }: { params: Promise<{ number: string }> }
@@ -36,7 +33,6 @@ export async function GET(
             },
         })
 
-        // Bekor qilingan sertifikatni yuklab bo'lmaydi
         if (!cert || cert.revokedAt) {
             return NextResponse.json({ error: "Sertifikat topilmadi" }, { status: 404 })
         }

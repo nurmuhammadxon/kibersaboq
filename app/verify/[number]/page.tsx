@@ -32,7 +32,6 @@ export default async function VerifyPage({
     const { number: raw } = await params
     const number = decodeURIComponent(raw).trim()
 
-    // Raqamlarni terib ko'rishga qarshi cheklov (bitta IP dan)
     const ip = (await headers()).get("x-forwarded-for")?.split(",")[0].trim() || "unknown"
     const key = `verify:${ip}`
     const limited = await isLimited(key, MAX_PER_WINDOW, WINDOW_MS)

@@ -97,7 +97,6 @@ export function useCourses() {
             const data = await res.json()
             if (!res.ok) { setFormError(data.error); return }
             if (!editCourse) {
-                // Yangi kurs: darrov modul va dars qo'shishga o'tamiz
                 router.push(`/admin/courses/${data.id}`)
                 return
             }

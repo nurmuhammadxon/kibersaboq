@@ -18,7 +18,6 @@ export async function GET() {
         organizationName: true,
         createdAt: true,
         isBlocked: true,
-        // Direktorning korxonasi (ownedCompany) yoki xodim qo'shilgan korxona (company)
         ownedCompany: { select: { code: true } },
         company: { select: { code: true } },
       },

@@ -74,7 +74,6 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
     const base = verifyBaseUrl()
     const verifyUrl = `${base}/verify/${encodeURIComponent(data.certificateNumber)}`
 
-    // Sarlavha
     ctx.textAlign = "center"
     const titleSize = W * 0.07
     ctx.font = `800 ${titleSize}px ${SANS}`
@@ -91,7 +90,6 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
     ctx.fillStyle = "#64748B"
     ctx.fillText("ushbu sertifikat quyidagi shaxsga topshiriladi", W * 0.5, H * 0.362)
 
-    // Ism (uzun bo'lsa, kichraytiriladi)
     let nameSize = W * 0.036
     ctx.font = `600 ${nameSize}px ${SANS}`
     while (ctx.measureText(data.userName).width > W * 0.58 && nameSize > W * 0.02) {
@@ -101,7 +99,6 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
     ctx.fillStyle = "#0E78C0"
     ctx.fillText(data.userName, W * 0.5, H * 0.463)
 
-    // Tavsif (o'zbekcha va inglizcha)
     const maxW = W * 0.64
     ctx.fillStyle = "#1E293B"
     ctx.font = `400 ${W * 0.0168}px ${SANS}`
@@ -121,14 +118,11 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
     )
     drawLines(ctx, en, W * 0.5, y + H * 0.012, W * 0.0252)
 
-
-    // SN (sertifikat raqami)
     ctx.textAlign = "left"
     ctx.fillStyle = "#0F172A"
     ctx.font = `600 ${W * 0.0125}px ${SANS}`
     ctx.fillText(data.certificateNumber, W * 0.7545, H * 0.1535)
 
-    // Ogohlantirish matnlari
     ctx.fillStyle = "#475569"
     ctx.font = `400 ${W * 0.0122}px ${SANS}`
     const noteW = W * 0.5
@@ -156,7 +150,6 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
         W * 0.0164
     )
 
-    // QR kod
     const { default: QRCode } = await import("qrcode")
     const qrSize = Math.round(W * 0.115)
     const qrCanvas = document.createElement("canvas")
@@ -168,7 +161,6 @@ export async function renderCertificateCanvas(data: CertificateData): Promise<HT
     })
     ctx.drawImage(qrCanvas, 1774, 1167, qrSize, qrSize)
 
-    // QR chap tomonidagi yozuv
     ctx.textAlign = "right"
     ctx.fillStyle = "#475569"
     ctx.font = `400 ${W * 0.0125}px ${SANS}`

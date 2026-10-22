@@ -52,7 +52,6 @@ export function LandingHero() {
                     </div>
                 </div>
 
-                {/* Namuna ko'rinish: platformaning o'quvchi paneli qanday ko'rinishini ko'rsatadi */}
                 <div className="relative mx-auto w-full max-w-md" aria-hidden="true">
                     <div className="absolute -inset-4 bg-primary/10 blur-3xl rounded-full" />
                     <div className="relative bg-card border border-border rounded-2xl p-5 shadow-xl space-y-4">

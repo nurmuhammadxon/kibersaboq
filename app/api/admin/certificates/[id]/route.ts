@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
 
-// Sertifikatni bekor qilish yoki qayta tiklash (faqat SUPER_ADMIN)
 export async function PATCH(
     req: Request,
     { params }: { params: Promise<{ id: string }> }

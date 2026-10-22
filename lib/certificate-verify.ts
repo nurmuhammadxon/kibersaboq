@@ -1,13 +1,7 @@
 import { prisma } from "@/lib/prisma"
 
-// Sertifikat raqami formati: yangilari CERT-2026-ABCDEF1234, eskilari cuid.
-// Faqat harf, raqam va chiziqcha; uzunligi cheklangan.
 export const CERT_NUMBER_RE = /^[A-Za-z0-9-]{8,40}$/
 
-/**
- * Ochiq sahifada shaxsiy ma'lumot kam ko'rsatiladi: "Abdullayev A."
- * (Rahbariyat to'liq ism ko'rsatishni tanlasa, shu funksiyani o'zgartirish yetarli.)
- */
 export function maskName(firstName: string, lastName: string): string {
     const initial = firstName.trim().charAt(0).toUpperCase()
     return initial ? `${lastName.trim()} ${initial}.` : lastName.trim()

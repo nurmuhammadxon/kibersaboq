@@ -40,7 +40,6 @@ export function LandingFaq() {
         <section id="faq" className="scroll-mt-20 border-t border-border px-4 sm:px-6 py-16">
             <div className="max-w-3xl mx-auto">
                 <h2 className="text-2xl sm:text-3xl font-bold text-center">Ko'p beriladigan savollar</h2>
-                <p className="text-muted-foreground text-center mt-2 mb-10">Javob topolmasangiz, tashkilotingiz direktoriga murojaat qiling</p>
                 <div className="space-y-3">
                     {faqs.map((f) => (
                         <details key={f.q} className="group bg-card border border-border rounded-xl open:border-primary/40">

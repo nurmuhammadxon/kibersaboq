@@ -136,7 +136,6 @@ export function useCourseDetail(courseId: string) {
             const lesson = await res.json()
             setLessonModal(false)
             setLessonTitle("")
-            // Yangi dars: darrov matn va test savollarini yozishga o'tamiz
             router.push(`/admin/courses/${courseId}/lessons/${lesson.id}`)
         } catch {
             setLessonError("Xatolik yuz berdi")

@@ -4,9 +4,6 @@ import { getToken } from "next-auth/jwt"
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // HTTPS (server) da sessiya cookie nomi "__Secure-" bilan boshlanadi.
-  // getToken buni o'zi aniqlamaydi, shuning uchun protokolni shu yerda beramiz.
-  // (Reverse proxy orqasida protokol x-forwarded-proto sarlavhasida keladi.)
   const proto = req.headers.get("x-forwarded-proto") ?? req.nextUrl.protocol.replace(":", "")
   const token = await getToken({
     req,

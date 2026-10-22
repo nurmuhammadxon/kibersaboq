@@ -82,8 +82,6 @@ async function main() {
       })
     }
 
-    // Kursning barcha darslari tugagan bo'lsa, haqiqiy jarayondagidek
-    // obunani yakunlaymiz va sertifikat beramiz.
     const allLessons = course.modules.flatMap((m) => m.lessons)
     const done = await prisma.progress.count({
       where: {

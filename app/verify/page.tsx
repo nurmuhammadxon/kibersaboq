@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import type { Metadata } from "next"
 
@@ -22,6 +23,7 @@ export default async function VerifyIndexPage({
                 <p className="text-sm text-muted-foreground">
                     Sertifikatdagi raqamni kiriting yoki QR kodni telefon kamerasi bilan skaner qiling.
                 </p>
+
                 <form action="/verify" method="GET" className="space-y-3">
                     <input
                         name="number"
@@ -32,11 +34,19 @@ export default async function VerifyIndexPage({
                     />
                     <button
                         type="submit"
-                        className="w-full rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium"
+                        className="w-full rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium hover:bg-primary/90 transition-colors"
                     >
                         Tekshirish
                     </button>
                 </form>
+
+                <Link
+                    href="/"
+                    className="flex w-full items-center justify-center gap-2 rounded-md border bg-background py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                >
+                    <span aria-hidden>←</span>
+                    Bosh sahifaga qaytish
+                </Link>
             </div>
         </main>
     )
