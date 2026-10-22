@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kiber Saboq",
-  description: "Kiber Saboq",
+  title: "KiberSaboq: kiberxavfsizlik ta'limi",
+  description: "Xodimlarni fishing, parol va zararli fayllardan saqlanishga o'rgatadigan kiberxavfsizlik ta'lim platformasi. Kurslar, testlar va QR kodli sertifikatlar.",
 };
 
 export default function RootLayout({
