@@ -1,6 +1,6 @@
 # KiberSaboq
 
-KiberSaboq - tashkilotlar xodimlarini kiberxavfsizlik bo'yicha o'qitish platformasi. Direktor tashkilot yaratadi va korxona kodini oladi, xodimlar shu kod bilan qo'shilib kurslarni o'qiydi, testlarni topshiradi va QR kodli sertifikat oladi. Direktor xodimlarining natijasini hisobotda ko'radi.
+KiberSaboq - tashkilotlar xodimlarini kiberxavfsizlik bo'yicha o'qitish platformasi. Direktor tashkilot yaratadi va korxona kodini oladi, xodimlar shu kod bilan qo'shilib kurslarni o'qiydi, testlarni topshiradi va sertifikat oladi. Direktor xodimlarining natijasini hisobotda ko'radi.
 
 ## Imkoniyatlar
 

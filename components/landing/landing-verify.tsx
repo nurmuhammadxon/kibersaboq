@@ -13,7 +13,7 @@ export function LandingVerify() {
                     <h2 className="text-xl sm:text-2xl font-bold">Sertifikatni tekshirish</h2>
                     <p className="text-muted-foreground mt-2 text-sm sm:text-base">
                         Har sertifikatda QR kod va noyob raqam bor. Telefon bilan skaner qiling yoki raqamni kiriting,
-                        sertifikat haqiqiy yoki yo'qligi darrov ko'rinadi. Kirish talab qilinmaydi.
+                        sertifikat haqiqiy yoki yo'qligi darrov ko'rinadi.
                     </p>
                 </div>
                 <Button size="lg" variant="outline" asChild className="shrink-0">

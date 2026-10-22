@@ -37,9 +37,6 @@ export function LandingCurriculum() {
                         </div>
                     ))}
                 </div>
-                <p className="text-center text-sm text-muted-foreground mt-6">
-                    Keyingi modullar tayyorlanmoqda: ma'lumotlar bilan ishlash, xavfsiz tarmoq, hodisa yuz bersa nima qilish kerak.
-                </p>
             </div>
         </section>
     )

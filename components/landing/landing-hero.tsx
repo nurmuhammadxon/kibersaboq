@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 const points = [
     "Qisqa darslar va har dars uchun test",
-    "Kursni tugatganda QR kodli sertifikat",
+    "Kursni tugatganda sertifikat",
     "Direktor uchun xodimlar natijasi hisoboti",
 ]
 
@@ -27,7 +27,7 @@ export function LandingHero() {
                     <p className="text-muted-foreground text-lg max-w-xl">
                         Ko'pchilik hujumlar xodimning bitta noto'g'ri bosgan havolasidan boshlanadi.
                         KiberSaboq xodimlarni fishing, parol va zararli fayllardan saqlanishga
-                        o'rgatadi, rahbarga esa kim o'qiganini ko'rsatadi.
+                        o'rgatadi.
                     </p>
 
                     <ul className="flex flex-col gap-2 text-sm text-left">

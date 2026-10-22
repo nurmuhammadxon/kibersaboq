@@ -11,27 +11,19 @@ const faqs = [
     },
     {
         q: "Kurs qanday o'tiladi?",
-        a: "Darslar matn ko'rinishida. Har darsda test bor, o'tish uchun kamida 70 foiz to'g'ri javob kerak. Darsni yakunlash uchun belgilangan minimal vaqt o'qish talab qilinishi mumkin.",
+        a: "Darslar matn ko'rinishida. Har darsda test bor, o'tish uchun kamida 70 foiz to'g'ri javob kerak. Darsni yakunlash uchun belgilangan minimal vaqt o'qish talab qilinadi",
     },
     {
         q: "Sertifikat qachon beriladi?",
-        a: "Kursning barcha darslari va testlari tugagach sertifikat avtomatik beriladi va PDF qilib yuklab olinadi.",
+        a: "Kursning barcha darslari va testlari tugagach sertifikat avtomatik beriladi va shu zahotiyoq yuklab olish mumkin.",
     },
     {
         q: "Sertifikat haqiqiyligini qanday tekshiramiz?",
-        a: "Sertifikatdagi QR kodni telefon bilan skaner qiling yoki \"Sertifikatni tekshirish\" sahifasiga raqamni kiriting. Sahifada kirish talab qilinmaydi. Bekor qilingan sertifikat shunday deb ko'rsatiladi.",
+        a: "Sertifikatdagi QR kodni telefon bilan skaner qiling yoki \"Sertifikatni tekshirish\" sahifasiga raqamni kiriting.Bekor qilingan sertifikat \"Sertifikat bekor qilingan\"  deb ko'rsatiladi.",
     },
     {
         q: "Direktor nimalarni ko'ra oladi?",
         a: "O'z xodimlarining ro'yxatini, kurs bo'yicha jarayonini, test natijalarini va sertifikatlarini. Hisobotni CSV yoki PDF qilib yuklab olish mumkin.",
-    },
-    {
-        q: "Ma'lumotlarim himoyalanganmi?",
-        a: "Parollar shifrlangan holda saqlanadi, kirish rollar bo'yicha cheklangan: direktor faqat o'z tashkiloti xodimlarini ko'radi. Sertifikat tekshirish sahifasida ism qisqartirib ko'rsatiladi.",
-    },
-    {
-        q: "Parolni unutsam nima qilaman?",
-        a: "Kirish sahifasidagi \"Unutdingizmi?\" havolasi orqali emailingizga tiklash havolasi yuboriladi.",
     },
 ]
 
