@@ -60,9 +60,6 @@ export default function CourseCatalogPage() {
                                         </p>
                                         <p className="text-xs text-muted-foreground mt-0.5">
                                             {levelUz[course.level] ?? course.level}
-                                            {course.duration
-                                                ? ` · ${course.duration} soat`
-                                                : ""}
                                         </p>
                                     </div>
                                     <BookOpen className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />

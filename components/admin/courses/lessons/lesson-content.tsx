@@ -37,11 +37,11 @@ export function LessonContent({
             </div>
 
             <div className="space-y-1.5">
-                <Label className="text-foreground">Minimum o'qish vaqti (daqiqa)</Label>
+                <Label className="text-foreground">Minimum o'qish vaqti (soniya)</Label>
                 <Input
                     type="number"
                     min={0}
-                    placeholder="Masalan: 5"
+                    placeholder="Masalan: 180 (3 daqiqa)"
                     value={minDuration ?? ""}
                     onChange={e => {
                         const v = e.target.value

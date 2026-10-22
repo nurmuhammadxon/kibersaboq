@@ -53,13 +53,6 @@ export function useUsers() {
         )
     })
 
-    const openAdd = () => {
-        setEditUser(null)
-        setForm(emptyForm)
-        setFormError("")
-        setModalOpen(true)
-    }
-
     const openEdit = (user: User) => {
         setEditUser(user)
         setForm({
@@ -84,37 +77,26 @@ export function useUsers() {
         setSaving(true)
         setFormError("")
 
-        if (!editUser && (!form.firstName || !form.lastName || !form.email || !form.password || !form.organizationName)) {
-            setFormError("Barcha maydonlar to'ldirilishi shart")
+        if (!editUser) {
             setSaving(false)
             return
         }
 
         try {
-            if (editUser) {
-                const body: any = {
-                    firstName: form.firstName,
-                    lastName: form.lastName,
-                    email: form.email,
-                    organizationName: form.organizationName,
-                }
-                if (form.password) body.password = form.password
-                const res = await fetch(`/api/users/${editUser.id}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                })
-                const data = await res.json()
-                if (!res.ok) { setFormError(data.error); setSaving(false); return }
-            } else {
-                const res = await fetch("/api/users", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(form)
-                })
-                const data = await res.json()
-                if (!res.ok) { setFormError(data.error); setSaving(false); return }
+            const body: any = {
+                firstName: form.firstName,
+                lastName: form.lastName,
+                email: form.email,
+                organizationName: form.organizationName,
             }
+            if (form.password) body.password = form.password
+            const res = await fetch(`/api/users/${editUser.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            })
+            const data = await res.json()
+            if (!res.ok) { setFormError(data.error); setSaving(false); return }
             await fetchUsers()
             closeModal()
         } catch {
@@ -170,7 +152,7 @@ export function useUsers() {
         loading, error, fetchUsers,
         modalOpen, editUser, form, setForm,
         formError, saving, deleteId, setDeleteId,
-        openAdd, openEdit, closeModal,
+        openEdit, closeModal,
         handleSave, handleDelete,
         handleUnblock, handleBlock,
     }

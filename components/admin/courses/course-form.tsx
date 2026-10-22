@@ -10,9 +10,6 @@ interface CourseFormData {
     title: string
     description: string
     level: string
-    price: string
-    duration: string
-    thumbnail: string
 }
 
 interface Props {
@@ -64,57 +61,21 @@ export default function CourseForm({ open, onClose, onSave, form, onChange, savi
                         />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                            <Label className="text-foreground">Daraja</Label>
-                            <Select
-                                value={form.level}
-                                onValueChange={v => onChange({ ...form, level: v })}
-                            >
-                                <SelectTrigger className="bg-input border-border text-foreground">
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="bg-card border-border text-foreground">
-                                    <SelectItem value="BEGINNER">Boshlang'ich</SelectItem>
-                                    <SelectItem value="INTERMEDIATE">O'rta</SelectItem>
-                                    <SelectItem value="ADVANCED">Yuqori</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <div className="space-y-1.5">
-                            <Label className="text-foreground">Narx (USD)</Label>
-                            <Input
-                                type="number"
-                                placeholder="0.00"
-                                value={form.price}
-                                onChange={set("price")}
-                                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                            <Label className="text-foreground">Davomiyligi (daqiqa)</Label>
-                            <Input
-                                type="number"
-                                placeholder="60"
-                                value={form.duration}
-                                onChange={set("duration")}
-                                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                            />
-                        </div>
-
-                        <div className="space-y-1.5">
-                            <Label className="text-foreground">Thumbnail URL</Label>
-                            <Input
-                                placeholder="https://..."
-                                value={form.thumbnail}
-                                onChange={set("thumbnail")}
-                                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                            />
-                        </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-foreground">Daraja</Label>
+                        <Select
+                            value={form.level}
+                            onValueChange={v => onChange({ ...form, level: v })}
+                        >
+                            <SelectTrigger className="bg-input border-border text-foreground">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-card border-border text-foreground">
+                                <SelectItem value="BEGINNER">Boshlang'ich</SelectItem>
+                                <SelectItem value="INTERMEDIATE">O'rta</SelectItem>
+                                <SelectItem value="ADVANCED">Yuqori</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 

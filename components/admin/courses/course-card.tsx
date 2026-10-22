@@ -1,4 +1,4 @@
-import { BookOpen, Users, Eye, EyeOff, Pencil, Trash2, Clock } from "lucide-react"
+import { BookOpen, Users, Eye, EyeOff, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -39,18 +39,6 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
 
     return (
         <div className="bg-card border border-border rounded-2xl overflow-hidden hover:border-muted transition-colors flex flex-col">
-            {course.thumbnail ? (
-                <img
-                    src={course.thumbnail}
-                    alt={course.title}
-                    className="w-full h-36 object-cover"
-                />
-            ) : (
-                <div className="w-full h-36 bg-linear-to-{dir} from-blue-600/20 to-indigo-600/20 flex items-center justify-center">
-                    <BookOpen className="w-10 h-10 text-primary/40" />
-                </div>
-            )}
-
             <div className="p-4 space-y-3 flex-1 flex flex-col">
                 <div className="flex items-start justify-between gap-2">
                     <h3 className="text-foreground font-semibold text-sm leading-snug">{course.title}</h3>
@@ -72,18 +60,9 @@ export default function CourseCard({ course, onEdit, onDelete, onTogglePublish }
                         <Users className="w-3.5 h-3.5" />
                         {course.enrollments.length} o'quvchi
                     </span>
-                    {course.duration && (
-                        <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" />
-                            {course.duration} daq
-                        </span>
-                    )}
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <span className="text-foreground text-sm font-medium">
-                        {course.price ? `$${course.price}` : "Bepul"}
-                    </span>
+                <div className="flex items-center justify-end">
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${course.isPublished ? "bg-emerald-500/10 text-emerald-400" : "bg-muted text-muted-foreground"}`}>
                         {course.isPublished ? "Faol" : "Qoralama"}
                     </span>

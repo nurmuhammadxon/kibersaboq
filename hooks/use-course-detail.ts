@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
 
 export interface Lesson {
     id: string
@@ -25,6 +26,7 @@ export interface Course {
 }
 
 export function useCourseDetail(courseId: string) {
+    const router = useRouter()
     const [course, setCourse] = useState<Course | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
@@ -131,14 +133,26 @@ export function useCourseDetail(courseId: string) {
                 })
             })
             if (!res.ok) throw new Error()
+            const lesson = await res.json()
             setLessonModal(false)
             setLessonTitle("")
-            await fetchCourse()
+            // Yangi dars: darrov matn va test savollarini yozishga o'tamiz
+            router.push(`/admin/courses/${courseId}/lessons/${lesson.id}`)
         } catch {
             setLessonError("Xatolik yuz berdi")
         } finally {
             setLessonSaving(false)
         }
+    }
+
+    const togglePublish = async () => {
+        if (!course) return
+        await fetch(`/api/courses/${courseId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ isPublished: !course.isPublished })
+        })
+        await fetchCourse()
     }
 
     const handleDeleteLesson = async (lessonId: string, moduleId: string) => {
@@ -157,5 +171,6 @@ export function useCourseDetail(courseId: string) {
         lessonTitle, setLessonTitle, lessonType, setLessonType,
         lessonSaving, lessonError, deleteLessonId, setDeleteLessonId,
         openLessonModal, handleAddLesson, handleDeleteLesson,
+        togglePublish,
     }
 }

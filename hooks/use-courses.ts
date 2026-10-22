@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
 
 interface Course {
     id: string
@@ -18,12 +19,10 @@ const emptyForm = {
     title: "",
     description: "",
     level: "BEGINNER",
-    price: "",
-    duration: "",
-    thumbnail: "",
 }
 
 export function useCourses() {
+    const router = useRouter()
     const [courses, setCourses] = useState<Course[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
@@ -63,9 +62,6 @@ export function useCourses() {
             title: course.title,
             description: course.description || "",
             level: course.level,
-            price: course.price?.toString() || "",
-            duration: course.duration?.toString() || "",
-            thumbnail: course.thumbnail || "",
         })
         setFormError("")
         setModalOpen(true)
@@ -96,13 +92,15 @@ export function useCourses() {
                     title: form.title,
                     description: form.description || null,
                     level: form.level,
-                    price: form.price ? parseFloat(form.price) : null,
-                    duration: form.duration ? parseInt(form.duration) : null,
-                    thumbnail: form.thumbnail || null,
                 })
             })
             const data = await res.json()
             if (!res.ok) { setFormError(data.error); return }
+            if (!editCourse) {
+                // Yangi kurs: darrov modul va dars qo'shishga o'tamiz
+                router.push(`/admin/courses/${data.id}`)
+                return
+            }
             await fetchCourses()
             closeModal()
         } catch {

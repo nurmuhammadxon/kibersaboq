@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import { readFileSync } from "fs";
+
+const appVersion: string = JSON.parse(readFileSync("./package.json", "utf-8")).version;
 
 const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
@@ -10,6 +13,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  env: { NEXT_PUBLIC_APP_VERSION: appVersion },
   poweredByHeader: false,
   // Faqat Docker build'da (Vercel o'zi hal qiladi)
   output: process.env.DOCKER_BUILD ? "standalone" : undefined,

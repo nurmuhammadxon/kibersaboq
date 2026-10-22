@@ -7,7 +7,7 @@ export function Footer() {
                 </p>
                 <div className="hidden sm:block w-1 h-1 rounded-full bg-muted-foreground/30" />
                 <p className="text-muted-foreground text-[10px] sm:text-xs font-medium">
-                    v2.0.0
+                    v{process.env.NEXT_PUBLIC_APP_VERSION}
                 </p>
             </div>
         </footer>

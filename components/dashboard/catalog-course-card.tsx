@@ -51,11 +51,6 @@ export function CatalogCourseCard({ course }: CatalogCourseCardProps) {
         }
     }
 
-    const priceLabel =
-        course.price != null && String(course.price) !== ""
-            ? `${Number(course.price).toLocaleString("uz-UZ")} so‘m`
-            : null
-
     return (
         <Card className="flex flex-col overflow-hidden border-border">
             <div className="aspect-video bg-muted relative">
@@ -78,8 +73,6 @@ export function CatalogCourseCard({ course }: CatalogCourseCardProps) {
                 </CardTitle>
                 <CardDescription className="text-xs">
                     {levelUz[course.level] ?? course.level}
-                    {course.duration ? ` • ${course.duration} daq.` : ""}
-                    {priceLabel ? ` • ${priceLabel}` : ""}
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-2">

@@ -1,7 +1,7 @@
 "use client"
 import { useParams } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Loading from "@/components/_components/loading"
 import { Error as ErrorComponent } from "@/components/_components/error"
@@ -24,6 +24,7 @@ export default function CourseDetailPage() {
         lessonTitle, setLessonTitle, lessonType, setLessonType,
         lessonSaving, lessonError, deleteLessonId, setDeleteLessonId,
         openLessonModal, handleAddLesson, handleDeleteLesson,
+        togglePublish,
     } = useCourseDetail(id)
 
     if (loading) return <Loading />
@@ -46,12 +47,16 @@ export default function CourseDetailPage() {
                         {course.modules.length} modul • {totalLessons} dars • {course.enrollments.length} o'quvchi
                     </p>
                 </div>
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium shrink-0 ${course.isPublished
-                    ? "bg-emerald-500/10 text-emerald-400"
-                    : "bg-muted text-muted-foreground"
-                    }`}>
-                    {course.isPublished ? "Faol" : "Qoralama"}
-                </span>
+                <Button
+                    variant={course.isPublished ? "outline" : "default"}
+                    size="sm"
+                    className="gap-2 shrink-0"
+                    onClick={togglePublish}
+                >
+                    {course.isPublished
+                        ? <><EyeOff className="w-4 h-4" /> Qoralamaga qaytarish</>
+                        : <><Eye className="w-4 h-4" /> Nashr qilish</>}
+                </Button>
             </div>
 
             <ModuleList

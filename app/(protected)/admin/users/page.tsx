@@ -14,7 +14,7 @@ export default function UsersPage() {
         loading, error, fetchUsers,
         modalOpen, editUser, form, setForm,
         formError, saving, deleteId, setDeleteId,
-        openAdd, openEdit, closeModal,
+        openEdit, closeModal,
         handleSave, handleDelete,
         handleBlock, handleUnblock,
     } = useUsers()
@@ -24,7 +24,7 @@ export default function UsersPage() {
 
     return (
         <div className="space-y-6">
-            <UsersHeader count={filtered.length} onAdd={openAdd} />
+            <UsersHeader count={filtered.length} />
             <UsersSearch value={search} onChange={setSearch} />
             <UsersTable
                 users={filtered}

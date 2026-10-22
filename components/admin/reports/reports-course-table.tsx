@@ -30,7 +30,6 @@ export function ReportsCourseTable({ rows }: ReportsCourseTableProps) {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Kurs</TableHead>
-                            <TableHead className="text-right hidden sm:table-cell">Narx</TableHead>
                             <TableHead className="text-right">Yozilishlar</TableHead>
                             <TableHead className="text-right">Yakunlangan</TableHead>
                             <TableHead className="text-right">Sertifikatlar</TableHead>
@@ -41,9 +40,6 @@ export function ReportsCourseTable({ rows }: ReportsCourseTableProps) {
                         {rows.map((row) => (
                             <TableRow key={row.id}>
                                 <TableCell className="font-medium">{row.title}</TableCell>
-                                <TableCell className="text-right hidden sm:table-cell">
-                                    {row.price ? `$${row.price}` : "Bepul"}
-                                </TableCell>
                                 <TableCell className="text-right">{row.enrollments}</TableCell>
                                 <TableCell className="text-right">{row.completed}</TableCell>
                                 <TableCell className="text-right">{row.certificates}</TableCell>
