@@ -21,8 +21,6 @@ interface Props {
 }
 
 export function UserFields({ companyCode, field, onChange }: Props) {
-    // Standart holat: korxona kodi so'ralmaydi (mustaqil o'quvchi).
-    // Belgilanganda kod maydoni ochiladi va tekshiriladi.
     const [hasCode, setHasCode] = useState(companyCode.trim() !== "")
 
     const toggle = (checked: boolean) => {
@@ -33,43 +31,36 @@ export function UserFields({ companyCode, field, onChange }: Props) {
     return (
         <>
             <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
-                    <input
-                        type="checkbox"
-                        checked={hasCode}
-                        onChange={(e) => toggle(e.target.checked)}
-                        className="h-4 w-4 rounded border-input accent-primary cursor-pointer"
+                <div className="flex items-center justify-between ml-1">
+                    <Label className="text-muted-foreground text-[10px] uppercase font-bold">
+                        Korxona kodi
+                    </Label>
+                    <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer select-none">
+                        <input
+                            type="checkbox"
+                            checked={hasCode}
+                            onChange={(e) => toggle(e.target.checked)}
+                            className="h-4 w-4 rounded border-input accent-primary cursor-pointer"
+                        />
+                        Kodim bor
+                    </label>
+                </div>
+                <div className="relative group">
+                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input
+                        value={companyCode}
+                        onChange={(e) => onChange("companyCode", e.target.value)}
+                        placeholder="KS-4829"
+                        className="pl-10"
+                        disabled={!hasCode}
+                        required={hasCode}
                     />
-                    Korxona kodim bor
-                </label>
-
-                {hasCode ? (
-                    <>
-                        <div className="relative group">
-                            <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                            <Input
-                                value={companyCode}
-                                onChange={(e) => onChange("companyCode", e.target.value)}
-                                placeholder="KS-4829"
-                                className="pl-10"
-                                required
-                                autoFocus
-                            />
-                        </div>
-                        <p className="text-xs text-muted-foreground ml-1">
-                            Kodni direktoringizdan oling. Kod tekshiriladi va siz korxonaga qo'shilasiz.
-                        </p>
-                    </>
-                ) : (
-                    <p className="text-xs text-muted-foreground ml-1">
-                        Kodsiz mustaqil o'quvchi sifatida ro'yxatdan o'tasiz: o'qiysiz va sertifikat olasiz.
-                    </p>
-                )}
+                </div>
             </div>
 
             <div className="space-y-2">
                 <Label className="text-muted-foreground text-[10px] uppercase font-bold ml-1">
-                    Yo'nalish (ixtiyoriy)
+                    Yo'nalish
                 </Label>
                 <select
                     value={field}
