@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Hash } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,25 +21,50 @@ interface Props {
 }
 
 export function UserFields({ companyCode, field, onChange }: Props) {
+    // Standart holat: korxona kodi so'ralmaydi (mustaqil o'quvchi).
+    // Belgilanganda kod maydoni ochiladi va tekshiriladi.
+    const [hasCode, setHasCode] = useState(companyCode.trim() !== "")
+
+    const toggle = (checked: boolean) => {
+        setHasCode(checked)
+        if (!checked) onChange("companyCode", "")
+    }
+
     return (
         <>
             <div className="space-y-2">
-                <Label className="text-muted-foreground text-[10px] uppercase font-bold ml-1">
-                    Korxona kodi (ixtiyoriy)
-                </Label>
-                <div className="relative group">
-                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                    <Input
-                        value={companyCode}
-                        onChange={(e) => onChange("companyCode", e.target.value)}
-                        placeholder="KS-4829"
-                        className="pl-10"
+                <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                    <input
+                        type="checkbox"
+                        checked={hasCode}
+                        onChange={(e) => toggle(e.target.checked)}
+                        className="h-4 w-4 rounded border-input accent-primary cursor-pointer"
                     />
-                </div>
-                <p className="text-xs text-muted-foreground ml-1">
-                    Kodingiz bo'lsa kiriting (direktoringizdan oling). Bo'lmasa, bo'sh qoldiring:
-                    mustaqil o'quvchi sifatida o'qiysiz va sertifikat olasiz.
-                </p>
+                    Korxona kodim bor
+                </label>
+
+                {hasCode ? (
+                    <>
+                        <div className="relative group">
+                            <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                            <Input
+                                value={companyCode}
+                                onChange={(e) => onChange("companyCode", e.target.value)}
+                                placeholder="KS-4829"
+                                className="pl-10"
+                                required
+                                autoFocus
+                            />
+                        </div>
+                        <p className="text-xs text-muted-foreground ml-1">
+                            Kodni direktoringizdan oling. Kod tekshiriladi va siz korxonaga qo'shilasiz.
+                        </p>
+                    </>
+                ) : (
+                    <p className="text-xs text-muted-foreground ml-1">
+                        Kodsiz mustaqil o'quvchi sifatida ro'yxatdan o'tasiz: o'qiysiz va sertifikat olasiz.
+                    </p>
+                )}
             </div>
 
             <div className="space-y-2">
