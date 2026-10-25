@@ -20,7 +20,7 @@ export function DirectorFields({ companyName, organizationName, onChange }: Prop
                     <Input
                         value={companyName}
                         onChange={(e) => onChange("companyName", e.target.value)}
-                        placeholder="TATU"
+                        placeholder="Kiber Saboq"
                         className="pl-10"
                         required
                     />

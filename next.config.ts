@@ -13,7 +13,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   devIndicators: false,
-  env: { NEXT_PUBLIC_APP_VERSION: appVersion },
+  env: {
+    NEXT_PUBLIC_APP_VERSION: appVersion,
+    NEXT_PUBLIC_APP_COMMIT: (process.env.VERCEL_GIT_COMMIT_SHA ?? "").slice(0, 7),
+  },
   poweredByHeader: false,
   output: process.env.DOCKER_BUILD ? "standalone" : undefined,
   async headers() {
