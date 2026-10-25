@@ -52,7 +52,7 @@ export function UsersTable({ users, onEdit, onDelete, onBlock, onUnblock }: Prop
                                     </div>
                                 </TableCell>
                                 <TableCell className="text-foreground text-sm">{user.email}</TableCell>
-                                <TableCell className="text-foreground text-sm hidden md:table-cell">{user.organizationName}</TableCell>
+                                <TableCell className="text-foreground text-sm hidden md:table-cell">{user.organizationName || (user.role === "USER" ? "Mustaqil" : "—")}</TableCell>
                                 <TableCell className="text-foreground text-sm font-mono hidden md:table-cell">
                                     {user.companyCode ?? "—"}
                                 </TableCell>

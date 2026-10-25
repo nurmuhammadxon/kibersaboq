@@ -6,6 +6,7 @@ export interface Certificate {
     issuedAt: string
     revokedAt: string | null
     revokedReason: string | null
+    flags: string[]
     user: {
         id: string
         firstName: string

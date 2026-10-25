@@ -53,6 +53,8 @@ export async function GET(
                 )
             }
 
+            // Dars ochilgan vaqtni serverda yozib qo'yamiz (minimal o'qish vaqtini
+            // tekshirish uchun). Mavjud bo'lsa, o'zgartirilmaydi.
             await prisma.progress.upsert({
                 where: { userId_lessonId: { userId, lessonId } },
                 update: {},
@@ -61,15 +63,11 @@ export async function GET(
 
             const sanitized = {
                 ...lesson,
+                // Savollar darsning o'zi bilan berilmaydi: test boshlanganda
+                // /api/quizzes/[id]/start orqali tasodifiy tartibda beriladi.
                 quizzes: lesson.quizzes.map((qz) => ({
-                    ...qz,
-                    questions: qz.questions.map((q) => ({
-                        ...q,
-                        options: q.options.map((o) => ({
-                            id: o.id,
-                            text: o.text,
-                        })),
-                    })),
+                    id: qz.id,
+                    questionCount: qz.questions.length,
                 })),
             }
             const { module: _m, ...rest } = sanitized

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { randomBytes } from "crypto"
 import { requireUser } from "@/lib/authz"
 import { prisma } from "@/lib/prisma"
+import { remainingActiveSeconds } from "@/lib/quiz-integrity"
 
 export async function GET(req: Request) {
   try {
@@ -53,6 +54,7 @@ export async function POST(req: Request) {
 
     const courseId = lesson.module.courseId
 
+    // 1) Foydalanuvchi shu kursga yozilgan bo'lishi shart
     const enrolled = await prisma.enrollment.findUnique({
       where: { userId_courseId: { userId, courseId } },
     })
@@ -60,25 +62,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Bu kursga yozilinmagan" }, { status: 403 })
     }
 
+    // 2) Minimal FAOL o'qish vaqti serverda tekshiriladi: vaqt faqat sahifa ochiq va
+    // foydalanuvchi faol bo'lganda hisoblanadi (brauzer taymeriga ishonilmaydi)
     const existing = await prisma.progress.findUnique({
       where: { userId_lessonId: { userId, lessonId } },
-      select: { startedAt: true, completedAt: true },
+      select: { activeSeconds: true, completedAt: true },
     })
     if (lesson.minDuration && !existing?.completedAt) {
       if (!existing) {
         return NextResponse.json({ error: "Avval darsni oching" }, { status: 403 })
       }
-      const elapsedSec = (Date.now() - existing.startedAt.getTime()) / 1000
-      const needSec = lesson.minDuration - 2 
-      if (elapsedSec < needSec) {
-        const left = Math.ceil(lesson.minDuration - elapsedSec)
+      const left = remainingActiveSeconds(existing.activeSeconds, lesson.minDuration)
+      if (left > 0) {
         return NextResponse.json(
-          { error: `Darsni kamida yana ${left} soniya o'qing` },
+          { error: `Darsni kamida yana ${left} soniya faol o'qing` },
           { status: 403 }
         )
       }
     }
 
+    // 3) Darsdagi barcha testlardan o'tilgan bo'lishi shart
     if (lesson.quizzes.length > 0) {
       const passedQuizzes = await prisma.quizResult.findMany({
         where: {
@@ -126,6 +129,7 @@ export async function POST(req: Request) {
         data: { completedAt: new Date() },
       })
 
+      // Taxmin qilib bo'lmaydigan raqam + (userId, courseId) bo'yicha takrorlanmaslik
       const certificateNumber = `CERT-${new Date().getFullYear()}-${randomBytes(5)
         .toString("hex")
         .toUpperCase()}`

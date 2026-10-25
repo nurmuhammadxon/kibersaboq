@@ -198,7 +198,7 @@ export async function GET(req: Request) {
                     firstName: u.firstName,
                     lastName: u.lastName,
                     email: u.email,
-                    company: (u.companyId && companyName.get(u.companyId)) || u.organizationName || "—",
+                    company: (u.companyId && companyName.get(u.companyId)) || u.organizationName || "Mustaqil",
                     isBlocked: u.isBlocked,
                     enrollments: a.enrollments,
                     completed: a.completed,

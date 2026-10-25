@@ -18,7 +18,8 @@ export default function LearnerLessonPage() {
     const {
         lesson, loading, error,
         completed, marking,
-        timerReady, remaining,
+        paused, timerReady, remaining,
+        syncActive,
         refresh, markComplete,
     } = useLearnerLesson(lessonId)
 
@@ -57,7 +58,13 @@ export default function LearnerLessonPage() {
             <LessonViewer lesson={lesson} />
 
             {lesson.quizzes[0] && (
-                <LessonQuiz quiz={lesson.quizzes[0]} lessonId={lessonId} />
+                <LessonQuiz
+                    quiz={lesson.quizzes[0]}
+                    lessonId={lessonId}
+                    canStart={timerReady || completed}
+                    remaining={remaining}
+                    onBeforeStart={syncActive}
+                />
             )}
 
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between rounded-xl border border-border bg-card p-4">
@@ -71,7 +78,10 @@ export default function LearnerLessonPage() {
                         <>
                             <Clock className="h-5 w-5 text-muted-foreground" />
                             <span className="text-muted-foreground">
-                                Yakunlash uchun kuting: <span className="font-mono font-medium text-foreground">{mm}:{ss}</span>
+                                {paused
+                                    ? "Vaqt to'xtatildi: sahifaga qayting va o'qishni davom ettiring. "
+                                    : "O'qish vaqti: "}
+                                <span className="font-mono font-medium text-foreground">{mm}:{ss}</span> qoldi
                             </span>
                         </>
                     ) : (

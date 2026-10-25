@@ -6,6 +6,7 @@ export interface DirectorCertificate {
     id: string
     certificateNumber: string
     issuedAt: string
+    flags: string[]
     user: {
         id: string
         firstName: string

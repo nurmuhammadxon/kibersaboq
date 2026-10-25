@@ -103,7 +103,7 @@ function Details({
     const rows: [string, string][] = [
         ["Egasi", result.holder],
         ["Kurs", result.courseTitle],
-        ["Korxona", result.organization],
+        ...(result.organization ? ([["Korxona", result.organization]] as [string, string][]) : []),
         ["Berilgan sana", formatDate(result.issuedAt)],
         ["Sertifikat raqami", result.number],
     ]

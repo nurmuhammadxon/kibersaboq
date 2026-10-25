@@ -36,8 +36,22 @@ function Row({ cert }: { cert: DirectorCertificate }) {
     return (
         <TableRow>
             <TableCell>
-                <p className="text-sm font-medium">{fullName}</p>
+                <p className="text-sm font-medium">
+                    {fullName}
+                    {cert.flags?.length > 0 && (
+                        <Badge
+                            variant="outline"
+                            className="ml-2 border-amber-500/50 text-amber-300"
+                            title={cert.flags.join("\n")}
+                        >
+                            Shubhali
+                        </Badge>
+                    )}
+                </p>
                 <p className="text-xs text-muted-foreground">{cert.user.email}</p>
+                {cert.flags?.length > 0 && (
+                    <p className="text-[11px] text-amber-300/90 mt-1">{cert.flags.join("; ")}</p>
+                )}
             </TableCell>
             <TableCell className="hidden text-sm text-muted-foreground md:table-cell">
                 {cert.user.field ?? "—"}

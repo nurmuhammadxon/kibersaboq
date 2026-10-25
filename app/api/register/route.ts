@@ -90,15 +90,39 @@ export async function POST(req: Request) {
 
     if (role === "USER") {
       const { companyCode, field } = body
+      const code = typeof companyCode === "string" ? companyCode.trim() : ""
+      const fieldValue = typeof field === "string" && field.trim() ? field.trim() : null
+      const ip = clientIp(req)
 
-      if (!companyCode || !field) {
+      // Korxona kodisiz: mustaqil o'quvchi (korxonaga bog'lanmagan, faqat ism-familya)
+      if (!code) {
+        // Ommaviy ro'yxatdan o'tkazishga qarshi: bitta IP dan soatiga 5 ta
+        const indieKey = `indie-reg:${ip}`
+        if (await isLimited(indieKey, 5, 60 * 60 * 1000)) {
+          return NextResponse.json(
+            { error: "Juda ko'p urinish. Keyinroq qayta urinib ko'ring." },
+            { status: 429 }
+          )
+        }
+        const indie = await prisma.user.create({
+          data: {
+            firstName,
+            lastName,
+            email,
+            hashedPassword,
+            role: "USER",
+            organizationName: "",
+            field: fieldValue,
+          },
+        })
+        await recordHit(indieKey, ip)
         return NextResponse.json(
-          { error: "Korxona kodi va yo'nalishni kiriting" },
-          { status: 400 }
+          { message: "Muvaffaqiyatli ro'yxatdan o'tdingiz", userId: indie.id },
+          { status: 201 }
         )
       }
 
-      const ip = clientIp(req)
+      // Korxona kodini terib ko'rishni to'xtatish: bitta IP dan 15 daqiqada 10 ta xato kod
       const limitKey = `company-code:${ip}`
       if (await isLimited(limitKey, 10, 15 * 60 * 1000)) {
         return NextResponse.json(
@@ -108,7 +132,7 @@ export async function POST(req: Request) {
       }
 
       const company = await prisma.company.findUnique({
-        where: { code: String(companyCode).trim().toUpperCase() },
+        where: { code: code.toUpperCase() },
       })
       if (!company) {
         await recordHit(limitKey, ip)
@@ -126,7 +150,7 @@ export async function POST(req: Request) {
           hashedPassword,
           role: "USER",
           organizationName: company.name,
-          field,
+          field: fieldValue,
           companyId: company.id,
         },
       })

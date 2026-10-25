@@ -63,6 +63,7 @@ model User {
   enrollments  Enrollment[]
   progress     Progress[]
   results      QuizResult[]
+  attempts     QuizAttempt[]
   certificates Certificate[]
 }
 
@@ -128,6 +129,9 @@ model Progress {
   lessonId    String
   startedAt   DateTime  @default(now())
   completedAt DateTime?
+  // Sahifa ochiq va foydalanuvchi faol bo'lgan vaqt (soniya). Faqat server hisoblaydi.
+  activeSeconds Int      @default(0)
+  lastPingAt    DateTime?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
@@ -142,6 +146,7 @@ model Quiz {
 
   questions Question[]
   results   QuizResult[]
+  attempts  QuizAttempt[]
 }
 
 model Question {
@@ -168,9 +173,28 @@ model QuizResult {
   score     Int
   passed    Boolean
   createdAt DateTime @default(now())
+  // Shubhali natijalarni belgilash uchun
+  durationSec Int?
+  flagged     Boolean  @default(false)
+  flagReason  String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id          String    @id @default(cuid())
+  userId      String
+  quizId      String
+  // Shu urinishda berilgan savollar (tasodifiy tanlangan). Faqat shularga javob hisoblanadi.
+  questionIds String[]
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([userId, quizId, startedAt])
 }
 
 model Certificate {

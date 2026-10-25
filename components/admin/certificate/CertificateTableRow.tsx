@@ -54,6 +54,20 @@ export function CertificateTableRow({ certificate, isDeleting, onDelete, onSetRe
                 {certificate.revokedAt && (
                     <Badge variant="destructive" className="ml-2">Bekor qilingan</Badge>
                 )}
+                {certificate.flags?.length > 0 && (
+                    <Badge
+                        variant="outline"
+                        className="ml-2 border-amber-500/50 text-amber-300"
+                        title={certificate.flags.join("\n")}
+                    >
+                        Shubhali
+                    </Badge>
+                )}
+                {certificate.flags?.length > 0 && (
+                    <span className="block font-sans text-[11px] text-amber-300/90 mt-1">
+                        {certificate.flags.join("; ")}
+                    </span>
+                )}
             </TableCell>
 
             <TableCell className="text-muted-foreground">

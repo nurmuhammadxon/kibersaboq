@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { flagsForCertificates } from "@/lib/integrity-flags"
 
 export async function GET(req: Request) {
     try {
@@ -42,7 +43,12 @@ export async function GET(req: Request) {
             orderBy: { issuedAt: "desc" },
         })
 
-        return NextResponse.json(certificates)
+        const flags = await flagsForCertificates(
+            certificates.map((c) => ({ userId: c.user.id, courseId: c.course.id }))
+        )
+        return NextResponse.json(
+            certificates.map((c) => ({ ...c, flags: flags.get(`${c.user.id}:${c.course.id}`) ?? [] }))
+        )
     } catch (error) {
         console.error("Admin certificates GET xato:", error)
         return NextResponse.json({ error: "Xatolik yuz berdi" }, { status: 500 })
